@@ -3,7 +3,7 @@ package Controller;
 public class CollageControllerImpl implements CollageController {
 
   private final Readable input;
-  private final Project currentProject;
+  //private final Project currentProject;
 
 
   public CollageControllerImpl(Readable input)
@@ -12,7 +12,7 @@ public class CollageControllerImpl implements CollageController {
       throw new IllegalArgumentException("provided readable input cannot be null.");
     }
     this.input = input;
-    this.currentProject = null;
+    //this.currentProject = null;
   }
 
   @Override
