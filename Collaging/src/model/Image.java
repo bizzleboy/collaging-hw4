@@ -50,9 +50,11 @@ List<List<Pixel>> pixels;
 //    int maxValue = sc.nextInt();
 //    System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
 
+    //adding the rows of pixels
     for (int i=0; i< this.height; i++){
       this.pixels.add(new ArrayList<Pixel>());
     }
+    //adding pixels to each row
     for (List l: this.pixels) {
       for (int j=0;j<width;j++) {
         int r = sc.nextInt();
@@ -64,7 +66,7 @@ List<List<Pixel>> pixels;
       }
     }
 
-    
+
 
 
   }
