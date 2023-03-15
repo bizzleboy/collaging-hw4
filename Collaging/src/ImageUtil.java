@@ -8,7 +8,6 @@ import java.io.FileInputStream;
  *  as required.
  */
 public class ImageUtil {
-
   /**
    * Read an image file in the PPM format and print the colors.
    *
@@ -27,10 +26,10 @@ public class ImageUtil {
     StringBuilder builder = new StringBuilder();
     //read the file line by line, and populate a string. This will throw away any comment lines
     while (sc.hasNextLine()) {
-        String s = sc.nextLine();
-        if (s.charAt(0)!='#') {
-            builder.append(s+System.lineSeparator());
-        }
+      String s = sc.nextLine();
+      if (s.charAt(0)!='#') {
+        builder.append(s+System.lineSeparator());
+      }
     }
     
     //now set up the scanner to read from the string we just built
