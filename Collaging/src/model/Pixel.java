@@ -22,7 +22,9 @@ public class Pixel {
   //i guess for lossy compression
   public Pixel(int red, int green, int blue, int alpha){
 
-    this.pixelColor = new Color(red*(alpha/255),green*(alpha/255),blue*(alpha/255));
+    this.pixelColor = new Color(red*alpha/255,
+            green*alpha/255,
+            blue*alpha/255);
     this.red = red;
     this.green = green;
     this.blue = blue;
@@ -118,6 +120,10 @@ public class Pixel {
       newGreen = this.green-darkness;
     }
     this.pixelColor = new Color(newRed,newGreen,newBlue,this.transparency);
+  }
+
+  public Color getPixelColor() {
+    return this.pixelColor;
   }
 
 
