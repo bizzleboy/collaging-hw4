@@ -98,7 +98,7 @@ List<List<Pixel>> pixels;
     }
   }
 
-  public void brightenImage(int brightness){
+  public void brightenImage(String brightness){
     this.filterPixels = pixels;
     for (List<Pixel> row: this.filterPixels){
       for(Pixel pixel: row){
@@ -106,7 +106,7 @@ List<List<Pixel>> pixels;
       }
     }
   }
-  public void darkenImage(int darkness){
+  public void darkenImage(String darkness){
     this.filterPixels = pixels;
     for (List<Pixel> row: this.filterPixels){
       for(Pixel pixel: row){

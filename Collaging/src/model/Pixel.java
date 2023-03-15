@@ -49,34 +49,60 @@ public class Pixel {
     this.pixelColor = new Color(this.red,0,0,this.transparency);
   }
 
-  public void brightenMe(int brightness){
+  public void brightenMe(String brightnessType){
+    int brightness;
+    switch(brightnessType){
+      case "darken-value":
+        brightness = Math.max(this.red,Math.max(this.green,this.blue));
+        break;
+      case"darken-intensity":
+        brightness= (this.red+this.green+this.blue)/3;
+        break;
+      case "darken-luma":
+        brightness=(int)(.2126*this.red+ .7152*this.green+ .0722*this.blue);
+        break;
+      default: brightness= 0;
+    }
     int newRed;
     int newBlue;
     int newGreen;
 
-    if (this.red+brightness > 255){
-      newRed = 255;
+    if (this.red - brightness < 0){
+      newRed = 0;
     } else{
-      newRed = this.red+brightness;
+      newRed = this.red-brightness;
     }
-    if (this.blue+brightness > 255){
-      newBlue = 255;
+    if (this.blue-brightness < 0){
+      newBlue = 0;
     } else{
-      newBlue = this.blue+brightness;
+      newBlue = this.blue-brightness;
     }
-    if (this.green+brightness > 255){
-      newGreen = 255;
+    if (this.green-brightness < 0){
+      newGreen = 0;
     } else{
-      newGreen = this.green+brightness;
+      newGreen = this.green-brightness;
     }
     this.pixelColor = new Color(newRed,newGreen,newBlue,this.transparency);
   }
-  public void darkenMe(int darkness){
+  public void darkenMe(String darknessType){
+    int darkness;
+    switch(darknessType){
+      case "darken-value":
+        darkness = Math.max(this.red,Math.max(this.green,this.blue));
+        break;
+      case"darken-intensity":
+        darkness= (this.red+this.green+this.blue)/3;
+        break;
+      case "darken-luma":
+        darkness=(int)(.2126*this.red+ .7152*this.green+ .0722*this.blue);
+        break;
+      default: darkness= 0;
+    }
     int newRed;
     int newBlue;
     int newGreen;
 
-    if (this.red-darkness < 0){
+    if (this.red - darkness < 0){
       newRed = 0;
     } else{
       newRed = this.red-darkness;
