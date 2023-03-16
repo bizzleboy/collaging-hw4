@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
-import collagefiles.model.Layer;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
 
@@ -106,51 +105,29 @@ public class CollageControllerImpl implements CollageController {
 
     while (sc.hasNextLine()) {
 
-      //ArrayList<Layer> nextLayer = new ArrayList<Layer>();
-      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<ArrayList<Pixel>>();
-      String layerName = null;
-      String filterName = null;
+      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
 
-      String title = null;
-      int width = -1;
-      int height = -1;
-      int maxVal = -1;
+      String title;
+      int width;
+      int height;
+      int maxVal;
+      String layerName;
+      String filterName;
 
-      title = sc.nextLine();
+      title = sc.next();
       width = sc.nextInt();
       height = sc.nextInt();
       maxVal = sc.nextInt();
-
-      if (title!=null && width > -1 && height > -1 && maxVal > -1) {
-        this.currentProject = new BasicCollageProject(width, height);
-      } else {
-        throw new IllegalArgumentException("Incorrect file header");
-      }
-
       layerName = sc.next();
       filterName = sc.next();
 
-      if(layerName != null & filterName != null) {
+      this.currentProject = new BasicCollageProject(width, height);
 
-      }
-
-      if (sc.next())
-
-      if (this.validProjectLayer(sc, nextPixels)) {
-        this.currentProject.addLayer(layerName, filterName);
-        this.currentProject.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
-      } else {
-        throw new IllegalArgumentException("Empty project with defined height and size");
-      }
-
-
-      //adding the rows of pixels
-      for (int i = 0; i < height; i++) {
+      for (int y = 0; y < height; y++) {
         nextPixels.add(new ArrayList<Pixel>());
       }
-      //adding pixels to each row
       for (List l : nextPixels) {
-        for (int j = 0; j < width; j++) {
+        for (int x = 0; x < width; x++) {
           int r = sc.nextInt();
           int g = sc.nextInt();
           int b = sc.nextInt();
@@ -158,16 +135,12 @@ public class CollageControllerImpl implements CollageController {
           l.add(new Pixel(new Color(r, g, b, a)));
         }
       }
+      this.currentProject.addLayer(layerName);
+      this.currentProject.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
+      this.currentProject.setFilter(layerName, filterName);
     }
-  }
 
-  private boolean validProjectLayer(Scanner sc, ArrayList<ArrayList<Pixel>> nextPixels) {
-    while (sc.hasNext()) {
-      title = sc.nextLine();
-      width = sc.nextInt();
-      height = sc.nextInt();
-      maxVal = sc.nextInt();
-    }
+    return this.currentProject;
   }
 
   private Image readImage(String path){
