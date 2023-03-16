@@ -102,11 +102,20 @@ public class CollageControllerImpl implements CollageController {
       return this.readProject(tryAgain.next());
     }
     StringBuilder projectBuilder = new StringBuilder();
+
+    int width = 0;
+    int height = 0;
+    ArrayList<Layer> layers = new ArrayList<Layer>();
+    ArrayList<ArrayList<Pixel>> pixels = new ArrayList<ArrayList<Pixel>>();
+
     //read the file line by line, and populate a string. This will throw away any comment lines
     while (sc.hasNextLine()) {
 
-      int width = 0;
-      int height = 0;
+      if(this.next()) {
+
+      };
+      this.addIfValidInfo();
+      if (sc.nextLine())
 
       if (sc.next().split(" ").length == 1) {
         String collageName = sc.nextLine();
@@ -119,11 +128,10 @@ public class CollageControllerImpl implements CollageController {
       if (sc.next().split(" ").length == 2) {
         String layerName = sc.next();
         String filterName = sc.next();
+        this.currentProject.addLayer(layerName, filterName);
       }
 
-      while (sc.next().split(" ").length == 4) {
-        ArrayList<Layer> layers = new ArrayList<Layer>();
-        ArrayList<ArrayList<Pixel>> pixels = new ArrayList<ArrayList<Pixel>>();
+      if (sc.next().split(" ").length == 4) {
         //adding the rows of pixels
         for (int i=0; i< height; i++){
           pixels.add(new ArrayList<Pixel>());
@@ -138,7 +146,10 @@ public class CollageControllerImpl implements CollageController {
             l.add(new Pixel(new Color(r,g,b,a)));
           }
         }
+        this.currentProject.addImageToLayer();
       }
+
+
 
 
 //      if (sc.nextLine().split(" ").length == 2) {
@@ -147,7 +158,7 @@ public class CollageControllerImpl implements CollageController {
 //    }
 
     }
-
+    Image readImage = new Image(pixels);
 
 
   }
