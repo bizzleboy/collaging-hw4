@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
+import collagefiles.model.Layer;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
 
@@ -52,6 +53,7 @@ public class CollageControllerImpl implements CollageController {
           System.out.println(height);
           this.currentProject = new BasicCollageProject(width, height);
           this.currentProject.addLayer("layer-1");
+
         case "load-project":
           String loadProjectPath = scan.next();
           // read in project from txt file
@@ -87,6 +89,67 @@ public class CollageControllerImpl implements CollageController {
 //     if load-project: create Project based on txt w/ exception if not available
 //     if save-project: adjust txt
 //     if save-image: create new PPM based on current project
+  }
+
+  private Project readProject(String path) throws IllegalArgumentException {
+    Scanner sc = null;
+
+    try {
+      sc = new Scanner(new FileInputStream(path));
+    } catch (FileNotFoundException e) {
+      System.out.println("File "+path+ " not found!");
+      Scanner tryAgain = new Scanner(this.input);
+      return this.readProject(tryAgain.next());
+    }
+    StringBuilder projectBuilder = new StringBuilder();
+    //read the file line by line, and populate a string. This will throw away any comment lines
+    while (sc.hasNextLine()) {
+
+      int width = 0;
+      int height = 0;
+
+      if (sc.next().split(" ").length == 1) {
+        String collageName = sc.nextLine();
+        width = sc.nextInt();
+        height = sc.nextInt();
+        int maxValue = sc.nextInt();
+        this.currentProject = new BasicCollageProject(width, height);
+      }
+
+      if (sc.next().split(" ").length == 2) {
+        String layerName = sc.next();
+        String filterName = sc.next();
+      }
+
+      while (sc.next().split(" ").length == 4) {
+        ArrayList<Layer> layers = new ArrayList<Layer>();
+        ArrayList<ArrayList<Pixel>> pixels = new ArrayList<ArrayList<Pixel>>();
+        //adding the rows of pixels
+        for (int i=0; i< height; i++){
+          pixels.add(new ArrayList<Pixel>());
+        }
+        //adding pixels to each row
+        for (List l: pixels) {
+          for (int j=0;j<width;j++) {
+            int r = sc.nextInt();
+            int g = sc.nextInt();
+            int b = sc.nextInt();
+            int a = sc.nextInt();
+            l.add(new Pixel(new Color(r,g,b,a)));
+          }
+        }
+      }
+
+
+//      if (sc.nextLine().split(" ").length == 2) {
+//        throw new IllegalArgumentException("Layer content dimensions do not " +
+//                "match with stated width and height");
+//    }
+
+    }
+
+
+
   }
 
   private Image readImage(String path){
