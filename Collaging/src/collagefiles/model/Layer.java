@@ -1,5 +1,6 @@
 package collagefiles.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Layer {
@@ -11,6 +12,7 @@ public class Layer {
   int height;
 
   public Layer(String name,int width,int height){
+    this.imagesOnLayer = new ArrayList<Image>();
     this.name = name;
     this.width =width;
     this.height =height;

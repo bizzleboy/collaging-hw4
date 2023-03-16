@@ -1,5 +1,6 @@
 package collagefiles.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BasicCollageProject implements Project{
@@ -8,8 +9,10 @@ public class BasicCollageProject implements Project{
   int width;
 
   public BasicCollageProject (int canvasWidth, int canvasHeight) {
+    this.layers = new ArrayList<Layer>();
     this.height= canvasHeight;
     this.width = canvasWidth;
+    this.layers.add(new Layer("name",this.width,this.height));
   }
 
 

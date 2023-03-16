@@ -10,7 +10,7 @@ public class Pixel {
   private int red;
   private int green;
   private int blue;
-  private int transparency;
+  private int alpha;
 
   //I dont think we need to throw an exception since the color class
   //unless we wanna throw for not inputting a valid color? idk if we have to worry about that
@@ -19,7 +19,7 @@ public class Pixel {
     this.red = color.getRed();
     this.blue =color.getBlue();
     this.green = color.getGreen();
-    this.transparency =255;
+    this.alpha =255;
   }
 
   //idk if this constructor is necessary
@@ -37,7 +37,7 @@ public class Pixel {
     this.red = red;
     this.green = green;
     this.blue = blue;
-    this.transparency = alpha;
+    this.alpha = alpha;
   }
 
   /**
@@ -46,7 +46,7 @@ public class Pixel {
   public void colorMeRed(){
     this.blue = 0;
     this.green = 0;
-    this.pixelColor = new Color(this.red,0,0,this.transparency);
+    this.pixelColor = new Color(this.red,0,0,this.alpha);
   }
 
   /**
@@ -55,7 +55,7 @@ public class Pixel {
   public void colorMeGreen(){
     this.red = 0;
     this.blue = 0;
-    this.pixelColor = new Color(0,this.green,0,this.transparency);
+    this.pixelColor = new Color(0,this.green,0,this.alpha);
   }
   /**
    * Change the color of this pixel to blue for filtering purposes
@@ -63,7 +63,7 @@ public class Pixel {
   public void colorMeBlue(){
     this.red = 0;
     this.green = 0;
-    this.pixelColor = new Color(0,0,this.blue,this.transparency);
+    this.pixelColor = new Color(0,0,this.blue,this.alpha);
   }
 
   public void brightenMe(String brightnessType){
@@ -99,7 +99,7 @@ public class Pixel {
     } else {
       newGreen = this.green + brightness;
     }
-    this.pixelColor = new Color(newRed,newGreen,newBlue,this.transparency);
+    this.pixelColor = new Color(newRed,newGreen,newBlue,this.alpha);
   }
 
   public void darkenMe(String darknessType){
@@ -135,7 +135,17 @@ public class Pixel {
     } else{
       newGreen = this.green-darkness;
     }
-    this.pixelColor = new Color(newRed,newGreen,newBlue,this.transparency);
+    this.pixelColor = new Color(newRed,newGreen,newBlue,this.alpha);
+  }
+
+  public Pixel addPixels(Pixel pix2) {
+    int alphaPct = this.alpha/255 + pix2.alpha/255 * (1 - (this.alpha/255));
+    return new Pixel(
+            (int) ((this.alpha*this.red/255)+(pix2.alpha*pix2.red/255)*(1-this.alpha/255)*(1/alphaPct)),
+            (int) ((this.alpha*this.green/255)+(pix2.alpha*pix2.green/255)*(1-this.alpha/255)*(1/alphaPct)),
+            (int) ((this.alpha*this.blue/255)+(pix2.alpha*pix2.blue/255)*(1-this.alpha/255)*(1/alphaPct)),
+            alphaPct
+            );
   }
 
   public Color getPixelColor() {

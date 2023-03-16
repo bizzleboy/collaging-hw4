@@ -4,15 +4,15 @@ package collagefiles.Controller;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import collagefiles.model.BasicCollageProject;
+import collagefiles.model.Image;
+import collagefiles.model.Layer;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
-import collagefiles.model.Image;
 
 
 public class CollageControllerImpl implements CollageController {
@@ -35,53 +35,45 @@ public class CollageControllerImpl implements CollageController {
 
     Scanner scan = new Scanner(this.input);
 
-  //  String input = scan.next();
-while(true) {
+    String input = scan.next();
 
+    boolean systemRun = true;
 
-    System.out.println("Enter filepath");
-    String path = scan.next();
+    while (systemRun) {
 
-  System.out.println(this.readImage(path).idk());
+      switch (input) {
+        case "q":
+          System.out.println("q");
+          systemRun = false;
+        case "new-project":
+          System.out.println("new-project");
+          int width = scan.nextInt();
+          System.out.println(width);
+          int height = scan.nextInt();
+          System.out.println(height);
+          this.currentProject = new BasicCollageProject(width, height);
+          this.currentProject.addLayer("layer-1");
 
+        case "load-project":
+          String loadProjectPath = scan.next();
+          // read in project from txt file
+        case "save-project":
+          String saveProjectPath = scan.next();
+        case "save-image":
+          String saveImagePath = scan.next();
+        case "set-filter":
+          String layer = scan.next();
+          String filter = scan.next();
+        case "add-layer":
+          String layerToAdd = scan.next();
+        case "add-image":
+          String imageToAdd = scan.next();
+          int xPos = scan.nextInt();
+          int yPos = scan.nextInt();
 
+      }
+    }
 
-
-
-
-//
-//  switch (input) {
-//    case "q":
-//     System.out.println("jo");
-//      return;
-//    case "new-project":
-//      int width = scan.nextInt();
-//      int height = scan.nextInt();
-//      System.out.println(height);
-//      this.currentProject = new BasicCollageProject(width, height);
-//    case "load-project":
-//      String loadProjectPath = scan.next();
-//      // read in project from txt file
-//    case "save-project":
-//      String saveProjectPath = scan.next();
-//    case "save-image":
-//      String saveImagePath = scan.next();
-//    case "set-filter":
-//      String layer = scan.next();
-//      String filter = scan.next();
-//    case "add-layer":
-//      String layerToAdd = scan.next();
-//    case "add-image":
-//      String imageToAdd = scan.next();
-//      int xPos = scan.nextInt();
-//      int yPos = scan.nextInt();
-//
-//  }
-}
-//    if (input.equalsIgnoreCase("q"));
-
-    //now set up the scanner to read from the string we just built
-   // sc = new Scanner(builder.toString());
 
     // check for next line input
     // if q: quit
@@ -97,6 +89,67 @@ while(true) {
 //     if load-project: create Project based on txt w/ exception if not available
 //     if save-project: adjust txt
 //     if save-image: create new PPM based on current project
+  }
+
+  private Project readProject(String path) throws IllegalArgumentException {
+    Scanner sc = null;
+
+    try {
+      sc = new Scanner(new FileInputStream(path));
+    } catch (FileNotFoundException e) {
+      System.out.println("File "+path+ " not found!");
+      Scanner tryAgain = new Scanner(this.input);
+      return this.readProject(tryAgain.next());
+    }
+    StringBuilder projectBuilder = new StringBuilder();
+    //read the file line by line, and populate a string. This will throw away any comment lines
+    while (sc.hasNextLine()) {
+
+      int width = 0;
+      int height = 0;
+
+      if (sc.next().split(" ").length == 1) {
+        String collageName = sc.nextLine();
+        width = sc.nextInt();
+        height = sc.nextInt();
+        int maxValue = sc.nextInt();
+        this.currentProject = new BasicCollageProject(width, height);
+      }
+
+      if (sc.next().split(" ").length == 2) {
+        String layerName = sc.next();
+        String filterName = sc.next();
+      }
+
+      while (sc.next().split(" ").length == 4) {
+        ArrayList<Layer> layers = new ArrayList<Layer>();
+        ArrayList<ArrayList<Pixel>> pixels = new ArrayList<ArrayList<Pixel>>();
+        //adding the rows of pixels
+        for (int i=0; i< height; i++){
+          pixels.add(new ArrayList<Pixel>());
+        }
+        //adding pixels to each row
+        for (List l: pixels) {
+          for (int j=0;j<width;j++) {
+            int r = sc.nextInt();
+            int g = sc.nextInt();
+            int b = sc.nextInt();
+            int a = sc.nextInt();
+            l.add(new Pixel(new Color(r,g,b,a)));
+          }
+        }
+      }
+
+
+//      if (sc.nextLine().split(" ").length == 2) {
+//        throw new IllegalArgumentException("Layer content dimensions do not " +
+//                "match with stated width and height");
+//    }
+
+    }
+
+
+
   }
 
   private Image readImage(String path){
@@ -136,7 +189,7 @@ while(true) {
 
 //    int maxValue = sc.nextInt();
 //    System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
-    List<List<Pixel>> pixels;
+    ArrayList<ArrayList<Pixel>> pixels;
     pixels = new ArrayList<>();
 
     //adding the rows of pixels
@@ -159,3 +212,4 @@ while(true) {
     return readImage;
   }
 }
+//
