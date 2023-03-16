@@ -15,11 +15,11 @@ public class Pixel {
   //I dont think we need to throw an exception since the color class
   //unless we wanna throw for not inputting a valid color? idk if we have to worry about that
   public Pixel(Color color){
-    this.pixelColor =color;
+    this.pixelColor = color;
     this.red = color.getRed();
-    this.blue =color.getBlue();
+    this.blue = color.getBlue();
     this.green = color.getGreen();
-    this.alpha =255;
+    this.alpha = 255;
   }
 
   //idk if this constructor is necessary
@@ -141,9 +141,9 @@ public class Pixel {
   public Pixel addPixels(Pixel pix2) {
     int alphaPct = this.alpha/255 + pix2.alpha/255 * (1 - (this.alpha/255));
     return new Pixel(
-            (int) ((this.alpha*this.red/255)+(pix2.alpha*pix2.red/255)*(1-this.alpha/255)*(1/alphaPct)),
-            (int) ((this.alpha*this.green/255)+(pix2.alpha*pix2.green/255)*(1-this.alpha/255)*(1/alphaPct)),
-            (int) ((this.alpha*this.blue/255)+(pix2.alpha*pix2.blue/255)*(1-this.alpha/255)*(1/alphaPct)),
+            (int) ((this.alpha/255*this.red+pix2.red*(pix2.alpha/255)*(1-this.alpha/255))*(1/alphaPct)),
+            (int) ((this.alpha/255*this.green+pix2.green*(pix2.alpha/255)*(1-this.alpha/255))*(1/alphaPct)),
+            (int) ((this.alpha/255*this.blue+pix2.blue*(pix2.alpha/255)*(1-this.alpha/255))*(1/alphaPct)),
             alphaPct
             );
   }

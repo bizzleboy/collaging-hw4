@@ -103,25 +103,26 @@ public class CollageControllerImpl implements CollageController {
       this.readProject(tryAgain.next());
     }
 
+    String title = null;
+    int width = -1;
+    int height = -1;
+    int maxVal = -1;
+    String layerName = null;
+    String filterName = null;
+    ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
+
+    //if (title == null && width == -1 && height == -1 && maxVal == -1);
+    title = sc.next();
+    width = sc.nextInt();
+    height = sc.nextInt();
+    maxVal = sc.nextInt();
+
+    this.currentProject = new BasicCollageProject(width, height);
+
     while (sc.hasNextLine()) {
 
-      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
-
-      String title;
-      int width;
-      int height;
-      int maxVal;
-      String layerName;
-      String filterName;
-
-      title = sc.next();
-      width = sc.nextInt();
-      height = sc.nextInt();
-      maxVal = sc.nextInt();
       layerName = sc.next();
       filterName = sc.next();
-
-      this.currentProject = new BasicCollageProject(width, height);
 
       for (int y = 0; y < height; y++) {
         nextPixels.add(new ArrayList<Pixel>());
