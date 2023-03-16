@@ -29,8 +29,8 @@ public class BasicCollageProject implements Project{
   }
 
   @Override
-  public void addImageToLayer(String layerName, String imagePath, int xPos, int yPos) {
-
+  public void addImageToLayer(String layerName, Image imageToAdd, int xPos, int yPos) {
+    this.layers.get(this.layers.indexOf(layerName)).placeImage(xPos,yPos,imageToAdd);
   }
 
   @Override

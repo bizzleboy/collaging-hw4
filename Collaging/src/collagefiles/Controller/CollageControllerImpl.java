@@ -67,10 +67,11 @@ public class CollageControllerImpl implements CollageController {
         case "add-layer":
           String layerToAdd = scan.next();
         case "add-image":
+          String layerToAddTo = scan.next();
           String imageToAdd = scan.next();
           int xPos = scan.nextInt();
           int yPos = scan.nextInt();
-
+          this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
       }
     }
 
