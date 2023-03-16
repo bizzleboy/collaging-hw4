@@ -12,22 +12,24 @@ public class TestPixel {
   Pixel redPixel;
   Pixel greenPixel;
   Pixel bluePixel;
-  Pixel blackPixel;
   Pixel whitePixel;
+  Pixel blackPixel;
   Pixel mixedPixel;
   Pixel transparentPixel;
   Pixel opaquePixel;
+  Pixel amaranthPixel;
 
   @Before
   public void init() {
     this.redPixel = new Pixel(255,0,0,255);
     this.greenPixel = new Pixel(0,255,0,255);
     this.bluePixel = new Pixel(0,0,255,255);
-    this.blackPixel = new Pixel(255,255,255,255);
-    this.whitePixel = new Pixel(0,0,0,255);
+    this.whitePixel = new Pixel(255,255,255,255);
+    this.blackPixel = new Pixel(0,0,0,255);
     this.mixedPixel = new Pixel(128,128,128,255);
     this.transparentPixel = new Pixel(255,255,255,0);
     this.opaquePixel = new Pixel(255,255,255,128);
+    this.amaranthPixel = new Pixel(159, 43, 104, 255);
   }
 
 
@@ -36,11 +38,253 @@ public class TestPixel {
     assertEquals(new Color(255,0,0,255), this.redPixel.getPixelColor());
     assertEquals(new Color(0,255,0,255), this.greenPixel.getPixelColor());
     assertEquals(new Color(0,0,255,255), this.bluePixel.getPixelColor());
-    assertEquals(new Color(255,255,255,255), this.blackPixel.getPixelColor());
-    assertEquals(new Color(0,0,0,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(159,43,104,255), this.amaranthPixel.getPixelColor());
     assertEquals(new Color(128,128,128,255), this.mixedPixel.getPixelColor());
     assertEquals(new Color(0,0,0), this.transparentPixel.getPixelColor());
     assertEquals(new Color(128,128,128), this.opaquePixel.getPixelColor());
   }
 
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionLargeRed() {
+    this.redPixel = new Pixel(256,0,0,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionSmallRed() {
+    this.redPixel = new Pixel(-1,0,0,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionLargeGreen() {
+    this.redPixel = new Pixel(0,256,0,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionSmallGreen() {
+    this.redPixel = new Pixel(0,-1,0,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionLargeBlue() {
+    this.redPixel = new Pixel(256,0,0,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionSmallBlue() {
+    this.redPixel = new Pixel(0,0,-1,0);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionLargeAlpha() {
+    this.redPixel = new Pixel(0,0,0,256);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testInvalidConstructionSmallAlpha() {
+    this.redPixel = new Pixel(0,0,0,-1);
+  }
+
+  @Test
+  public void testRedFilter() {
+    this.redPixel.colorMeRed();
+    this.greenPixel.colorMeRed();
+    this.bluePixel.colorMeRed();
+    this.whitePixel.colorMeRed();
+    this.blackPixel.colorMeRed();
+    this.mixedPixel.colorMeRed();
+    this.transparentPixel.colorMeRed();
+    this.opaquePixel.colorMeRed();
+
+    assertEquals(new Color(255,0,0,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,0,0,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(128,0,0,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(255,0,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,0,0,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testGreenFilter() {
+    this.redPixel.colorMeGreen();
+    this.greenPixel.colorMeGreen();
+    this.bluePixel.colorMeGreen();
+    this.whitePixel.colorMeGreen();
+    this.blackPixel.colorMeGreen();
+    this.mixedPixel.colorMeGreen();
+    this.transparentPixel.colorMeGreen();
+    this.opaquePixel.colorMeGreen();
+
+    assertEquals(new Color(0,0,0,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(0,255,0,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(0,255,0,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(0,128,0,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(0,255,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,255,0,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testBlueFilter() {
+    this.redPixel.colorMeBlue();
+    this.greenPixel.colorMeBlue();
+    this.bluePixel.colorMeBlue();
+    this.whitePixel.colorMeBlue();
+    this.blackPixel.colorMeBlue();
+    this.mixedPixel.colorMeBlue();
+    this.transparentPixel.colorMeBlue();
+    this.opaquePixel.colorMeBlue();
+
+    assertEquals(new Color(0,0,0,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(0,0,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(0,0,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(0,0,128,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(0,0,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,0,255,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testBrightenValue() {
+    this.redPixel.brightenMe("brighten-value");
+    this.greenPixel.brightenMe("brighten-value");
+    this.bluePixel.brightenMe("brighten-value");
+    this.whitePixel.brightenMe("brighten-value");
+    this.blackPixel.brightenMe("brighten-value");
+    this.mixedPixel.brightenMe("brighten-value");
+    this.amaranthPixel.brightenMe("brighten-value");
+    this.transparentPixel.brightenMe("brighten-value");
+    this.opaquePixel.brightenMe("brighten-value");
+
+    assertEquals(new Color(255,255,255,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(255,202,255,255), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testBrightenIntensity() {
+    this.redPixel.brightenMe("brighten-intensity");
+    this.greenPixel.brightenMe("brighten-intensity");
+    this.bluePixel.brightenMe("brighten-intensity");
+    this.whitePixel.brightenMe("brighten-intensity");
+    this.blackPixel.brightenMe("brighten-intensity");
+    this.mixedPixel.brightenMe("brighten-intensity");
+    this.amaranthPixel.brightenMe("brighten-intensity");
+    this.transparentPixel.brightenMe("brighten-intensity");
+    this.opaquePixel.brightenMe("brighten-intensity");
+
+    assertEquals(new Color(255,85,85,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(85,255,85,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(85,85,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(255,145,206,255), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testBrightenLuma() {
+    this.redPixel.brightenMe("brighten-luma");
+    this.greenPixel.brightenMe("brighten-luma");
+    this.bluePixel.brightenMe("brighten-luma");
+    this.whitePixel.brightenMe("brighten-luma");
+    this.blackPixel.brightenMe("brighten-luma");
+    this.mixedPixel.brightenMe("brighten-luma");
+    this.amaranthPixel.brightenMe("brighten-luma");
+    this.transparentPixel.brightenMe("brighten-luma");
+    this.opaquePixel.brightenMe("brighten-luma");
+
+    assertEquals(new Color(255,54,54,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(182,255,182,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(18,18,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(231,115,176,255), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
+  }
+
+
+  @Test
+  public void testBrightenValue() {
+    this.redPixel.brightenMe("brighten-value");
+    this.greenPixel.brightenMe("brighten-value");
+    this.bluePixel.brightenMe("brighten-value");
+    this.whitePixel.brightenMe("brighten-value");
+    this.blackPixel.brightenMe("brighten-value");
+    this.mixedPixel.brightenMe("brighten-value");
+    this.amaranthPixel.brightenMe("brighten-value");
+    this.transparentPixel.brightenMe("brighten-value");
+    this.opaquePixel.brightenMe("brighten-value");
+
+    assertEquals(new Color(255,255,255,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(255,202,255,255), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testBrightenIntensity() {
+    this.redPixel.brightenMe("brighten-intensity");
+    this.greenPixel.brightenMe("brighten-intensity");
+    this.bluePixel.brightenMe("brighten-intensity");
+    this.whitePixel.brightenMe("brighten-intensity");
+    this.blackPixel.brightenMe("brighten-intensity");
+    this.mixedPixel.brightenMe("brighten-intensity");
+    this.amaranthPixel.brightenMe("brighten-intensity");
+    this.transparentPixel.brightenMe("brighten-intensity");
+    this.opaquePixel.brightenMe("brighten-intensity");
+
+    assertEquals(new Color(255,85,85,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(85,255,85,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(85,85,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(255,145,206,255), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
+  }
+
+  @Test
+  public void testBrightenLuma() {
+    this.redPixel.brightenMe("brighten-luma");
+    this.greenPixel.brightenMe("brighten-luma");
+    this.bluePixel.brightenMe("brighten-luma");
+    this.whitePixel.brightenMe("brighten-luma");
+    this.blackPixel.brightenMe("brighten-luma");
+    this.mixedPixel.brightenMe("brighten-luma");
+    this.amaranthPixel.brightenMe("brighten-luma");
+    this.transparentPixel.brightenMe("brighten-luma");
+    this.opaquePixel.brightenMe("brighten-luma");
+
+    assertEquals(new Color(255,54,54,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(182,255,182,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(18,18,255,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(231,115,176,255), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
+  }
 }
