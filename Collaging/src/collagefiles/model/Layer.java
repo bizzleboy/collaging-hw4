@@ -18,19 +18,10 @@ public class Layer {
     this.height =height;
     Image background = new Image(width, height);
     this.imagesOnLayer.add(background);
-
   }
 
   public void placeImage(int xPos, int yPos,Image image){
-    for()
-
-  }
-
-
-
-
-  public Layer(String name){
-    this.name = name;
+    
   }
 
 

@@ -23,40 +23,26 @@ public class Image {
       }
     }
   }
-<<<<<<< HEAD
-}
-  public Image(List<List<Pixel>> pixelList){
-  this.pixels = pixelList;
-  }
-=======
->>>>>>> ba743554b65f9c1e050efdfcd4307b9ac3d27d30
 
   public Image(ArrayList<ArrayList<Pixel>> pixelList) {
     this.pixels = pixelList;
-
-<<<<<<< HEAD
-public String idk() {
-=======
-
   }
+
+
 
   public String idk() {
 
     Pixel p = this.pixels.get(38).get(37);
->>>>>>> ba743554b65f9c1e050efdfcd4307b9ac3d27d30
+
 
     p.colorMeRed();
     return p.getPixelColor().toString();
-  }
 
-<<<<<<< HEAD
-  p.colorMeRed();
-  return p.getPixelColor().toString();
 }
-  protected void filterImageRed(){
-=======
+
+
   public void filterImageRed() {
->>>>>>> ba743554b65f9c1e050efdfcd4307b9ac3d27d30
+
     this.filterPixels = pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
@@ -66,11 +52,9 @@ public String idk() {
     }
   }
 
-<<<<<<< HEAD
-  protected void filterImageGreen(){
-=======
+
   public void filterImageGreen() {
->>>>>>> ba743554b65f9c1e050efdfcd4307b9ac3d27d30
+
     this.filterPixels = pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
