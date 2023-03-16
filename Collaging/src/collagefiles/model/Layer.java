@@ -6,6 +6,7 @@ public class Layer {
   List<Image> imagesOnLayer;
   private String filter;
   String name;
+
   int width;
   int height;
 
@@ -22,6 +23,14 @@ public class Layer {
     for()
 
   }
+
+
+
+
+  public Layer(String name){
+    this.name = name;
+  }
+
 
 
   public void applyFilter(String filter){

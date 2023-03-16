@@ -24,12 +24,9 @@ public Image(int width,int height){
 }
   public Image(List<List<Pixel>> pixelList){
   this.pixels = pixelList;
-
-
-
-
-
   }
+
+
 public String idk() {
 
   Pixel p= this.pixels.get(38).get(37);
@@ -37,7 +34,7 @@ public String idk() {
   p.colorMeRed();
   return p.getPixelColor().toString();
 }
-  public void filterImageRed(){
+  protected void filterImageRed(){
     this.filterPixels = pixels;
     for (List<Pixel> row: this.filterPixels){
       for(Pixel pixel: row){
@@ -47,7 +44,7 @@ public String idk() {
     }
   }
 
-  public void filterImageGreen(){
+  protected void filterImageGreen(){
     this.filterPixels = pixels;
     for (List<Pixel> row: this.filterPixels){
       for(Pixel pixel: row){
