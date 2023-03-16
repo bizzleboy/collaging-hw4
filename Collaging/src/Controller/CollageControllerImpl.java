@@ -1,16 +1,21 @@
 package Controller;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.BasicCollageProject;
 import model.Pixel;
+
+import model.Project;
+
 
 public class CollageControllerImpl implements CollageController {
 
   private final Readable input;
-  private final Project currentProject;
+  private  Project currentProject;
 
 
   public CollageControllerImpl(Readable input)
@@ -35,7 +40,7 @@ public class CollageControllerImpl implements CollageController {
       case "new-project":
         int width = scan.nextInt();
         int height = scan.nextInt();
-        this.currentProject = new Project(width, height);
+        this.currentProject = new BasicCollageProject(width, height);
       case "load-project":
         String loadProjectPath = scan.next();
         // read in project from txt file
@@ -54,10 +59,10 @@ public class CollageControllerImpl implements CollageController {
         int yPos = scan.nextInt();
 
     }
-    if (input.equalsIgnoreCase("q"))
+//    if (input.equalsIgnoreCase("q"));
 
     //now set up the scanner to read from the string we just built
-    sc = new Scanner(builder.toString());
+   // sc = new Scanner(builder.toString());
 
     // check for next line input
     // if q: quit
@@ -66,5 +71,13 @@ public class CollageControllerImpl implements CollageController {
     // if save-project: adjust txt
     // if save-image: create new PPM based on current project
 
-    public List<List<Pixel>>;
+
+//     check for next line input
+//     if q: quit
+//     if new-project: make new Project
+//     if load-project: create Project based on txt w/ exception if not available
+//     if save-project: adjust txt
+//     if save-image: create new PPM based on current project
+  }
+
 }

@@ -13,7 +13,17 @@ List<List<Pixel>> pixels;
   String filePath;
   int width;
   int height;
-
+  String name;
+public Image(int width,int height){
+  for (int i = 0; i<height;i++){
+    this.pixels.add(new ArrayList<Pixel>());
+  }
+  for (List l: this.pixels ){
+    for (int i = 0; i< width; i++){
+      l.add(new Pixel(new Color(255,255,255,0)));
+    }
+  }
+}
   public Image(String filename){
     Scanner sc;
 
@@ -117,4 +127,3 @@ List<List<Pixel>> pixels;
 
 }
 
-//MAMAMMAMAMAMAMAMAAAMAMAMAMAMQMAMAMAMAMAMAMMAAMMAMAMA

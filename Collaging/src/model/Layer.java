@@ -7,10 +7,12 @@ import model.Image;
 public class Layer {
   List<Image> imagesOnLayer;
   private String filter;
+  String name;
 
-  public Layer(){
-
+  public Layer(String name){
+    this.name = name;
   }
+
 
   public void applyFilter(String filter){
    switch(filter){
