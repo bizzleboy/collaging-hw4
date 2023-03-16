@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Image {
-  ArrayList<ArrayList<Pixel>> pixels;
+  protected ArrayList<ArrayList<Pixel>> pixels;
   ArrayList<ArrayList<Pixel>> filterPixels;
   String filePath;
   String name;
