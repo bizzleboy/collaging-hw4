@@ -16,6 +16,10 @@ public class Pixel {
   //unless we wanna throw for not inputting a valid color? idk if we have to worry about that
   public Pixel(Color color){
     this.pixelColor =color;
+    this.red = color.getRed();
+    this.blue =color.getBlue();
+    this.green = color.getGreen();
+    this.transparency =255;
   }
 
   //idk if this constructor is necessary
