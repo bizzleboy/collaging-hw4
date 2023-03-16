@@ -21,7 +21,7 @@ public class BasicCollageProject implements Project{
 
   @Override
   public void addLayer(String layerName) {
-    this.layers.add((new Layer(layerName)));
+    this.layers.add((new Layer(layerName,this.width,this.height)));
 
   }
 

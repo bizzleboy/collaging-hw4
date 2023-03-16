@@ -11,8 +11,6 @@ public class Image {
 List<List<Pixel>> pixels;
   List<List<Pixel>> filterPixels;
   String filePath;
-  int width;
-  int height;
   String name;
 public Image(int width,int height){
   for (int i = 0; i<height;i++){
@@ -20,7 +18,7 @@ public Image(int width,int height){
   }
   for (List l: this.pixels ){
     for (int i = 0; i< width; i++){
-      l.add(new Pixel(new Color(255,255,255,0)));
+      l.add(new Pixel(new Color(255, 255, 255,0)));
     }
   }
 }

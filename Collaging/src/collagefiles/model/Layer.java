@@ -6,9 +6,21 @@ public class Layer {
   List<Image> imagesOnLayer;
   private String filter;
   String name;
+  int width;
+  int height;
 
-  public Layer(String name){
+  public Layer(String name,int width,int height){
     this.name = name;
+    this.width =width;
+    this.height =height;
+    Image background = new Image(width, height);
+    this.imagesOnLayer.add(background);
+
+  }
+
+  public void placeImage(int xPos, int yPos,Image image){
+    for()
+
   }
 
 
