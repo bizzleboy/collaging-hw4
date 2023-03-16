@@ -1,4 +1,4 @@
-package model;
+package collagefiles.model;
 
 import java.util.List;
 

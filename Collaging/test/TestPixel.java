@@ -3,7 +3,7 @@ import org.junit.Test;
 
 import java.awt.*;
 
-import model.Pixel;
+import collagefiles.model.Pixel;
 
 import static org.junit.Assert.assertEquals;
 

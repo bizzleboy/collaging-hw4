@@ -1,4 +1,4 @@
-package model;
+package collagefiles.model;
 
 public interface Project {
 

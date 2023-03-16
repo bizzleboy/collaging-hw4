@@ -1,4 +1,4 @@
-package Controller;
+package collagefiles.Controller;
 
 public interface CollageController {
 

@@ -1,8 +1,6 @@
-package model;
+package collagefiles.model;
 
 import java.util.List;
-
-import model.Image;
 
 public class Layer {
   List<Image> imagesOnLayer;
