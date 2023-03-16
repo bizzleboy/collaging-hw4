@@ -56,6 +56,7 @@ public class CollageControllerImpl implements CollageController {
 
         case "load-project":
           String loadProjectPath = scan.next();
+          this.currentProject = this.readProject(loadProjectPath);
           // read in project from txt file
         case "save-project":
           String saveProjectPath = scan.next();
@@ -100,68 +101,73 @@ public class CollageControllerImpl implements CollageController {
     } catch (FileNotFoundException e) {
       System.out.println("File "+path+ " not found!");
       Scanner tryAgain = new Scanner(this.input);
-      return this.readProject(tryAgain.next());
+      this.readProject(tryAgain.next());
     }
-    StringBuilder projectBuilder = new StringBuilder();
 
-    int width = 0;
-    int height = 0;
-    ArrayList<Layer> layers = new ArrayList<Layer>();
-    ArrayList<ArrayList<Pixel>> pixels = new ArrayList<ArrayList<Pixel>>();
-
-    //read the file line by line, and populate a string. This will throw away any comment lines
     while (sc.hasNextLine()) {
 
-      if(this.next()) {
+      //ArrayList<Layer> nextLayer = new ArrayList<Layer>();
+      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<ArrayList<Pixel>>();
+      String layerName = null;
+      String filterName = null;
 
-      };
-      this.addIfValidInfo();
-      if (sc.nextLine())
+      String title = null;
+      int width = -1;
+      int height = -1;
+      int maxVal = -1;
 
-      if (sc.next().split(" ").length == 1) {
-        String collageName = sc.nextLine();
-        width = sc.nextInt();
-        height = sc.nextInt();
-        int maxValue = sc.nextInt();
+      title = sc.nextLine();
+      width = sc.nextInt();
+      height = sc.nextInt();
+      maxVal = sc.nextInt();
+
+      if (title!=null && width > -1 && height > -1 && maxVal > -1) {
         this.currentProject = new BasicCollageProject(width, height);
+      } else {
+        throw new IllegalArgumentException("Incorrect file header");
       }
 
-      if (sc.next().split(" ").length == 2) {
-        String layerName = sc.next();
-        String filterName = sc.next();
+      layerName = sc.next();
+      filterName = sc.next();
+
+      if(layerName != null & filterName != null) {
+
+      }
+
+      if (sc.next())
+
+      if (this.validProjectLayer(sc, nextPixels)) {
         this.currentProject.addLayer(layerName, filterName);
-      }
-
-      if (sc.next().split(" ").length == 4) {
-        //adding the rows of pixels
-        for (int i=0; i< height; i++){
-          pixels.add(new ArrayList<Pixel>());
-        }
-        //adding pixels to each row
-        for (List l: pixels) {
-          for (int j=0;j<width;j++) {
-            int r = sc.nextInt();
-            int g = sc.nextInt();
-            int b = sc.nextInt();
-            int a = sc.nextInt();
-            l.add(new Pixel(new Color(r,g,b,a)));
-          }
-        }
-        this.currentProject.addImageToLayer();
+        this.currentProject.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
+      } else {
+        throw new IllegalArgumentException("Empty project with defined height and size");
       }
 
 
-
-
-//      if (sc.nextLine().split(" ").length == 2) {
-//        throw new IllegalArgumentException("Layer content dimensions do not " +
-//                "match with stated width and height");
-//    }
-
+      //adding the rows of pixels
+      for (int i = 0; i < height; i++) {
+        nextPixels.add(new ArrayList<Pixel>());
+      }
+      //adding pixels to each row
+      for (List l : nextPixels) {
+        for (int j = 0; j < width; j++) {
+          int r = sc.nextInt();
+          int g = sc.nextInt();
+          int b = sc.nextInt();
+          int a = sc.nextInt();
+          l.add(new Pixel(new Color(r, g, b, a)));
+        }
+      }
     }
-    Image readImage = new Image(pixels);
+  }
 
-
+  private boolean validProjectLayer(Scanner sc, ArrayList<ArrayList<Pixel>> nextPixels) {
+    while (sc.hasNext()) {
+      title = sc.nextLine();
+      width = sc.nextInt();
+      height = sc.nextInt();
+      maxVal = sc.nextInt();
+    }
   }
 
   private Image readImage(String path){

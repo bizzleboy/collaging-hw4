@@ -20,7 +20,7 @@ public class Layer {
   }
 
   public void placeImage(int xPos, int yPos,Image image){
-    
+
   }
 
 
