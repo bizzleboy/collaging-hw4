@@ -7,6 +7,7 @@ public class Layer {
   List<Image> imagesOnLayer;
   private String filter;
   String name;
+
   int width;
   int height;
 
@@ -21,6 +22,23 @@ public class Layer {
 
   public void placeImage(int xPos, int yPos,Image image){
 
+    int xIndex = xPos;
+    int yIndex = yPos;
+
+    for (List<Pixel> list:image.pixels){
+
+      for(Pixel p: list) {
+        if(xIndex < list.size()) {
+          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
+                  this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex).addPixels(p));
+          xIndex += 1;
+        } else{
+          xIndex = 0;
+          yIndex+=1;
+      }
+      }
+    }
+    
   }
 
 

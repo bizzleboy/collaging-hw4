@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Image {
-  ArrayList<ArrayList<Pixel>> pixels;
+  protected ArrayList<ArrayList<Pixel>> pixels;
   ArrayList<ArrayList<Pixel>> filterPixels;
   String filePath;
   String name;
@@ -26,19 +26,23 @@ public class Image {
 
   public Image(ArrayList<ArrayList<Pixel>> pixelList) {
     this.pixels = pixelList;
-
-
   }
+
+
 
   public String idk() {
 
     Pixel p = this.pixels.get(38).get(37);
 
+
     p.colorMeRed();
     return p.getPixelColor().toString();
-  }
+
+}
+
 
   public void filterImageRed() {
+
     this.filterPixels = pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
@@ -48,7 +52,9 @@ public class Image {
     }
   }
 
+
   public void filterImageGreen() {
+
     this.filterPixels = pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
