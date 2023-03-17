@@ -20,27 +20,39 @@ public class Layer {
     this.imagesOnLayer.add(background);
   }
 
-  public void placeImage(int xPos, int yPos,Image image){
-
+  public void placeImage(int xPos, int yPos,Image image) throws IllegalArgumentException{
+    if (xPos <0 || yPos >= this.imagesOnLayer.get(0).pixels.size() ||yPos <0 || xPos >= this.imagesOnLayer.get(0).pixels.get(0).size() ){
+      throw new IllegalArgumentException("Invalid positions");
+    }
     int xIndex = xPos;
     int yIndex = yPos;
 
 
-    for (List<Pixel> list:image.pixels){
-      for(Pixel p: list) {
-        Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
+    for (List<Pixel> list:image.pixels) {
+      if (yIndex >= this.imagesOnLayer.get(0).pixels.size()) {
+        break;
+      } else {
+        for (Pixel p : list) {
+          if (xIndex >= this.imagesOnLayer.get(0).pixels.get(0).size()) {
+            break;
+          } else {
+            Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
 
-        alteredPixel.addPixels(p);
+            alteredPixel.addPixels(p);
 
 //          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
-                  this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,alteredPixel);
-          xIndex += 1;
+            this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex, alteredPixel);
+            xIndex += 1;
+
+          }
+        }
+        xIndex = xPos;
+        yIndex += 1;
       }
-      xIndex = xPos;
-      yIndex+=1;
-      }
-    this.imagesOnLayer.add(image);
     }
+    this.imagesOnLayer.add(image);
+
+  }
 
 
 
