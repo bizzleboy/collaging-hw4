@@ -26,20 +26,21 @@ public class Layer {
     int yIndex = yPos;
 
     for (List<Pixel> list:image.pixels){
-
       for(Pixel p: list) {
-        if(xIndex < list.size() && yIndex < image.pixels.size()) {
+
 //          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
                   this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex).addPixels(p);
           xIndex += 1;
-        } else{
-          xIndex = 0;
-          yIndex+=1;
+
+
       }
+      xIndex = xPos;
+      yIndex+=1;
       }
-    }
     this.imagesOnLayer.add(image);
-  }
+    }
+
+
 
 
 
