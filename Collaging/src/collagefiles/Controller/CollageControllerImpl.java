@@ -81,7 +81,6 @@ public class CollageControllerImpl implements CollageController {
           System.out.println("height entered");
           if (this.currentProject == null) {
             this.currentProject = new BasicCollageProject(width, height, 255);
-            this.currentProject.addLayer("layer-1");
             System.out.println("new project made");
           }
           break;
@@ -124,14 +123,14 @@ public class CollageControllerImpl implements CollageController {
             }
             String imageString = this.currentProject.saveImage(saveImagePath);
             System.out.print(imageString);
-//            File file = new File(saveImagePath);
-//            FileWriter fr = null;
-//            try {
-//              fr = new FileWriter(file);
-//              fr.write(imageString);
-//              fr.close();
-//            } catch (IOException e) {
-//            }
+            File file = new File(saveImagePath);
+            FileWriter fr = null;
+            try {
+              fr = new FileWriter(file);
+              fr.write(imageString);
+              fr.close();
+            } catch (IOException e) {
+            }
             System.out.println("image saved");
           }
           break;

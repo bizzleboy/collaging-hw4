@@ -47,14 +47,21 @@ public class BasicCollageProject implements Project{
 
   @Override
   public void setFilter(String layerName, String filterType) {
-    this.layers.get(this.layers.indexOf(layerName)).applyFilter(filterType);
+    for (Layer l: this.layers) {
+      if (l.getName().equals(layerName)) {
+        l.applyFilter(filterType);
+        System.out.print("Filter applied to layer\n");
+        break;
+      }
+    }
+    //this.layers.get(this.layers.indexOf(layerName)).applyFilter(filterType);
   }
 
   @Override
   public String saveProject(String projectPath) {
     String projectString = "";
     projectString += (projectPath + "\n");
-    projectString += (this.width + " " + this.height + "\n" + this.maxVal + "\n");
+    projectString += (this.width + " " + this.height + "\n" + this.maxVal);
     for (Layer l: this.layers) {
       projectString += (l.getName() + " " + l.getFilter() + "\n");
       projectString += (l.getImageTxt());
@@ -67,7 +74,8 @@ public class BasicCollageProject implements Project{
     String imageString = "";
     String[] paths = imagePath.split("/");
     imageString += "P3\n";
-    imageString += ("#" + paths[paths.length-1].split(".")[0] + "\n");
+    //System.out.println(paths[7]);
+    imageString += ("#" + paths[paths.length-1].split("\\.")[0] + "\n");
     imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
     for (Layer l: this.layers) {
       imageString += (l.getImagePPM() + "\n");
