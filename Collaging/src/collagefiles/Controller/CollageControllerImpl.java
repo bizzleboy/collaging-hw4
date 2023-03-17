@@ -49,108 +49,146 @@ public class CollageControllerImpl implements CollageController {
 
     Scanner scan = new Scanner(this.input);
 
-
     while (scan.hasNext()) {
 
       String input = scan.next();
 
       switch (input) {
+
         case "q":
-          System.out.println("q");
+          System.out.println("program quit!");
           return;
 
         case "new-project":
-          System.out.println("new-project");
+          System.out.println("enter width and height");
 
           while (!scan.hasNextInt()) {
             if (scan.next().equals("q")) {
+              System.out.println("program quit!");
               return;
             }
           }
           int width = scan.nextInt();
-          System.out.println(width);
+          System.out.println("width entered");
 
           while (!scan.hasNextInt()) {
             if (scan.next().equals("q")) {
+              System.out.println("program quit!");
               return;
             }
           }
           int height = scan.nextInt();
-          System.out.println(height);
+          System.out.println("height entered");
           this.currentProject = new BasicCollageProject(width, height, 255);
           this.currentProject.addLayer("layer-1");
+          System.out.println("new project made");
           break;
 
         case "load-project":
           String loadProjectPath = scan.next();
           if (loadProjectPath.equals("q")) {
+            System.out.println("program quit!");
             return;
           }
           this.currentProject = this.readProject(loadProjectPath);
+          System.out.println("project loaded");
           break;
         case "save-project":
-          String saveProjectPath = scan.next();
-          if (saveProjectPath.equals("q")) {
-            return;
-          }
-          String projectString = this.currentProject.saveProject(saveProjectPath);
-          try {
-            FileWriter fr = new FileWriter(new File(saveProjectPath, projectString));
-          } catch (IOException io) {
+          if (this.currentProject!=null) {
+            System.out.println("enter file path");
+            String saveProjectPath = scan.next();
+            if (saveProjectPath.equals("q")) {
+              System.out.println("program quit!");
+              return;
+            }
+            String projectString = this.currentProject.saveProject(saveProjectPath);
+            try {
+              FileWriter fr = new FileWriter(new File(saveProjectPath, projectString));
+            } catch (IOException io) {
+            }
+            System.out.println("project saved");
           }
           break;
+
         case "save-image":
-          String saveImagePath = scan.next();
-          if (saveImagePath.equals("q")) {
-            return;
-          }
-          String imageString = this.currentProject.saveImage(saveImagePath);
-          try {
-            FileWriter fr = new FileWriter(new File(saveImagePath, imageString));
-          } catch (IOException io) {
+          if (this.currentProject!=null) {
+            System.out.println("enter image path");
+            String saveImagePath = scan.next();
+            if (saveImagePath.equals("q")) {
+              System.out.println("program quit!");
+              return;
+            }
+            String imageString = this.currentProject.saveImage(saveImagePath);
+            try {
+              FileWriter fr = new FileWriter(new File(saveImagePath, imageString));
+            } catch (IOException io) {
+            }
+            System.out.println("image saved");
           }
           break;
         case "set-filter":
-          String layer = scan.next();
-          String filter = scan.next();
-          if (layer.equals("q")) {
-            return;
+          if (this.currentProject!=null) {
+            System.out.println("enter filter name");
+            String layer = scan.next();
+            String filter = scan.next();
+            if (layer.equals("q")) {
+              System.out.println("program quit!");
+              return;
+            }
+            if (filter.equals("q")) {
+              System.out.println("program quit!");
+              return;
+            }
+            this.currentProject.setFilter(layer, filter);
+            System.out.println("filter set");
           }
-          if (filter.equals("q")) {
-            return;
-          }
-          this.currentProject.setFilter(layer, filter);
           break;
         case "add-layer":
-          String layerToAdd = scan.next();
-          if (layerToAdd.equals("q")) {
-            return;
+          if (this.currentProject!=null) {
+            System.out.println("enter layer name");
+
+            String layerToAdd = scan.next();
+            if (layerToAdd.equals("q")) {
+              System.out.println("program quit!");
+              return;
+            }
+            this.currentProject.addLayer(layerToAdd);
           }
-          this.currentProject.addLayer(layerToAdd);
           break;
         case "add-image":
-          String layerToAddTo = scan.next();
-          String imageToAdd = scan.next();
-          if (layerToAddTo.equals("q")) {
-            return;
-          }
-          if (imageToAdd.equals("q")) {
-            return;
-          }
-          while (!scan.hasNextInt()) {
-            if (scan.next().equals("q")) {
+          if (this.currentProject!=null) {
+            System.out.println("enter layer name and image path");
+            String layerToAddTo = scan.next();
+            String imageToAdd = scan.next();
+            if (layerToAddTo.equals("q")) {
+              System.out.println("program quit!");
               return;
             }
-          }
-          int xPos = scan.nextInt();
+            if (imageToAdd.equals("q")) {
+              System.out.println("program quit!");
+              return;
+            }
+            while (!scan.hasNextInt()) {
+              if (scan.next().equals("q")) {
+                System.out.println("program quit!");
+                return;
+              }
+            }
+            System.out.println("enter x and y position");
+            int xPos = scan.nextInt();
+            System.out.println("x entered");
 
-          while (!scan.hasNextInt()) {
-            if (scan.next().equals("q")) {
-              return;
+            while (!scan.hasNextInt()) {
+              if (scan.next().equals("q")) {
+                System.out.println("program quit!");
+                return;
+              }
             }
+            int yPos = scan.nextInt();
+            System.out.println("y entered");
+            this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
+            System.out.println("image added to layer");
           }
-          int yPos = scan.nextInt();
-          this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
           break;
       }
     }
@@ -281,5 +319,6 @@ public class CollageControllerImpl implements CollageController {
     Image readImage = new Image(pixels);
     return readImage;
   }
+
 }
 //

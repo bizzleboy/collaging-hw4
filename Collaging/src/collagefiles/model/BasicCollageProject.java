@@ -20,12 +20,18 @@ public class BasicCollageProject implements Project{
   @Override
   public void addLayer(String layerName) {
 
-    for (Layer l: layers) {
-      if (l.getName() == layerName) {
-        throw new IllegalArgumentException("Layer with this name already exists");
+    boolean layerUnique = true;
+
+    for (Layer l: this.layers) {
+      if (l.getName().equals(layerName)) {
+        layerUnique = false;
+        System.out.print("Layer with this name already exists\n");
       }
     }
-    this.layers.add((new Layer(layerName,this.width,this.height)));
+    if (layerUnique) {
+      this.layers.add((new Layer(layerName,this.width,this.height)));
+      System.out.print("Layer added\n");
+    }
   }
 
   @Override

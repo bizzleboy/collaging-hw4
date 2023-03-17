@@ -35,8 +35,6 @@ public class Layer {
 //          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
                   this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,alteredPixel);
           xIndex += 1;
-
-
       }
       xIndex = xPos;
       yIndex+=1;

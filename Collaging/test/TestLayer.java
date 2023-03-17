@@ -69,6 +69,9 @@ public class TestLayer {
     Collections.addAll(row4, opaquePixel, opaquePixel);
     ArrayList<Pixel> row5 = new ArrayList<Pixel>();
 
+    Collections.addAll(row1, opaquePixel, opaquePixel);
+
+
 
     Collections.addAll(row5, opaquePixel, opaqueBlue);
 

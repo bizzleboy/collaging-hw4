@@ -18,30 +18,37 @@ public class TestCollageControllerImpl {
   }
 
   @Test
-  public void testNewProject() {
-
-    Readable in = new StringReader("add-layer q");
+  public void testQuitBeforeFunctions() {
+    Readable in = new StringReader("q");
     Appendable log = new StringBuilder();
     Project p = new BasicCollageProjectConfirmInputsMock(log);
     CollageController controller = new CollageControllerImpl(in,p);
     controller.runProgram();
-    assertEquals("layerName=next", log.toString());
+    assertEquals("", log.toString());
   }
 
+  @Test
+  public void testQuitDuringFunctions() {
+    Readable in = new StringReader("new-project 60 60 add-layer layer-2 q");
+    Appendable log = new StringBuilder();
+    Project p = new BasicCollageProjectConfirmMethodsMock(log);
+    CollageController controller = new CollageControllerImpl(in,p);
+    controller.runProgram();
+    assertEquals("", p.log.toString());
 
-  //Test quit at start
-  // Test newproject
-  // Test loadproject
-  // Test saveproject
-  // Test
-
-
+//    in = new StringReader("new-project add-layer layer-2 q");
+//    log = new StringBuilder();
+//    p = new BasicCollageProjectConfirmMethodsMock(log);
+//    controller = new CollageControllerImpl(in,p);
+//    controller.runProgram();
+//    assertEquals("", log.toString());
+  }
 
 
 
   class BasicCollageProjectConfirmInputsMock implements Project {
 
-    private final Appendable log;
+    protected final Appendable log;
 
     public BasicCollageProjectConfirmInputsMock(Appendable log) {
       this.log = log;

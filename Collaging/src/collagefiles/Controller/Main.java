@@ -12,5 +12,4 @@ public class Main {
    CollageController controller = new CollageControllerImpl( new InputStreamReader(System.in));
    controller.runProgram();
   }
-
 }
