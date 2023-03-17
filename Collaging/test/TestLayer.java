@@ -197,4 +197,30 @@ public class TestLayer {
     assertEquals(new Pixel(new Color(127,0,72,187)).getPixelColor(), this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
 
   }
+  @Test(expected = IllegalArgumentException.class)
+  public void testPlacingAnImageOffTheGridEntirely() {
+    this.layer0.placeImage(5,4,this.image6);
+
+
+
+  }
+  @Test(expected = IllegalArgumentException.class)
+  public void testPlacingAnImageOffTheGridEntirely2() {
+    this.layer0.placeImage(4,5,this.image6);
+
+  }
+  @Test
+  public void testPlacingAnImageThatStartsOnTheGridButThenGoesOff() {
+    this.layer0.placeImage(3,3,this.image1);
+
+    assertEquals(new Color(255,255,255,0), this.layer0.getImages().get(0).getPixels().get(2).get(4).getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.layer0.getImages().get(0).getPixels().get(3).get(2).getPixelColor());
+    assertEquals(new Color(255,0,0,255), this.layer0.getImages().get(0).getPixels().get(3).get(3).getPixelColor());
+    assertEquals(new Color(255,0,0,255), this.layer0.getImages().get(0).getPixels().get(3).get(4).getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.layer0.getImages().get(0).getPixels().get(4).get(2).getPixelColor());
+    assertEquals(new Color(255,0,0,255), this.layer0.getImages().get(0).getPixels().get(4).get(3).getPixelColor());
+    assertEquals(new Color(0,255,0,255), this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
+
+
+  }
 }
