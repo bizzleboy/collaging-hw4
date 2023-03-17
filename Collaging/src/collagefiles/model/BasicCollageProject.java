@@ -52,25 +52,25 @@ public class BasicCollageProject implements Project{
   }
 
   @Override
-  public String saveProject(String imagePath) {
-    String imageString = "";
-    String[] filePaths = imagePath.split("\\\\");
-    imageString += (filePaths[filePaths.length-1].split(".")[0]);
-    imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n");
+  public String saveProject(String projectPath) {
+    String projectString = "";
+    projectString += (projectPath + "\n");
+    projectString += (this.width + " " + this.height + "\n" + this.maxVal + "\n");
     for (Layer l: this.layers) {
-      imageString += (l.getName() + " " + l.getFilter() + "\n");
-      imageString += (l.getImageTxt());
+      projectString += (l.getName() + " " + l.getFilter() + "\n");
+      projectString += (l.getImageTxt());
     }
-    return imageString;
+    return projectString;
   }
 
   @Override
   public String saveImage(String imagePath) {
     String imageString = "";
-    String[] filePaths = imagePath.split("\\\\");
     imageString += "P3\n";
-    imageString += String.format("#%s\n",filePaths[filePaths.length-1].split(".")[0]);
-    imageString += (this.width + " " + this.height + "\n");
+    imageString += "Untitled";
+
+    imageString += ("#" + imagePath + "\n");
+    imageString += (this.width + " " + this.height + this.maxVal + "\n" + "\n");
     for (Layer l: this.layers) {
       imageString += (l.getImagePPM() + "\n");
     }
