@@ -10,7 +10,7 @@ public class Main {
     Project project;
 
    CollageController controller = new CollageControllerImpl( new InputStreamReader(System.in));
-controller.runProgram();
+   controller.runProgram();
   }
 
 }

@@ -23,10 +23,9 @@ public class BasicCollageProject implements Project{
     for (Layer l: layers) {
       if (l.getName() == layerName) {
         throw new IllegalArgumentException("Layer with this name already exists");
-      } else {
-        this.layers.add((new Layer(layerName,this.width,this.height)));
       }
     }
+    this.layers.add((new Layer(layerName,this.width,this.height)));
   }
 
   @Override
