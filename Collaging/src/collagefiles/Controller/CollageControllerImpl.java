@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
@@ -33,66 +32,126 @@ public class CollageControllerImpl implements CollageController {
     this.currentProject = null;
   }
 
+  public CollageControllerImpl(Readable input, Project p)
+          throws IllegalArgumentException {
+    if (input == null) {
+      throw new IllegalArgumentException("provided readable input cannot be null.");
+    }
+    if (p == null) {
+      throw new IllegalArgumentException("provided project input cannot be null.");
+    }
+    this.input = input;
+    this.currentProject = p;
+  }
+
   @Override
   public void runProgram() throws IllegalStateException {
 
     Scanner scan = new Scanner(this.input);
 
-    String input = scan.next();
 
-    boolean systemRun = true;
+    while (scan.hasNext()) {
 
-    while (systemRun) {
+      String input = scan.next();
 
       switch (input) {
         case "q":
           System.out.println("q");
-          systemRun = false;
+          return;
+
         case "new-project":
           System.out.println("new-project");
+
+          while (!scan.hasNextInt()) {
+            if (scan.next().equals("q")) {
+              return;
+            }
+          }
           int width = scan.nextInt();
           System.out.println(width);
+
+          while (!scan.hasNextInt()) {
+            if (scan.next().equals("q")) {
+              return;
+            }
+          }
           int height = scan.nextInt();
           System.out.println(height);
           this.currentProject = new BasicCollageProject(width, height, 255);
           this.currentProject.addLayer("layer-1");
+          break;
 
         case "load-project":
           String loadProjectPath = scan.next();
+          if (loadProjectPath.equals("q")) {
+            return;
+          }
           this.currentProject = this.readProject(loadProjectPath);
-
+          break;
         case "save-project":
           String saveProjectPath = scan.next();
+          if (saveProjectPath.equals("q")) {
+            return;
+          }
           String projectString = this.currentProject.saveProject(saveProjectPath);
           try {
             FileWriter fr = new FileWriter(new File(saveProjectPath, projectString));
           } catch (IOException io) {
-
           }
-
+          break;
         case "save-image":
           String saveImagePath = scan.next();
+          if (saveImagePath.equals("q")) {
+            return;
+          }
           String imageString = this.currentProject.saveImage(saveImagePath);
           try {
-            FileWriter fr = new FileWriter(new File(saveImagePath,imageString));
+            FileWriter fr = new FileWriter(new File(saveImagePath, imageString));
           } catch (IOException io) {
           }
-
+          break;
         case "set-filter":
           String layer = scan.next();
           String filter = scan.next();
+          if (layer.equals("q")) {
+            return;
+          }
+          if (filter.equals("q")) {
+            return;
+          }
           this.currentProject.setFilter(layer, filter);
-
+          break;
         case "add-layer":
           String layerToAdd = scan.next();
+          if (layerToAdd.equals("q")) {
+            return;
+          }
           this.currentProject.addLayer(layerToAdd);
-
+          break;
         case "add-image":
           String layerToAddTo = scan.next();
           String imageToAdd = scan.next();
+          if (layerToAddTo.equals("q")) {
+            return;
+          }
+          if (imageToAdd.equals("q")) {
+            return;
+          }
+          while (!scan.hasNextInt()) {
+            if (scan.next().equals("q")) {
+              return;
+            }
+          }
           int xPos = scan.nextInt();
+
+          while (!scan.hasNextInt()) {
+            if (scan.next().equals("q")) {
+              return;
+            }
+          }
           int yPos = scan.nextInt();
           this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
+          break;
       }
     }
 

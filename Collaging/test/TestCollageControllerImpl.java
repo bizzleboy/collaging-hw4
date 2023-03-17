@@ -20,12 +20,12 @@ public class TestCollageControllerImpl {
   @Test
   public void testNewProject() {
 
-    Readable in = new StringReader("new-project q");
+    Readable in = new StringReader("add-layer q");
     Appendable log = new StringBuilder();
-    Project m = new BasicCollageProjectConfirmInputsMock(log);
-    CollageController controller = new CollageControllerImpl(in);
+    Project p = new BasicCollageProjectConfirmInputsMock(log);
+    CollageController controller = new CollageControllerImpl(in,p);
     controller.runProgram();
-    assertEquals("", log.toString());
+    assertEquals("layerName=next", log.toString());
   }
 
 
