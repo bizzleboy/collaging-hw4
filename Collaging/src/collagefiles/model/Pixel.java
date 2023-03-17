@@ -19,7 +19,7 @@ public class Pixel {
     this.red = color.getRed();
     this.blue = color.getBlue();
     this.green = color.getGreen();
-    this.alpha = 255;
+    this.alpha = color.getAlpha();
   }
 
   //idk if this constructor is necessary
@@ -138,14 +138,18 @@ public class Pixel {
     this.pixelColor = new Color(newRed,newGreen,newBlue,this.alpha);
   }
 
-  public Pixel addPixels(Pixel pix2) {
-    int alphaPct = (this.alpha/255 + pix2.alpha * (1-(this.alpha/255)));
-    int newRed = (this.alpha/255 * this.red + pix2.red*(pix2.alpha/255) *(1-this.alpha/255)) * (1/alphaPct);
-    int newGreen = (this.alpha/255 * this.green + pix2.green*(pix2.alpha/255) *(1-this.alpha/255)) * (1/alphaPct);
-    int newBlue = (this.alpha/255 * this.blue + pix2.blue*(pix2.alpha/255) *(1-this.alpha/255)) * (1/alphaPct);
-    return new Pixel(new Color(newRed,newGreen,newBlue)
-
-            );
+  public void addPixels(Pixel pix2) {
+    float pix1Alpha = (float) this.alpha;
+    float pix2Alpha = (float) pix2.alpha;
+    float alphaPct = (pix1Alpha/255 + pix2Alpha/255 * (1 -  (pix1Alpha/255)));
+    int newRed = (int) ((pix1Alpha/255 * this.red + pix2.red*(pix2Alpha/255) *(1-pix1Alpha/255)) * (1/alphaPct));
+    int newGreen = (int) ((pix1Alpha/255 * this.green + pix2.green*(pix2Alpha/255) * (1-pix1Alpha/255)) * (1/alphaPct));
+    int newBlue = (int) ((pix1Alpha/255 * this.blue + pix2.blue*(pix2Alpha/255) *(1-pix1Alpha/255)) * (1/alphaPct));
+    this.pixelColor = new Color(newRed,newGreen,newBlue,(int) alphaPct*255);
+//    this.pixelColor = new Color((this.red + pix2.red) / 2,
+//            (this.blue + pix2.blue) / 2,
+//            (this.green + pix2.green) / 2,
+//            (this.alpha + pix2.alpha) / 2);
   }
 
   public Color getPixelColor() {

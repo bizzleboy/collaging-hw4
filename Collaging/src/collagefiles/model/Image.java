@@ -11,13 +11,13 @@ public class Image {
   String name;
 
   public Image(int width, int height) throws IllegalArgumentException {
-if(width < 1 || height < 1){
-  throw new IllegalArgumentException("Invalid height/width");
-}
+    if (width < 1 || height < 1) {
+      throw new IllegalArgumentException("Invalid height/width");
+    }
     this.pixels = new ArrayList<ArrayList<Pixel>>();
 
     for (int i = 0; i < height; i++) {
-      this.pixels.add(new ArrayList<Pixel>());
+      this.pixels.add(new ArrayList<>());
     }
     for (List l : this.pixels) {
       for (int i = 0; i < width; i++) {
@@ -41,7 +41,7 @@ if(width < 1 || height < 1){
     p.colorMeRed();
     return p.getPixelColor().toString();
 
-}
+  }
 
 
   public void filterImageRed() {
@@ -93,8 +93,11 @@ if(width < 1 || height < 1){
     }
   }
 
-  public ArrayList<ArrayList<Pixel>> getPixels(){
+
+  public ArrayList<ArrayList<Pixel>> getPixels() {
     return this.filterPixels;
+
+
   }
 
 }

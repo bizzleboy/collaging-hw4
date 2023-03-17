@@ -28,9 +28,9 @@ public class Layer {
     for (List<Pixel> list:image.pixels){
 
       for(Pixel p: list) {
-        if(xIndex < list.size()) {
-          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
-                  this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex).addPixels(p));
+        if(xIndex < list.size() && yIndex < image.pixels.size()) {
+//          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
+                  this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex).addPixels(p);
           xIndex += 1;
         } else{
           xIndex = 0;
@@ -38,7 +38,7 @@ public class Layer {
       }
       }
     }
-    
+    this.imagesOnLayer.add(image);
   }
 
 
@@ -108,6 +108,10 @@ public class Layer {
      default: System.out.println("Invalid Input!");
        }
 
+   }
+
+   public List<Image> getImages() {
+    return this.imagesOnLayer;
    }
 
   }
