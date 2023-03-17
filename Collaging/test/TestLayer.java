@@ -223,7 +223,18 @@ public class TestLayer {
     assertEquals(new Color(255,255,255,0), this.layer0.getImages().get(0).getPixels().get(4).get(2).getPixelColor());
     assertEquals(new Color(255,0,0,255), this.layer0.getImages().get(0).getPixels().get(4).get(3).getPixelColor());
     assertEquals(new Color(0,255,0,255), this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
+  }
+
+  @Test
+  public void testApplyFilterRed(){
+    this.layer1.placeImage(0,0,image1);
+    this.layer1.applyFilter("red-component");
+
+    assertEquals(new Color(255,255,255,0), this.layer0.getImages().get(0).getPixels().get(2).get(4).getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.layer0.getImages().get(0).getPixels().get(3).get(2).getPixelColor());
 
 
   }
+
+
 }
