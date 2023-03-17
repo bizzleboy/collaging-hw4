@@ -43,7 +43,6 @@ public class BasicCollageProject implements Project{
         break;
       }
     }
-
   }
 
   @Override
