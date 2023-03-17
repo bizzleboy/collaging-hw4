@@ -63,6 +63,112 @@ public class TestImage {
 
   @Test
   public void testFilterImageRed(){
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1, redPixel, redPixel, redPixel);
 
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, redPixel, blackPixel, redPixel);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3 );
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.filterImageRed();
+    for (int y = 0; y < 3; y++) {
+      for(int x = 0; x<3; x++ )
+      assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
+    }
+  }
+  @Test
+  public void testFilterImageGreen(){
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, blackPixel, greenPixel, blackPixel);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, blackPixel, greenPixel, blackPixel);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3 );
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.filterImageGreen();
+    for (int y = 0; y < 3; y++) {
+      for(int x = 0; x<3; x++ )
+        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
+    }
+  }
+  @Test
+  public void testFilterImageBlue(){
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, bluePixel, blackPixel, bluePixel);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3 );
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.filterImageBlue();
+    for (int y = 0; y < 3; y++) {
+      for(int x = 0; x<3; x++ )
+        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
+    }
+  }
+  @Test
+  public void testFilterDarkenValue(){
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3 );
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.darkenImage("darken-value");
+    for (int y = 0; y < 3; y++) {
+      for(int x = 0; x<3; x++ )
+        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
+    }
+  }
+
+  @Test
+  public void testFilterDarkenIntensity(){
+    Pixel darkenRedIntensity = new Pixel(new Color(170,0,0));
+    Pixel darkenGreenIntensity = new Pixel(new Color(0,170,0));
+    Pixel darkenBlueIntensity = new Pixel(new Color(0,0,170));
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1,darkenRedIntensity, darkenRedIntensity, darkenRedIntensity);
+
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, darkenRedIntensity, darkenGreenIntensity, darkenRedIntensity);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, darkenBlueIntensity, darkenGreenIntensity, darkenBlueIntensity);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3 );
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.darkenImage("darken-intensity");
+    for (int y = 0; y < 3; y++) {
+      for(int x = 0; x<3; x++ )
+        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
+    }
   }
 }
+

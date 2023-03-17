@@ -24,10 +24,13 @@ if(width < 1 || height < 1){
         l.add(new Pixel(new Color(255, 255, 255, 0)));
       }
     }
+
+    this.filterPixels = pixels;
   }
 
   public Image(ArrayList<ArrayList<Pixel>> pixelList) {
     this.pixels = pixelList;
+    this.filterPixels = this.pixels;
   }
 
   public String idk() {
@@ -88,6 +91,10 @@ if(width < 1 || height < 1){
         pixel.darkenMe(darkness);
       }
     }
+  }
+
+  public ArrayList<ArrayList<Pixel>> getPixels(){
+    return this.filterPixels;
   }
 
 }
