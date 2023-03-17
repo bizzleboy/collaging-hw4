@@ -28,13 +28,13 @@ public class TestCollageControllerImpl {
   }
 
   @Test
-  public void testQuitDuringFunctions() {
+  public void testQuitsAfter1Functions() {
     Readable in = new StringReader("new-project 60 60 add-layer layer-2 q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmMethodsMock p = new BasicCollageProjectConfirmMethodsMock(log);
     CollageController controller = new CollageControllerImpl(in,p);
     controller.runProgram();
-    assertEquals("3",log.toString());
+    assertEquals("addLayer ",log.toString());
 
 //    in = new StringReader("new-project add-layer layer-2 q");
 //    log = new StringBuilder();

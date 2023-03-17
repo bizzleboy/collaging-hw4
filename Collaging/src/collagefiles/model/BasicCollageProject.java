@@ -66,11 +66,10 @@ public class BasicCollageProject implements Project{
   @Override
   public String saveImage(String imagePath) {
     String imageString = "";
+    String[] paths = imagePath.split("/");
     imageString += "P3\n";
-    imageString += "Untitled";
-
-    imageString += ("#" + imagePath + "\n");
-    imageString += (this.width + " " + this.height + this.maxVal + "\n" + "\n");
+    imageString += ("#" + paths[paths.length-1].split(".")[0] + "\n");
+    imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
     for (Layer l: this.layers) {
       imageString += (l.getImagePPM() + "\n");
     }

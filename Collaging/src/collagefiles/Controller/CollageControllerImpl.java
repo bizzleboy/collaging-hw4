@@ -123,10 +123,15 @@ public class CollageControllerImpl implements CollageController {
               return;
             }
             String imageString = this.currentProject.saveImage(saveImagePath);
-            try {
-              FileWriter fr = new FileWriter(new File(saveImagePath, imageString));
-            } catch (IOException io) {
-            }
+            System.out.print(imageString);
+//            File file = new File(saveImagePath);
+//            FileWriter fr = null;
+//            try {
+//              fr = new FileWriter(file);
+//              fr.write(imageString);
+//              fr.close();
+//            } catch (IOException e) {
+//            }
             System.out.println("image saved");
           }
           break;
