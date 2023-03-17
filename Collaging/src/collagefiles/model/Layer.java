@@ -5,11 +5,10 @@ import java.util.List;
 
 public class Layer {
   List<Image> imagesOnLayer;
-  String filter;
-  String name;
-
-  int width;
-  int height;
+  private String filter;
+  private String name;
+  private int width;
+  private int height;
 
   public Layer(String name,int width,int height){
     this.imagesOnLayer = new ArrayList<Image>();
@@ -111,6 +110,10 @@ public class Layer {
 
    }
 
+   public List<Image> getImages() {
+    return this.imagesOnLayer;
+   }
+
    public String getImagePPM() {
     String imageString = "";
        for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
@@ -138,6 +141,14 @@ public class Layer {
       }
     }
     return imageString;
+  }
+
+  public String getFilter() {
+    return this.filter;
+  }
+
+  public String getName() {
+    return this.name;
   }
 }
 

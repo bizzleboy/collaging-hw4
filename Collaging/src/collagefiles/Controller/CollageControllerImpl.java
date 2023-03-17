@@ -61,7 +61,6 @@ public class CollageControllerImpl implements CollageController {
           String loadProjectPath = scan.next();
           this.currentProject = this.readProject(loadProjectPath);
 
-
         case "save-project":
           String saveProjectPath = scan.next();
           String projectString = this.currentProject.saveProject(saveProjectPath);

@@ -19,7 +19,14 @@ public class BasicCollageProject implements Project{
 
   @Override
   public void addLayer(String layerName) {
-    this.layers.add((new Layer(layerName,this.width,this.height)));
+
+    for (Layer l: layers) {
+      if (l.getName() == layerName) {
+        throw new IllegalArgumentException("Layer with this name already exists");
+      } else {
+        this.layers.add((new Layer(layerName,this.width,this.height)));
+      }
+    }
   }
 
   @Override
@@ -39,7 +46,7 @@ public class BasicCollageProject implements Project{
     imageString += (filePaths[filePaths.length-1].split(".")[0]);
     imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n");
     for (Layer l: this.layers) {
-      imageString += (l.name + " " + l.filter + "\n");
+      imageString += (l.getName() + " " + l.getFilter() + "\n");
       imageString += (l.getImageTxt());
     }
     return imageString;
