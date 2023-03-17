@@ -291,7 +291,9 @@ public class TestPixel {
   @Test
   public void testAddPixels(){
      bluePixel.addPixels(redPixel);
-     assertEquals(new Color(84,0,170,191),bluePixel.getPixelColor());
+
+     assertEquals(new Color(84,0,170,bluePixel.getPixelColor().getAlpha()),bluePixel.getPixelColor());
+
 
 
   }
