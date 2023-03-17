@@ -30,12 +30,12 @@ public class Pixel {
             || blue < 0 || blue > 255 || alpha < 0 || alpha > 255) {
       throw new IllegalArgumentException("RGB and alpha values must be between 0 and 255");
     }
-
-    this.pixelColor = new Color(this.red, this.green, this.blue, this.alpha);
     this.red = red;
     this.green = green;
     this.blue = blue;
     this.alpha = alpha;
+    this.pixelColor = new Color(this.red, this.green, this.blue, this.alpha);
+
   }
 
   /**

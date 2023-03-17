@@ -57,8 +57,6 @@ public class Layer {
 
 
 
-
-
   public void applyFilter(String filter){
    switch(filter){
      case "normal":

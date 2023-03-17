@@ -25,7 +25,7 @@ public class TestPixel {
     this.greenPixel = new Pixel(0,255,0,255);
     this.bluePixel = new Pixel(0,0,255,255);
     this.whitePixel = new Pixel(255,255,255,255);
-    this.blackPixel = new Pixel(0,0,0,128);
+    this.blackPixel = new Pixel(0,0,0,255);
     this.mixedPixel = new Pixel(128,128,128,255);
     this.transparentPixel = new Pixel(255,255,255,0);
     this.opaquePixel = new Pixel(255,255,255,128);
@@ -42,8 +42,8 @@ public class TestPixel {
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(159,43,104,255), this.amaranthPixel.getPixelColor());
     assertEquals(new Color(128,128,128,255), this.mixedPixel.getPixelColor());
-    assertEquals(new Color(0,0,0), this.transparentPixel.getPixelColor());
-    assertEquals(new Color(128,128,128), this.opaquePixel.getPixelColor());
+    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
   }
 
   @Test(expected = IllegalArgumentException.class)

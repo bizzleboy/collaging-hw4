@@ -42,7 +42,7 @@ public class TestLayer {
     this.bluePixel = new Pixel(0, 0, 255, 255);
     this.opaquePixel = new Pixel(255, 255, 255, 128);
     this.invisiblePixel = new Pixel(new Color(255, 255, 255, 0));
-     this.opaqueBlue = new Pixel(0,0,200,128);
+    this.opaqueBlue = new Pixel(0,0,200,128);
     this.opaqueRed = new Pixel(200,0,0,120);
 
 
@@ -71,8 +71,6 @@ public class TestLayer {
 
     Collections.addAll(row1, opaquePixel, opaquePixel);
 
-
-
     Collections.addAll(row5, opaquePixel, opaqueBlue);
 
     ArrayList<ArrayList<Pixel>> imageGrid2 = new ArrayList<>();
@@ -84,16 +82,12 @@ public class TestLayer {
 
     singlePix.add(singleRow);
 
-
-
     this.image1 = new Image(imageGrid);
     this.image2 = new Image(2, 2);
     this.image3 = new Image(3, 3);
     this.image4 = new Image(5, 5);
     this.image5 = new Image(imageGrid2);
     this.image6 = new Image(singlePix);
-
-
   }
 
   @Test
