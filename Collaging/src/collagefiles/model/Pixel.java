@@ -139,12 +139,12 @@ public class Pixel {
   }
 
   public Pixel addPixels(Pixel pix2) {
-    int alphaPct = this.alpha/255 + pix2.alpha/255 * (1 - (this.alpha/255));
-    return new Pixel(
-            (int) ((this.alpha/255*this.red+pix2.red*(pix2.alpha/255)*(1-this.alpha/255))*(1/alphaPct)),
-            (int) ((this.alpha/255*this.green+pix2.green*(pix2.alpha/255)*(1-this.alpha/255))*(1/alphaPct)),
-            (int) ((this.alpha/255*this.blue+pix2.blue*(pix2.alpha/255)*(1-this.alpha/255))*(1/alphaPct)),
-            alphaPct
+    int alphaPct = (this.alpha/255 + pix2.alpha * (1-(this.alpha/255)));
+    int newRed = (this.alpha/255 * this.red + pix2.red*(pix2.alpha/255) *(1-this.alpha/255)) * (1/alphaPct);
+    int newGreen = (this.alpha/255 * this.green + pix2.green*(pix2.alpha/255) *(1-this.alpha/255)) * (1/alphaPct);
+    int newBlue = (this.alpha/255 * this.blue + pix2.blue*(pix2.alpha/255) *(1-this.alpha/255)) * (1/alphaPct);
+    return new Pixel(new Color(newRed,newGreen,newBlue)
+
             );
   }
 

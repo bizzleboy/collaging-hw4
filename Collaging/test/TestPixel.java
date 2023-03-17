@@ -287,4 +287,14 @@ public class TestPixel {
     assertEquals(new Color(1,1,1,0), this.transparentPixel.getPixelColor());
     assertEquals(new Color(1,1,1,128), this.opaquePixel.getPixelColor());
   }
+
+  @Test
+  public void testAddPixels(){
+     Pixel purpPix;
+     purpPix =  redPixel.addPixels(bluePixel);
+
+
+     assertEquals(new Color(255,0,255,255),purpPix.getPixelColor());
+
+  }
 }
