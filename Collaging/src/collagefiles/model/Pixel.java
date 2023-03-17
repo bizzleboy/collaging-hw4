@@ -155,4 +155,8 @@ public class Pixel {
   public Color getPixelColor() {
     return this.pixelColor;
   }
+
+  public String toString() {
+    return String.format("%d %d %d %d", this.red, this.blue, this.green, this.alpha);
+  }
 }

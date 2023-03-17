@@ -6,14 +6,14 @@ import java.util.List;
 public class Layer {
   List<Image> imagesOnLayer;
   private String filter;
-  String name;
-
-  int width;
-  int height;
+  private String name;
+  private int width;
+  private int height;
 
   public Layer(String name,int width,int height){
     this.imagesOnLayer = new ArrayList<Image>();
     this.name = name;
+    this.filter = "normal";
     this.width =width;
     this.height =height;
     Image background = new Image(width, height);
@@ -114,7 +114,44 @@ public class Layer {
     return this.imagesOnLayer;
    }
 
+   public String getImagePPM() {
+    String imageString = "";
+       for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
+         for(Pixel p: list) {
+           imageString += (String.format("%d %d %d\n",
+                   p.getPixelColor().getRed(),
+                   p.getPixelColor().getGreen(),
+                   p.getPixelColor().getGreen()
+                   ));
+           }
+         }
+       return imageString;
   }
+
+  public String getImageTxt() {
+    String imageString = "";
+    for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
+      for(Pixel p: list) {
+        imageString += (String.format("%d %d %d %d\n",
+                p.getPixelColor().getRed(),
+                p.getPixelColor().getGreen(),
+                p.getPixelColor().getGreen(),
+                p.getPixelColor().getAlpha()
+        ));
+      }
+    }
+    return imageString;
+  }
+
+  public String getFilter() {
+    return this.filter;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+}
+
 
 
 
