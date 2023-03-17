@@ -31,10 +31,10 @@ public class TestCollageControllerImpl {
   public void testQuitDuringFunctions() {
     Readable in = new StringReader("new-project 60 60 add-layer layer-2 q");
     Appendable log = new StringBuilder();
-    Project p = new BasicCollageProjectConfirmMethodsMock(log);
+    BasicCollageProjectConfirmMethodsMock p = new BasicCollageProjectConfirmMethodsMock(log);
     CollageController controller = new CollageControllerImpl(in,p);
     controller.runProgram();
-    assertEquals("", p.log.toString());
+    assertEquals("3",log.toString());
 
 //    in = new StringReader("new-project add-layer layer-2 q");
 //    log = new StringBuilder();
@@ -102,11 +102,12 @@ public class TestCollageControllerImpl {
     public void quit() {
 
     }
+
   }
 
   class BasicCollageProjectConfirmMethodsMock implements Project {
 
-    private final Appendable log;
+    protected final Appendable log;
 
     public BasicCollageProjectConfirmMethodsMock(Appendable log) {
 

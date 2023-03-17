@@ -79,9 +79,11 @@ public class CollageControllerImpl implements CollageController {
           }
           int height = scan.nextInt();
           System.out.println("height entered");
-          this.currentProject = new BasicCollageProject(width, height, 255);
-          this.currentProject.addLayer("layer-1");
-          System.out.println("new project made");
+          if (this.currentProject == null) {
+            this.currentProject = new BasicCollageProject(width, height, 255);
+            this.currentProject.addLayer("layer-1");
+            System.out.println("new project made");
+          }
           break;
 
         case "load-project":
@@ -90,8 +92,10 @@ public class CollageControllerImpl implements CollageController {
             System.out.println("program quit!");
             return;
           }
-          this.currentProject = this.readProject(loadProjectPath);
-          System.out.println("project loaded");
+          if (this.currentProject == null) {
+            this.currentProject = this.readProject(loadProjectPath);
+            System.out.println("project loaded");
+          }
           break;
         case "save-project":
           if (this.currentProject!=null) {
