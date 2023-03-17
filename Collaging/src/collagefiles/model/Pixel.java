@@ -141,11 +141,11 @@ public class Pixel {
   public void addPixels(Pixel pix2) {
     float pix1Alpha = (float) this.alpha;
     float pix2Alpha = (float) pix2.alpha;
-    float alphaPct = (pix1Alpha/255 + pix2Alpha/255 * (1 -  (pix1Alpha/255)));
-    int newRed = (int) ((pix1Alpha/255 * this.red + pix2.red*(pix2Alpha/255) *(1-pix1Alpha/255)) * (1/alphaPct));
-    int newGreen = (int) ((pix1Alpha/255 * this.green + pix2.green*(pix2Alpha/255) * (1-pix1Alpha/255)) * (1/alphaPct));
-    int newBlue = (int) ((pix1Alpha/255 * this.blue + pix2.blue*(pix2Alpha/255) *(1-pix1Alpha/255)) * (1/alphaPct));
-    this.pixelColor = new Color(newRed,newGreen,newBlue,(int) alphaPct*255);
+    float alphaPct = (pix2Alpha/255 + pix1Alpha/255 * (1 - (pix2Alpha/255)));
+    int newRed = (int) ((pix2Alpha/255 * pix2.red + this.red*(pix1Alpha/255) *(1-pix2Alpha/255)) * (1/alphaPct));
+    int newGreen = (int) ((pix2Alpha/255 * pix2.green + this.green*(pix1Alpha/255) * (1-pix2Alpha/255)) * (1/alphaPct));
+    int newBlue = (int) ((pix2Alpha/255 * pix2.blue + this.blue*(pix1Alpha/255) *(1-pix2Alpha/255)) * (1/alphaPct));
+    this.pixelColor = new Color(newRed,newGreen,newBlue, (int) (alphaPct*255));
 //    this.pixelColor = new Color((this.red + pix2.red) / 2,
 //            (this.blue + pix2.blue) / 2,
 //            (this.green + pix2.green) / 2,

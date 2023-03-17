@@ -81,11 +81,63 @@ public class TestLayer {
     assertEquals(new Color(255,255,255,0),
             this.layer0.getImages().get(0).getPixels().get(0).get(1).getPixelColor());
     assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(0).get(2).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(0).get(3).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(0).get(4).getPixelColor());
+
+
+    assertEquals(new Color(255,255,255,0),
             this.layer0.getImages().get(0).getPixels().get(1).get(0).getPixelColor());
-    assertEquals(new Color(255,127,127,127),
+    assertEquals(new Color(255,0,0,255),
             this.layer0.getImages().get(0).getPixels().get(1).get(1).getPixelColor());
-    assertEquals(new Color(127,127,255,127),
+    assertEquals(new Color(255,0,0,255),
+            this.layer0.getImages().get(0).getPixels().get(1).get(2).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(1).get(3).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(1).get(4).getPixelColor());
+
+
+    assertEquals(new Color(255,0,0,255),
+            this.layer0.getImages().get(0).getPixels().get(2).get(0).getPixelColor());
+    assertEquals(new Color(0,255,0,255),
             this.layer0.getImages().get(0).getPixels().get(2).get(1).getPixelColor());
+    assertEquals(new Color(255,0,0,255),
+            this.layer0.getImages().get(0).getPixels().get(2).get(2).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(2).get(3).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(2).get(4).getPixelColor());
+
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(3).get(0).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(3).get(1).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(3).get(2).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(3).get(3).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(3).get(4).getPixelColor());
+
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(4).get(0).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(4).get(1).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(4).get(2).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(4).get(3).getPixelColor());
+    assertEquals(new Color(255,255,255,0),
+            this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
+
+//            this.layer0.getImages().get(0).getPixels().get(1).get(0).getPixelColor());
+//    assertEquals(new Color(255,127,127,127),
+//            this.layer0.getImages().get(0).getPixels().get(1).get(1).getPixelColor());
+//    assertEquals(new Color(127,127,255,127),
+//            this.layer0.getImages().get(0).getPixels().get(2).get(1).getPixelColor());
   }
 
   @Test
@@ -109,7 +161,7 @@ public class TestLayer {
 
     Image testImage = new Image(imageGrid);
 
-    assertEquals(layer1.getImages().get(0).getPixels().get(0).get(0).getPixelColor(),testImage.getPixels().get(0).get(0).getPixelColor());
+    assertEquals(layer0.getImages().get(0).getPixels().get(0).get(0).getPixelColor(),testImage.getPixels().get(0).get(0).getPixelColor());
     this.layer0.placeImage(2, 1, this.image1);
 
     for (int y = 0; y < 5; y++) {
