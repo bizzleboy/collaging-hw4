@@ -37,10 +37,10 @@ public class BasicCollageProject implements Project{
     String imageString = "";
     String[] filePaths = imagePath.split("\\\\");
     imageString += (filePaths[filePaths.length-1].split(".")[0]);
-    imageString += (this.width + " " + this.height + "\n");
-    imageString += ();
+    imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n");
     for (Layer l: this.layers) {
-      imageString += (l.getImage() + "\n");
+      imageString += (l.name + " " + l.filter + "\n");
+      imageString += (l.getImageTxt());
     }
     return imageString;
   }
@@ -53,7 +53,7 @@ public class BasicCollageProject implements Project{
     imageString += String.format("#%s\n",filePaths[filePaths.length-1].split(".")[0]);
     imageString += (this.width + " " + this.height + "\n");
     for (Layer l: this.layers) {
-      imageString += (l.getImage() + "\n");
+      imageString += (l.getImagePPM() + "\n");
     }
     return imageString;
   }

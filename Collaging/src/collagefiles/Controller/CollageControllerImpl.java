@@ -54,7 +54,7 @@ public class CollageControllerImpl implements CollageController {
           System.out.println(width);
           int height = scan.nextInt();
           System.out.println(height);
-          this.currentProject = new BasicCollageProject(width, height);
+          this.currentProject = new BasicCollageProject(width, height, 255);
           this.currentProject.addLayer("layer-1");
 
         case "load-project":
@@ -133,7 +133,6 @@ public class CollageControllerImpl implements CollageController {
     String filterName = null;
     ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
 
-    //if (title == null && width == -1 && height == -1 && maxVal == -1);
     title = sc.next();
     width = sc.nextInt();
     height = sc.nextInt();

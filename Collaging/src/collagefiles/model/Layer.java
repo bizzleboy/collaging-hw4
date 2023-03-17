@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Layer {
   List<Image> imagesOnLayer;
-  private String filter;
+  String filter;
   String name;
 
   int width;
@@ -14,6 +14,7 @@ public class Layer {
   public Layer(String name,int width,int height){
     this.imagesOnLayer = new ArrayList<Image>();
     this.name = name;
+    this.filter = "normal";
     this.width =width;
     this.height =height;
     Image background = new Image(width, height);
@@ -110,11 +111,11 @@ public class Layer {
 
    }
 
-   public String getImage() {
+   public String getImagePPM() {
     String imageString = "";
        for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
          for(Pixel p: list) {
-           imageString += (String.format("%d %d %d \n",
+           imageString += (String.format("%d %d %d\n",
                    p.getPixelColor().getRed(),
                    p.getPixelColor().getGreen(),
                    p.getPixelColor().getGreen()
@@ -122,6 +123,21 @@ public class Layer {
            }
          }
        return imageString;
+  }
+
+  public String getImageTxt() {
+    String imageString = "";
+    for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
+      for(Pixel p: list) {
+        imageString += (String.format("%d %d %d %d\n",
+                p.getPixelColor().getRed(),
+                p.getPixelColor().getGreen(),
+                p.getPixelColor().getGreen(),
+                p.getPixelColor().getAlpha()
+        ));
+      }
+    }
+    return imageString;
   }
 }
 
