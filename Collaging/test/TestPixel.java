@@ -21,9 +21,9 @@ public class TestPixel {
 
   @Before
   public void init() {
-    this.redPixel = new Pixel(255,0,0,128);
+    this.redPixel = new Pixel(255,0,0,255);
     this.greenPixel = new Pixel(0,255,0,255);
-    this.bluePixel = new Pixel(0,0,255,128);
+    this.bluePixel = new Pixel(0,0,255,255);
     this.whitePixel = new Pixel(255,255,255,255);
     this.blackPixel = new Pixel(0,0,0,255);
     this.mixedPixel = new Pixel(128,128,128,255);
@@ -290,9 +290,8 @@ public class TestPixel {
 
   @Test
   public void testAddPixels(){
-     Pixel pix1;
      bluePixel.addPixels(redPixel);
-     assertEquals(new Color(84,0,170,255),bluePixel.getPixelColor());
+     assertEquals(new Color(84,0,170,191),bluePixel.getPixelColor());
 
   }
 }
