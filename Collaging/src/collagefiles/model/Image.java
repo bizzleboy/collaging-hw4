@@ -10,8 +10,10 @@ public class Image {
   String filePath;
   String name;
 
-  public Image(int width, int height) {
-
+  public Image(int width, int height) throws IllegalArgumentException {
+if(width < 1 || height < 1){
+  throw new IllegalArgumentException("Invalid height/width");
+}
     this.pixels = new ArrayList<ArrayList<Pixel>>();
 
     for (int i = 0; i < height; i++) {

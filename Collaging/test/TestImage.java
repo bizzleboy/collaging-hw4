@@ -53,11 +53,16 @@ public class TestImage {
 
     ArrayList<Pixel> row3 = new ArrayList<Pixel>();
     Collections.addAll(row3, bluePixel, greenPixel, bluePixel);
-    ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>()
-    Collections.addAll(imageGrid, row1, )
+    ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
+    Collections.addAll(imageGrid, row1, row2, row3 );
 
-    this.image1 = new Image();
+    this.image1 = new Image(imageGrid);
+//TEST FOR INVALID CONSTRUCTION
 
+  }
+
+  @Test
+  public void testFilterImageRed(){
 
   }
 }
