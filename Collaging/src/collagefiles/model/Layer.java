@@ -110,11 +110,21 @@ public class Layer {
 
    }
 
-   public List<Image> getImages() {
-    return this.imagesOnLayer;
-   }
-
+   public String getImage() {
+    String imageString = "";
+       for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
+         for(Pixel p: list) {
+           imageString += (String.format("%d %d %d \n",
+                   p.getPixelColor().getRed(),
+                   p.getPixelColor().getGreen(),
+                   p.getPixelColor().getGreen()
+                   ));
+           }
+         }
+       return imageString;
   }
+}
+
 
 
 

@@ -7,25 +7,19 @@ public class BasicCollageProject implements Project{
   List<Layer> layers;
   int height;
   int width;
+  int maxVal;
 
-  public BasicCollageProject (int canvasWidth, int canvasHeight) {
+  public BasicCollageProject (int canvasWidth, int canvasHeight, int maxVal) {
     this.layers = new ArrayList<Layer>();
     this.height= canvasHeight;
     this.width = canvasWidth;
+    this.maxVal = maxVal;
     this.layers.add(new Layer("name",this.width,this.height));
-  }
-
-
-
-  @Override
-  public String saveProject() {
-    return "";
   }
 
   @Override
   public void addLayer(String layerName) {
     this.layers.add((new Layer(layerName,this.width,this.height)));
-
   }
 
   @Override
@@ -39,8 +33,29 @@ public class BasicCollageProject implements Project{
   }
 
   @Override
-  public String saveImage() {
-    return "";
+  public String saveProject(String imagePath) {
+    String imageString = "";
+    String[] filePaths = imagePath.split("\\\\");
+    imageString += (filePaths[filePaths.length-1].split(".")[0]);
+    imageString += (this.width + " " + this.height + "\n");
+    imageString += ();
+    for (Layer l: this.layers) {
+      imageString += (l.getImage() + "\n");
+    }
+    return imageString;
+  }
+
+  @Override
+  public String saveImage(String imagePath) {
+    String imageString = "";
+    String[] filePaths = imagePath.split("\\\\");
+    imageString += "P3\n";
+    imageString += String.format("#%s\n",filePaths[filePaths.length-1].split(".")[0]);
+    imageString += (this.width + " " + this.height + "\n");
+    for (Layer l: this.layers) {
+      imageString += (l.getImage() + "\n");
+    }
+    return imageString;
   }
 
   @Override
