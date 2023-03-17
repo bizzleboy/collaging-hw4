@@ -125,7 +125,7 @@ public class TestLayer {
             this.layer0.getImages().get(0).getPixels().get(1).get(2).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
             this.layer0.getImages().get(0).getPixels().get(1).get(3).getPixelColor());
-    assertEquals(new Color(255, 255, 255, 0),
+    assertEquals(new Color(255, 255, 255,0),
             this.layer0.getImages().get(0).getPixels().get(1).get(4).getPixelColor());
 
 

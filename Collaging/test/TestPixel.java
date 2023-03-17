@@ -103,8 +103,8 @@ public class TestPixel {
     assertEquals(new Color(255,0,0,255), this.whitePixel.getPixelColor());
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(128,0,0,255), this.mixedPixel.getPixelColor());
-    assertEquals(new Color(255,0,0,0), this.transparentPixel.getPixelColor());
-    assertEquals(new Color(255,0,0,128), this.opaquePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(128,0,0,128), this.opaquePixel.getPixelColor());
   }
 
   @Test
@@ -124,8 +124,8 @@ public class TestPixel {
     assertEquals(new Color(0,255,0,255), this.whitePixel.getPixelColor());
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(0,128,0,255), this.mixedPixel.getPixelColor());
-    assertEquals(new Color(0,255,0,0), this.transparentPixel.getPixelColor());
-    assertEquals(new Color(0,255,0,128), this.opaquePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,128,0,128), this.opaquePixel.getPixelColor());
   }
 
   @Test
@@ -145,8 +145,8 @@ public class TestPixel {
     assertEquals(new Color(0,0,255,255), this.whitePixel.getPixelColor());
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(0,0,128,255), this.mixedPixel.getPixelColor());
-    assertEquals(new Color(0,0,255,0), this.transparentPixel.getPixelColor());
-    assertEquals(new Color(0,0,255,128), this.opaquePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,0,128,128), this.opaquePixel.getPixelColor());
   }
 
   @Test
@@ -168,7 +168,7 @@ public class TestPixel {
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
     assertEquals(new Color(255,202,255,255), this.amaranthPixel.getPixelColor());
-    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
     assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
   }
 
@@ -191,7 +191,7 @@ public class TestPixel {
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
     assertEquals(new Color(255,145,206,255), this.amaranthPixel.getPixelColor());
-    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
     assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
   }
 
@@ -214,7 +214,7 @@ public class TestPixel {
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(255,255,255,255), this.mixedPixel.getPixelColor());
     assertEquals(new Color(231,115,176,255), this.amaranthPixel.getPixelColor());
-    assertEquals(new Color(255,255,255,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
     assertEquals(new Color(255,255,255,128), this.opaquePixel.getPixelColor());
   }
 
@@ -284,8 +284,8 @@ public class TestPixel {
     assertEquals(new Color(0,0,0,255), this.blackPixel.getPixelColor());
     assertEquals(new Color(0,0,0,255), this.mixedPixel.getPixelColor());
     assertEquals(new Color(87,0,32,255), this.amaranthPixel.getPixelColor());
-    assertEquals(new Color(1,1,1,0), this.transparentPixel.getPixelColor());
-    assertEquals(new Color(1,1,1,128), this.opaquePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,128), this.opaquePixel.getPixelColor());
   }
 
   @Test

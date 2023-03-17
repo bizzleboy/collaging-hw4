@@ -21,11 +21,10 @@ public class Image {
     }
     for (List l : this.pixels) {
       for (int i = 0; i < width; i++) {
-        l.add(new Pixel(new Color(255, 255, 255, 0)));
+        l.add(new Pixel(255,255,255,0));
       }
     }
-
-    this.filterPixels = pixels;
+    this.filterPixels = this.pixels;
   }
 
   public Image(ArrayList<ArrayList<Pixel>> pixelList) {
@@ -33,20 +32,10 @@ public class Image {
     this.filterPixels = this.pixels;
   }
 
-  public String idk() {
-
-    Pixel p = this.pixels.get(38).get(37);
-
-
-    p.colorMeRed();
-    return p.getPixelColor().toString();
-
-  }
-
 
   public void filterImageRed() {
 
-    this.filterPixels = pixels;
+    this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
         pixel.colorMeRed();
@@ -58,7 +47,7 @@ public class Image {
 
   public void filterImageGreen() {
 
-    this.filterPixels = pixels;
+    this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
         pixel.colorMeGreen();
@@ -67,7 +56,7 @@ public class Image {
   }
 
   public void filterImageBlue() {
-    this.filterPixels = pixels;
+    this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
         pixel.colorMeBlue();
@@ -76,7 +65,7 @@ public class Image {
   }
 
   public void brightenImage(String brightness) {
-    this.filterPixels = pixels;
+    this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
         pixel.brightenMe(brightness);
@@ -85,7 +74,7 @@ public class Image {
   }
 
   public void darkenImage(String darkness) {
-    this.filterPixels = pixels;
+    this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
       for (Pixel pixel : row) {
         pixel.darkenMe(darkness);
@@ -96,8 +85,6 @@ public class Image {
 
   public ArrayList<ArrayList<Pixel>> getPixels() {
     return this.filterPixels;
-
-
   }
 
 }

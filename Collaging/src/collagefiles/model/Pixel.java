@@ -26,15 +26,22 @@ public class Pixel {
   //i guess for lossy compression
   public Pixel(int red, int green, int blue, int alpha) throws IllegalArgumentException {
 
+    float floatAlpha = (float) alpha;
+
     if (red < 0 || red > 255 || green < 0 || green > 255
             || blue < 0 || blue > 255 || alpha < 0 || alpha > 255) {
       throw new IllegalArgumentException("RGB and alpha values must be between 0 and 255");
     }
+
     this.red = red;
     this.green = green;
     this.blue = blue;
     this.alpha = alpha;
-    this.pixelColor = new Color(this.red, this.green, this.blue, this.alpha);
+    this.pixelColor = new Color((int) (this.red * floatAlpha/255),
+            (int) (this.green * floatAlpha/255),
+            (int) (this.blue * floatAlpha/255),
+            this.alpha);
+
 
   }
 

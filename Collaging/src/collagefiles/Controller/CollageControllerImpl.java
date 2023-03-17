@@ -257,7 +257,7 @@ public class CollageControllerImpl implements CollageController {
           int g = sc.nextInt();
           int b = sc.nextInt();
           int a = sc.nextInt();
-          l.add(new Pixel(new Color(r, g, b, a)));
+          l.add(new Pixel(r, g, b, a));
         }
       }
       this.currentProject.addLayer(layerName);

@@ -37,12 +37,12 @@ public class Layer {
           if (xIndex >= this.imagesOnLayer.get(0).pixels.get(0).size()) {
             break;
           } else {
-            Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
+            Pixel alteredPixel = this.imagesOnLayer.get(0).filterPixels.get(yIndex).get(xIndex);
 
             alteredPixel.addPixels(p);
 
 //          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
-            this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex, alteredPixel);
+            this.imagesOnLayer.get(0).filterPixels.get(yIndex).set(xIndex, alteredPixel);
             xIndex += 1;
 
           }
@@ -131,12 +131,12 @@ public class Layer {
    public String getImagePPM() {
 
     String imageString = "";
-       for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
+       for (List<Pixel> list:this.imagesOnLayer.get(0).filterPixels){
          for(Pixel p: list) {
            imageString += (String.format("%d %d %d\n",
-                   p.getPixelColor().getRed() * (float) p.getPixelColor().getAlpha() / 255,
-                   p.getPixelColor().getGreen() * (float) p.getPixelColor().getAlpha() / 255,
-                   p.getPixelColor().getBlue() * (float) p.getPixelColor().getAlpha() / 255
+                   p.getPixelColor().getRed(),
+                   p.getPixelColor().getGreen(),
+                   p.getPixelColor().getBlue()
                    ));
            }
          }
@@ -145,7 +145,7 @@ public class Layer {
 
   public String getImageTxt() {
     String imageString = "";
-    for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
+    for (List<Pixel> list:this.imagesOnLayer.get(0).filterPixels){
       for(Pixel p: list) {
         imageString += (String.format("%d %d %d %d\n",
                 p.getPixelColor().getRed(),
