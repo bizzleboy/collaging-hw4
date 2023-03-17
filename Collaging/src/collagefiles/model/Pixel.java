@@ -31,10 +31,7 @@ public class Pixel {
       throw new IllegalArgumentException("RGB and alpha values must be between 0 and 255");
     }
 
-    this.pixelColor = new Color( (int)(red* (float)alpha/255),
-
-            (int)((float)green*alpha/255),
-            (int) ((float)blue*alpha/255));
+    this.pixelColor = new Color(this.red, this.green, this.blue, this.alpha);
     this.red = red;
     this.green = green;
     this.blue = blue;

@@ -1,5 +1,6 @@
 package collagefiles.model;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,13 +131,14 @@ public class Layer {
    }
 
    public String getImagePPM() {
+
     String imageString = "";
        for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
          for(Pixel p: list) {
            imageString += (String.format("%d %d %d\n",
-                   p.getPixelColor().getRed(),
-                   p.getPixelColor().getGreen(),
-                   p.getPixelColor().getGreen()
+                   p.getPixelColor().getRed() * (float) p.getPixelColor().getAlpha() / 255,
+                   p.getPixelColor().getGreen() * (float) p.getPixelColor().getAlpha() / 255,
+                   p.getPixelColor().getBlue() * (float) p.getPixelColor().getAlpha() / 255
                    ));
            }
          }
