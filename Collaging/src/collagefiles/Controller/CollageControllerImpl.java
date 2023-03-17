@@ -191,7 +191,6 @@ public class CollageControllerImpl implements CollageController {
             int yPos = scan.nextInt();
             System.out.println("y entered");
             this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
-            System.out.println("image added to layer");
           }
           break;
       }

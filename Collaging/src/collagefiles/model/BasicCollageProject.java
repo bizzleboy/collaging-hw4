@@ -36,7 +36,14 @@ public class BasicCollageProject implements Project{
 
   @Override
   public void addImageToLayer(String layerName, Image imageToAdd, int xPos, int yPos) {
-    this.layers.get(this.layers.indexOf(layerName)).placeImage(xPos,yPos,imageToAdd);
+    for (Layer l: this.layers) {
+      if (l.getName().equals(layerName)) {
+        l.placeImage(xPos,yPos,imageToAdd);
+        System.out.print("Image added to layer\n");
+        break;
+      }
+    }
+
   }
 
   @Override
