@@ -95,7 +95,7 @@ public class Image {
 
 
   public ArrayList<ArrayList<Pixel>> getPixels() {
-    return this.pixels;
+    return this.filterPixels;
 
 
   }

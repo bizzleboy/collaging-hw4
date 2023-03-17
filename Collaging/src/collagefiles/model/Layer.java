@@ -25,11 +25,15 @@ public class Layer {
     int xIndex = xPos;
     int yIndex = yPos;
 
+
     for (List<Pixel> list:image.pixels){
       for(Pixel p: list) {
+        Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
+
+        alteredPixel.addPixels(p);
 
 //          this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,
-                  this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex).addPixels(p);
+                  this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex,alteredPixel);
           xIndex += 1;
 
 

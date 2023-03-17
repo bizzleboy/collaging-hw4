@@ -146,6 +146,10 @@ public class Pixel {
     int newGreen = (int) ((pix2Alpha/255 * pix2.green + this.green*(pix1Alpha/255) * (1-pix2Alpha/255)) * (1/alphaPct));
     int newBlue = (int) ((pix2Alpha/255 * pix2.blue + this.blue*(pix1Alpha/255) *(1-pix2Alpha/255)) * (1/alphaPct));
     this.pixelColor = new Color(newRed,newGreen,newBlue, (int) (alphaPct*255));
+    this.blue = newBlue;
+    this.red= newRed;
+    this.green = newGreen;
+    this.alpha =  (int) (alphaPct*255);
 //    this.pixelColor = new Color((this.red + pix2.red) / 2,
 //            (this.blue + pix2.blue) / 2,
 //            (this.green + pix2.green) / 2,
