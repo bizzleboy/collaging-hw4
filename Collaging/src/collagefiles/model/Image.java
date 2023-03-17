@@ -28,8 +28,6 @@ public class Image {
     this.pixels = pixelList;
   }
 
-
-
   public String idk() {
 
     Pixel p = this.pixels.get(38).get(37);

@@ -2,8 +2,11 @@ package collagefiles.Controller;
 
 
 import java.awt.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -56,16 +59,34 @@ public class CollageControllerImpl implements CollageController {
         case "load-project":
           String loadProjectPath = scan.next();
           this.currentProject = this.readProject(loadProjectPath);
-          // read in project from txt file
-        case "save-project":
-          String saveProjectPath = scan.next();
+
+
+//        case "save-project":
+//          String saveProjectPath = scan.next();
+//          String projectString = this.currentProject.saveProject(saveProjectPath);
+//          try {
+//            FileWriter fr = new FileWriter(saveProjectPath, projectString);
+//          } catch (IOException io) {
+//
+//          }
+
         case "save-image":
           String saveImagePath = scan.next();
+          String imageString = this.currentProject.saveImage();
+          try {
+            FileWriter fr = new FileWriter(new File(saveImagePath,imageString));
+          } catch (IOException io) {
+          }
+
         case "set-filter":
           String layer = scan.next();
           String filter = scan.next();
+          this.currentProject.setFilter(layer, filter);
+
         case "add-layer":
           String layerToAdd = scan.next();
+          this.currentProject.addLayer(layerToAdd);
+
         case "add-image":
           String layerToAddTo = scan.next();
           String imageToAdd = scan.next();
@@ -140,7 +161,6 @@ public class CollageControllerImpl implements CollageController {
       this.currentProject.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
       this.currentProject.setFilter(layerName, filterName);
     }
-
     return this.currentProject;
   }
 

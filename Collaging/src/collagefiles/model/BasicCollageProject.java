@@ -18,8 +18,8 @@ public class BasicCollageProject implements Project{
 
 
   @Override
-  public void saveProject() {
-
+  public String saveProject() {
+    return "";
   }
 
   @Override
@@ -35,12 +35,12 @@ public class BasicCollageProject implements Project{
 
   @Override
   public void setFilter(String layerName, String filterType) {
-
+    this.layers.get(this.layers.indexOf(layerName)).applyFilter(filterType);
   }
 
   @Override
-  public void saveImage(String fileName) {
-
+  public String saveImage() {
+    return "";
   }
 
   @Override

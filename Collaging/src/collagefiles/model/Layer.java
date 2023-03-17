@@ -46,49 +46,61 @@ public class Layer {
   public void applyFilter(String filter){
    switch(filter){
      case "normal":
-       //pass
-       break;
+       this.filter = filter;
+       for(Image image:imagesOnLayer) {
+         image.filterPixels = image.pixels;
+         break;
+       }
      case"red-component":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.filterImageRed();
          break;
          }
      case"blue-component":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.filterImageBlue();
          break;
        }
      case"green-component":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.filterImageGreen();
          break;
        }
      case"brighten-value":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.brightenImage("brighten-value");
          break;
        }
      case"darken-value":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.darkenImage("darken-value");
          break;
        }
      case"brighten-luma":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.brightenImage("brighten-luma");
          break;
        }
      case"darken-luma":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.darkenImage("darken-luma");
          break;
        }
      case"brighten-intensity":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.brightenImage("brighten-intensity");
          break;
        }
      case"darken-intensity":
+       this.filter = filter;
        for(Image image:imagesOnLayer){
          image.darkenImage("darken-intensity");
          break;
