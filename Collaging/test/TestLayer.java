@@ -29,6 +29,7 @@ public class TestLayer {
   Image image2;
   Image image3;
   Image image4;
+  Image image5;
 
   @Before
   public void init() {
@@ -56,10 +57,18 @@ public class TestLayer {
     ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
     Collections.addAll(imageGrid, row1, row2, row3 );
 
+    ArrayList<Pixel> row4 = new ArrayList<Pixel>();
+    Collections.addAll(row1, opaquePixel, opaquePixel);
+    ArrayList<Pixel> row5 = new ArrayList<Pixel>();
+    Collections.addAll(row1, opaquePixel, );
+
+
     this.image1 = new Image(imageGrid);
     this.image2 = new Image(2,2);
     this.image3 = new Image(3,3);
     this.image4 = new Image(5,5);
+
+
 
 
   }
