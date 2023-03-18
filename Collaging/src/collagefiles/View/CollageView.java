@@ -1,7 +1,5 @@
 package collagefiles.View;
 
-package cs3500.set.view;
-
 import java.io.IOException;
 
 /**

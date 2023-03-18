@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import collagefiles.View.CollageView;
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
 import collagefiles.model.Pixel;
@@ -20,27 +21,33 @@ import collagefiles.model.Project;
 public class CollageControllerImpl implements CollageController {
 
   private final Readable input;
+  private final CollageView view;
   private Project currentProject;
 
 
-  public CollageControllerImpl(Readable input)
+  public CollageControllerImpl(Readable input, CollageView view)
           throws IllegalArgumentException {
     if (input == null) {
       throw new IllegalArgumentException("provided readable input cannot be null.");
     }
     this.input = input;
+    this.view = view;
     this.currentProject = null;
   }
 
-  public CollageControllerImpl(Readable input, Project p)
+  public CollageControllerImpl(Readable input, Project p, CollageView view)
           throws IllegalArgumentException {
     if (input == null) {
       throw new IllegalArgumentException("provided readable input cannot be null.");
+    }
+    if (view == null) {
+      throw new IllegalArgumentException("provided view input cannot be null.");
     }
     if (p == null) {
       throw new IllegalArgumentException("provided project input cannot be null.");
     }
     this.input = input;
+    this.view = view;
     this.currentProject = p;
   }
 
@@ -56,54 +63,102 @@ public class CollageControllerImpl implements CollageController {
       switch (input) {
 
         case "q":
-          System.out.println("program quit!");
+          try {
+          this.view.renderMessage("program quit!");
           return;
+          } catch (IOException a) {
+            throw new IllegalStateException(a);
+          }
 
         case "new-project":
-          System.out.println("enter width and height");
+          try {
+          this.view.renderMessage("enter width and height");
+          } catch (IOException a) {
+            throw new IllegalStateException(a);
+          }
 
           while (!scan.hasNextInt()) {
             if (scan.next().equals("q")) {
-              System.out.println("program quit!");
+              try {
+              this.view.renderMessage("program quit!");
               return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
           }
-          int width = scan.nextInt();
-          System.out.println("width entered");
 
+          int width = scan.nextInt();
+          try {
+          this.view.renderMessage("width entered");
+          } catch (IOException a) {
+            throw new IllegalStateException(a);
+          }
           while (!scan.hasNextInt()) {
             if (scan.next().equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
               return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
           }
           int height = scan.nextInt();
-          System.out.println("height entered");
+          try {
+          this.view.renderMessage("height entered");
+          } catch (IOException a) {
+            throw new IllegalStateException(a);
+          }
           if (this.currentProject == null) {
             this.currentProject = new BasicCollageProject(width, height, 255);
-            System.out.println("new project made");
+            try {
+            this.view.renderMessage("new project made");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
 
         case "load-project":
-          System.out.println("enter project path");
+          try{
+          this.view.renderMessage("enter project path");
+          } catch (IOException a) {
+            throw new IllegalStateException(a);
+          }
           String loadProjectPath = scan.next();
           if (loadProjectPath.equals("q")) {
-            System.out.println("program quit!");
+            try{
+            this.view.renderMessage("program quit!");
             return;
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           if (this.currentProject == null) {
             this.currentProject = this.readProject(loadProjectPath);
-            System.out.println("project loaded");
+            try{
+            this.view.renderMessage("project loaded");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
         case "save-project":
           if (this.currentProject!=null) {
-            System.out.println("enter file path");
+            try{
+            this.view.renderMessage("enter file path");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String saveProjectPath = scan.next();
             if (saveProjectPath.equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
               return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
             String projectString = this.currentProject.saveProject(saveProjectPath);
             File file = new File(saveProjectPath);
@@ -114,17 +169,29 @@ public class CollageControllerImpl implements CollageController {
               fr.close();
             } catch (IOException e) {
             }
-            System.out.println("project saved");
+            try{
+            this.view.renderMessage("project saved");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
 
         case "save-image":
           if (this.currentProject!=null) {
-            System.out.println("enter image path");
+            try{
+            this.view.renderMessage("enter image path");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String saveImagePath = scan.next();
             if (saveImagePath.equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
               return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
             String imageString = this.currentProject.saveImage(saveImagePath);
             System.out.print(imageString);
@@ -136,73 +203,144 @@ public class CollageControllerImpl implements CollageController {
               fr.close();
             } catch (IOException e) {
             }
-            System.out.println("image saved");
+            this.view.renderMessage("image saved");
           }
           break;
         case "set-filter":
           if (this.currentProject!=null) {
-            System.out.println("enter layer name");
+            try{
+            this.view.renderMessage("enter layer name");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String layer = scan.next();
-            System.out.println("enter filter name");
+            try{
+            this.view.renderMessage("enter filter name");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String filter = scan.next();
             if (layer.equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
               return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
             if (filter.equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
               return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
             this.currentProject.setFilter(layer, filter);
-            System.out.println("filter set");
+            try{
+            this.view.renderMessage("filter set");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
         case "add-layer":
           if (this.currentProject!=null) {
-            System.out.println("enter layer name");
+            try{
+            this.view.renderMessage("enter layer name");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String layerToAdd = scan.next();
             if (layerToAdd.equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
               return;
             }
             this.currentProject.addLayer(layerToAdd);
-            System.out.println("layer added if name is unique");
+            try{
+            this.view.renderMessage("layer added if name is unique");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
         case "add-image":
           if (this.currentProject!=null) {
-            System.out.println("enter layer name");
+            try{
+            this.view.renderMessage("enter layer name");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String layerToAddTo = scan.next();
-            System.out.println("enter image path");
+            try{
+            this.view.renderMessage("enter image path");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             String imageToAdd = scan.next();
             if (layerToAddTo.equals("q")) {
-              System.out.println("program quit!");
+              try{
+              this.view.renderMessage("program quit!");
               return;
-            }
-            if (imageToAdd.equals("q")) {
-              System.out.println("program quit!");
-              return;
-            }
-            while (!scan.hasNextInt()) {
-              if (scan.next().equals("q")) {
-                System.out.println("program quit!");
-                return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
               }
             }
-            System.out.println("enter x position");
-            int xPos = scan.nextInt();
-            System.out.println("x entered\nenter y position");
-
+            if (imageToAdd.equals("q")) {
+              try{
+              this.view.renderMessage("program quit!");
+              return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
+            }
             while (!scan.hasNextInt()) {
               if (scan.next().equals("q")) {
-                System.out.println("program quit!");
+                try{
+                this.view.renderMessage("program quit!");
+                return;
+                } catch (IOException a) {
+                  throw new IllegalStateException(a);
+                }
+              }
+            }
+            try{
+            this.view.renderMessage("enter x position");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
+            int xPos = scan.nextInt();
+            try{
+            this.view.renderMessage("x entered\nenter y position");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
+            while (!scan.hasNextInt()) {
+              if (scan.next().equals("q")) {
+                try{
+                this.view.renderMessage("program quit!");
+                } catch (IOException a) {
+                  throw new IllegalStateException(a);
+                }
                 return;
               }
             }
             int yPos = scan.nextInt();
-            System.out.println("y entered");
+            try{
+            this.view.renderMessage("y entered");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
             this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
-            System.out.println("image added to layer");
+            try{
+            this.view.renderMessage("image added to layer");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
       }
@@ -231,7 +369,11 @@ public class CollageControllerImpl implements CollageController {
     try {
       sc = new Scanner(new FileInputStream(path));
     } catch (FileNotFoundException e) {
-      System.out.println("File "+path+ " not found!");
+      try{
+      this.view.renderMessage("File "+path+ " not found!");
+      } catch (IOException a) {
+        throw new IllegalStateException(a);
+      }
       Scanner tryAgain = new Scanner(this.input);
       this.readProject(tryAgain.next());
     }
@@ -282,7 +424,11 @@ public class CollageControllerImpl implements CollageController {
       sc = new Scanner(new FileInputStream(path));
     }
     catch (FileNotFoundException e) {
-      System.out.println("File "+path+ " not found!");
+      try{
+      this.view.renderMessage("File "+path+ " not found!");
+      } catch (IOException a) {
+        throw new IllegalStateException(a);
+      }
       Scanner tryAgain = new Scanner(this.input);
       return this.readImage(tryAgain.next());
       // return or repeat statement here
@@ -303,15 +449,19 @@ public class CollageControllerImpl implements CollageController {
 
     token = sc.next();
     if (!token.equals("P3")) {
-      System.out.println("Invalid PPM file: plain RAW file should begin with P3");
+      try{
+      this.view.renderMessage("Invalid PPM file: plain RAW file should begin with P3");
+      } catch (IOException a) {
+        throw new IllegalStateException(a);
+      }
     }
     int width = sc.nextInt();
-//    System.out.println("Width of image: "+width);
+//    this.view.renderMessage("Width of image: "+width);
 
     int height = sc.nextInt();
 
 //    int maxValue = sc.nextInt();
-//    System.out.println("Maximum value of a color in this file (usually 255): "+maxValue);
+//    this.view.renderMessage("Maximum value of a color in this file (usually 255): "+maxValue);
     ArrayList<ArrayList<Pixel>> pixels;
     pixels = new ArrayList<>();
 
@@ -326,7 +476,7 @@ public class CollageControllerImpl implements CollageController {
         int g = sc.nextInt();
         int b = sc.nextInt();
         l.add(new Pixel(new Color(r,g,b)));
-//        System.out.println("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
+//        this.view.renderMessage("Color of pixel ("+j+","+i+"): "+ r+","+g+","+b);
 
       }
     }
