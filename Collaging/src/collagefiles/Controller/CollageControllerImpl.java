@@ -30,6 +30,9 @@ public class CollageControllerImpl implements CollageController {
     if (input == null) {
       throw new IllegalArgumentException("provided readable input cannot be null.");
     }
+    if (view == null) {
+      throw new IllegalArgumentException("provided view input cannot be null.");
+    }
     this.input = input;
     this.view = view;
     this.currentProject = null;
