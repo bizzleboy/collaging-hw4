@@ -185,16 +185,14 @@ public class TestLayer {
     this.image5.getPixels().get(1).get(1).addPixels(this.image6.getPixels().get(0).get(0));
 
    assertEquals(new Color(254,254,254,128), this.layer0.getImages().get(0).getPixels().get(3).get(3).getPixelColor());
-    assertEquals(new Pixel(new Color(127,0,72,187)).getPixelColor(), this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
+   assertEquals(new Color(127,0,72,187), this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
 
   }
   @Test(expected = IllegalArgumentException.class)
   public void testPlacingAnImageOffTheGridEntirely() {
     this.layer0.placeImage(5,4,this.image6);
-
-
-
   }
+
   @Test(expected = IllegalArgumentException.class)
   public void testPlacingAnImageOffTheGridEntirely2() {
     this.layer0.placeImage(4,5,this.image6);

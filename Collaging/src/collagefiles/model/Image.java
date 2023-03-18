@@ -27,7 +27,10 @@ public class Image {
     this.filterPixels = this.pixels;
   }
 
-  public Image(ArrayList<ArrayList<Pixel>> pixelList) {
+  public Image(ArrayList<ArrayList<Pixel>> pixelList) throws IllegalArgumentException {
+    if (pixelList == null) {
+      throw new IllegalArgumentException("Invalid pixelList");
+    }
     this.pixels = pixelList;
     this.filterPixels = this.pixels;
   }
