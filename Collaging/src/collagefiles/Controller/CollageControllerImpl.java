@@ -86,6 +86,7 @@ public class CollageControllerImpl implements CollageController {
           break;
 
         case "load-project":
+          System.out.println("enter project path");
           String loadProjectPath = scan.next();
           if (loadProjectPath.equals("q")) {
             System.out.println("program quit!");
@@ -105,9 +106,13 @@ public class CollageControllerImpl implements CollageController {
               return;
             }
             String projectString = this.currentProject.saveProject(saveProjectPath);
+            File file = new File(saveProjectPath);
+            FileWriter fr = null;
             try {
-              FileWriter fr = new FileWriter(new File(saveProjectPath, projectString));
-            } catch (IOException io) {
+              fr = new FileWriter(file);
+              fr.write(projectString);
+              fr.close();
+            } catch (IOException e) {
             }
             System.out.println("project saved");
           }
@@ -136,8 +141,9 @@ public class CollageControllerImpl implements CollageController {
           break;
         case "set-filter":
           if (this.currentProject!=null) {
-            System.out.println("enter filter name");
+            System.out.println("enter layer name");
             String layer = scan.next();
+            System.out.println("enter filter name");
             String filter = scan.next();
             if (layer.equals("q")) {
               System.out.println("program quit!");
@@ -154,19 +160,20 @@ public class CollageControllerImpl implements CollageController {
         case "add-layer":
           if (this.currentProject!=null) {
             System.out.println("enter layer name");
-
             String layerToAdd = scan.next();
             if (layerToAdd.equals("q")) {
               System.out.println("program quit!");
               return;
             }
             this.currentProject.addLayer(layerToAdd);
+            System.out.println("layer added if name is unique");
           }
           break;
         case "add-image":
           if (this.currentProject!=null) {
-            System.out.println("enter layer name and image path");
+            System.out.println("enter layer name");
             String layerToAddTo = scan.next();
+            System.out.println("enter image path");
             String imageToAdd = scan.next();
             if (layerToAddTo.equals("q")) {
               System.out.println("program quit!");
@@ -182,9 +189,9 @@ public class CollageControllerImpl implements CollageController {
                 return;
               }
             }
-            System.out.println("enter x and y position");
+            System.out.println("enter x position");
             int xPos = scan.nextInt();
-            System.out.println("x entered");
+            System.out.println("x entered\nenter y position");
 
             while (!scan.hasNextInt()) {
               if (scan.next().equals("q")) {
@@ -195,6 +202,7 @@ public class CollageControllerImpl implements CollageController {
             int yPos = scan.nextInt();
             System.out.println("y entered");
             this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
+            System.out.println("image added to layer");
           }
           break;
       }
