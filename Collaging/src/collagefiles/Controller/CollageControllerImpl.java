@@ -203,7 +203,11 @@ public class CollageControllerImpl implements CollageController {
               fr.close();
             } catch (IOException e) {
             }
+            try{
             this.view.renderMessage("image saved");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
+            }
           }
           break;
         case "set-filter":
