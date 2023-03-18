@@ -6,6 +6,7 @@ import java.io.StringReader;
 import collagefiles.Controller.CollageController;
 import collagefiles.Controller.CollageControllerImpl;
 import collagefiles.View.CollageTextView;
+import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
 import collagefiles.model.Project;
 

@@ -245,7 +245,7 @@ public class CollageControllerImpl implements CollageController {
             }
             this.currentProject.setFilter(layer, filter);
             try{
-            this.view.renderMessage("filter set");
+            this.view.renderMessage("filter set if layer exists");
             } catch (IOException a) {
               throw new IllegalStateException(a);
             }
@@ -344,7 +344,7 @@ public class CollageControllerImpl implements CollageController {
             }
             this.currentProject.addImageToLayer(layerToAddTo, this.readImage(imageToAdd), xPos, yPos);
             try{
-            this.view.renderMessage("image added to layer");
+            this.view.renderMessage("image added to layer if layer exists");
             } catch (IOException a) {
               throw new IllegalStateException(a);
             }

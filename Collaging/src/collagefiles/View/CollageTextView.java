@@ -20,7 +20,7 @@ public class CollageTextView implements CollageView {
   @Override
   public void renderMessage(String message) throws IOException {
     try {
-      this.output.append(message);
+      this.output.append(message+"\n");
     } catch (IOException a) {
       throw new IOException(a);
     }
