@@ -29,7 +29,7 @@ public class Layer {
     int yIndex = yPos;
 
 
-    for (List<Pixel> list:image.pixels) {
+    for (List<Pixel> list:image.filterPixels) {
       if (yIndex >= this.imagesOnLayer.get(0).pixels.size()) {
         break;
       } else {
@@ -63,62 +63,70 @@ public class Layer {
        this.filter = filter;
        for(Image image:imagesOnLayer) {
          image.filterPixels = image.pixels;
-         break;
+
        }
+       break;
      case"red-component":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.filterImageRed();
-         break;
+
          }
+       break;
      case"blue-component":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.filterImageBlue();
-         break;
+
        }
+       break;
      case"green-component":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.filterImageGreen();
-         break;
+
        }
+       break;
      case"brighten-value":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.brightenImage("brighten-value");
-         break;
-       }
+       }break;
      case"darken-value":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.darkenImage("darken-value");
-         break;
+
        }
+       break;
      case"brighten-luma":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.brightenImage("brighten-luma");
-         break;
+
        }
+       break;
      case"darken-luma":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.darkenImage("darken-luma");
-         break;
+
        }
+       break;
      case"brighten-intensity":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.brightenImage("brighten-intensity");
-         break;
+
        }
+       break;
      case"darken-intensity":
        this.filter = filter;
        for(Image image:imagesOnLayer){
          image.darkenImage("darken-intensity");
-         break;
+
        }
+       break;
      default: System.out.println("Invalid Input!");
        }
 

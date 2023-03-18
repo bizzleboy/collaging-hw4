@@ -170,5 +170,26 @@ public class TestImage {
         assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
     }
   }
+  @Test
+  public void testFilterNormal(){
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1, redPixel, redPixel, redPixel);
+
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, redPixel, blackPixel, redPixel);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3 );
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.filterImageRed();
+    for (int y = 0; y < 3; y++) {
+      for(int x = 0; x<3; x++ )
+        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(), this.image1.getPixels().get(y).get(x).getPixelColor());
+    }
+  }
 }
 
