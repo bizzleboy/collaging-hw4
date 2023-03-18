@@ -94,9 +94,4 @@ public class BasicCollageProject implements Project{
   public List<Layer> getLayers() {
     return this.layers;
   }
-
-  @Override
-  public void quit() {
-
-  }
 }

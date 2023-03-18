@@ -8,5 +8,4 @@ public interface Project {
  public void addImageToLayer(String layerName, Image image,int xPos, int yPos );
  public void setFilter (String layerName, String filterType);
 public String saveImage(String imagePath);
-public void quit();
 }
