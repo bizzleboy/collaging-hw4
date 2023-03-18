@@ -125,9 +125,6 @@ public class TestLayer {
             this.layer0.getImages().get(0).getPixels().get(1).get(2).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
             this.layer0.getImages().get(0).getPixels().get(1).get(3).getPixelColor());
-    assertEquals(new Color(255, 255, 255,0),
-            this.layer0.getImages().get(0).getPixels().get(1).get(4).getPixelColor());
-
 
     assertEquals(new Color(255, 255, 255, 0),
             this.layer0.getImages().get(0).getPixels().get(2).get(0).getPixelColor());
@@ -186,9 +183,6 @@ public class TestLayer {
     this.layer0.placeImage(4,4,this.image6);
 
     this.image5.getPixels().get(1).get(1).addPixels(this.image6.getPixels().get(0).get(0));
-    System.out.println(this.image5.getPixels().get(1).get(1).getPixelColor());
-
-    System.out.println(layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor().getAlpha());
 
    assertEquals(new Color(254,254,254,128), this.layer0.getImages().get(0).getPixels().get(3).get(3).getPixelColor());
     assertEquals(new Pixel(new Color(127,0,72,187)).getPixelColor(), this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());

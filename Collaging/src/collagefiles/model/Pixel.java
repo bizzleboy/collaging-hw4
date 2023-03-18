@@ -26,23 +26,16 @@ public class Pixel {
   //i guess for lossy compression
   public Pixel(int red, int green, int blue, int alpha) throws IllegalArgumentException {
 
-    float floatAlpha = (float) alpha;
-
     if (red < 0 || red > 255 || green < 0 || green > 255
             || blue < 0 || blue > 255 || alpha < 0 || alpha > 255) {
       throw new IllegalArgumentException("RGB and alpha values must be between 0 and 255");
     }
 
+    this.pixelColor = new Color(red,green,blue,alpha);
     this.red = red;
     this.green = green;
     this.blue = blue;
     this.alpha = alpha;
-    this.pixelColor = new Color((int) (this.red * floatAlpha/255),
-            (int) (this.green * floatAlpha/255),
-            (int) (this.blue * floatAlpha/255),
-            this.alpha);
-
-
   }
 
   /**
@@ -117,7 +110,7 @@ public class Pixel {
         darkness= (this.red+this.green+this.blue)/3;
         break;
       case "darken-luma":
-        darkness=(int)(.2126*this.red+ .7152*this.green+ .0722*this.blue);
+        darkness=(int)Math.round(.2126*this.red+ .7152*this.green+ .0722*this.blue);
         break;
       default: darkness= 0;
     }
