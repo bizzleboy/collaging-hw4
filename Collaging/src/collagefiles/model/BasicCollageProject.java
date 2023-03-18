@@ -91,6 +91,10 @@ public class BasicCollageProject implements Project{
     return imageString;
   }
 
+  public List<Layer> getLayers() {
+    return this.layers;
+  }
+
   @Override
   public void quit() {
 
