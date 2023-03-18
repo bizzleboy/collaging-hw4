@@ -74,11 +74,19 @@ public class BasicCollageProject implements Project{
     String imageString = "";
     String[] paths = imagePath.split("/");
     imageString += "P3\n";
-    //System.out.println(paths[7]);
     imageString += ("#" + paths[paths.length-1].split("\\.")[0] + "\n");
     imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
+
+    Image startImage = null;
+
     for (Layer l: this.layers) {
-      imageString += (l.getImagePPM() + "\n");
+      if (startImage == null) {
+        startImage = l.getImages().get(0);
+      } else {
+        l.placeImage(0,0,startImage);
+        startImage = l.getImages().get(0);
+      }
+      imageString = (l.getImagePPM());
     }
     return imageString;
   }
