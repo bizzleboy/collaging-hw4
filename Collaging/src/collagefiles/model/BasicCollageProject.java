@@ -117,18 +117,18 @@ public class BasicCollageProject implements Project {
     String imageString = "";
     String[] paths = imagePath.split("/");
     imageString += "P3\n";
-    imageString += ("#" + paths[paths.length - 1].split("\\.")[0] + "\n");
+    imageString += ("#" + paths[paths.length-1].split("\\.")[0] + "\n");
     imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
 
-    Image startImage = null;
+    Layer startLayer = new Layer("base",this.width,this.height);
 
-    for (Layer l : this.layers) {
-      imageString += l.getImagePPM();
+    for (Layer l: this.layers) {
+      startLayer.placeImage(0,0,l.getImages().get(0));
     }
-
-
+    imageString += startLayer.getImagePPM();
     return imageString;
   }
+
 
   /**
    * Returns the list of layers to perform operations and test on.

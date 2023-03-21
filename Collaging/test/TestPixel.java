@@ -295,6 +295,7 @@ public class TestPixel {
   public void testAddPixels() {
     bluePixel.addPixels(this.mixedPixel);
 
+
     assertEquals(new Color(128, 128, 128), bluePixel.getPixelColor());
 
 

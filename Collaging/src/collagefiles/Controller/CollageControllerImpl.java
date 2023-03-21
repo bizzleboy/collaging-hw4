@@ -481,6 +481,7 @@ public class CollageControllerImpl implements CollageController {
 
     int height = sc.nextInt();
 
+    int maxVal = sc.nextInt();
 
     ArrayList<ArrayList<Pixel>> pixels;
     pixels = new ArrayList<>();

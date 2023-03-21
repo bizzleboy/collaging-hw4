@@ -192,7 +192,7 @@ public class Layer {
         imageString += (String.format("%d %d %d %d\n",
                 p.getPixelColor().getRed(),
                 p.getPixelColor().getGreen(),
-                p.getPixelColor().getGreen(),
+                p.getPixelColor().getBlue(),
                 p.getPixelColor().getAlpha()
         ));
       }
