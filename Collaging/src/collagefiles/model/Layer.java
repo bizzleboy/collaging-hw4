@@ -68,6 +68,10 @@ public class Layer {
 
   }
 
+  public void setFilter(String filter) {
+    this.filter = filter;
+  }
+
   /**
    * Applies a filter to all the images on a layer.
    *
@@ -79,7 +83,6 @@ public class Layer {
         this.filter = filter;
         for (Image image : imagesOnLayer) {
           image.filterPixels = image.pixels;
-
         }
         break;
       case "red-component":

@@ -77,8 +77,9 @@ public class BasicCollageProject implements Project {
   public void setFilter(String layerName, String filterType) {
     for (Layer l : this.layers) {
       if (l.getName().equals(layerName)) {
-        l.applyFilter(filterType);
-        System.out.print("Filter applied to layer\n");
+        l.setFilter(filterType);
+        //l.applyFilter(filterType);
+        System.out.print("Filter set for layer\n");
         break;
       }
     }
@@ -125,6 +126,11 @@ public class BasicCollageProject implements Project {
     for (Layer l: this.layers) {
       startLayer.placeImage(0,0,l.getImages().get(0));
     }
+
+    for (Layer l: this.layers) {
+      l.applyFilter(l.getFilter());
+    }
+
     imageString += startLayer.getImagePPM();
     return imageString;
   }
