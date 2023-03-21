@@ -9,6 +9,9 @@ import collagefiles.view.CollageTextView;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Does controller work.
+ */
 public class TestCollageControllerImpl {
 
   @Test(expected = IllegalArgumentException.class)
@@ -127,7 +130,8 @@ public class TestCollageControllerImpl {
 
   @Test
   public void testSaveProjectInputs() {
-    Readable in = new StringReader("new-project 60 60 save-project Collaging/src/project1.txt q");
+    Readable in =
+            new StringReader("new-project 60 60 save-project Collaging/src/project1.txt q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmInputsMock p = new BasicCollageProjectConfirmInputsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());

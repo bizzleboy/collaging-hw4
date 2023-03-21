@@ -1,15 +1,23 @@
 package collagefiles.model;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A representation of an image, primarily displayed as.
+ * An arraylist of arraylist(pixels).
+ */
 public class Image {
   protected ArrayList<ArrayList<Pixel>> pixels;
   ArrayList<ArrayList<Pixel>> filterPixels;
-  String filePath;
-  String name;
 
+  /**
+   * Creates a blank image of a specified size.
+   *
+   * @param width  Of blank image.
+   * @param height Of blank image.
+   * @throws IllegalArgumentException If a height/width is less than 1.
+   */
   public Image(int width, int height) throws IllegalArgumentException {
     if (width < 1 || height < 1) {
       throw new IllegalArgumentException("Invalid height/width");
@@ -21,12 +29,19 @@ public class Image {
     }
     for (List l : this.pixels) {
       for (int i = 0; i < width; i++) {
-        l.add(new Pixel(255,255,255,0));
+        l.add(new Pixel(255, 255, 255, 0));
       }
     }
     this.filterPixels = this.pixels;
   }
 
+  /**
+   * Typical image constructor.
+   * Builds from arraylist of arraylist(pixels).
+   *
+   * @param pixelList What image is constructed from.
+   * @throws IllegalArgumentException Null pixel lists provided.
+   */
   public Image(ArrayList<ArrayList<Pixel>> pixelList) throws IllegalArgumentException {
     if (pixelList == null) {
       throw new IllegalArgumentException("Invalid pixelList");
@@ -35,7 +50,9 @@ public class Image {
     this.filterPixels = this.pixels;
   }
 
-
+  /**
+   * Filter this image red by iterating through each of its pixels.
+   */
   public void filterImageRed() {
 
     this.filterPixels = this.pixels;
@@ -47,7 +64,9 @@ public class Image {
     }
   }
 
-
+  /**
+   * Filter this image green by iterating through each of its pixels.
+   */
   public void filterImageGreen() {
 
     this.filterPixels = this.pixels;
@@ -58,6 +77,9 @@ public class Image {
     }
   }
 
+  /**
+   * Filter this image blue by iterating through each of its pixels.
+   */
   public void filterImageBlue() {
     this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
@@ -67,6 +89,11 @@ public class Image {
     }
   }
 
+  /**
+   * Brighten this image based on a type of brightening.
+   *
+   * @param brightness Representing brightness type.
+   */
   public void brightenImage(String brightness) {
     this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
@@ -76,16 +103,25 @@ public class Image {
     }
   }
 
+  /**
+   * Brighten this image based on a type of darkening.
+   *
+   * @param darkness Representing darkness type.
+   */
   public void darkenImage(String darkness) {
     this.filterPixels = this.pixels;
     for (List<Pixel> row : this.filterPixels) {
-      for (Pixel pixel : row) {
-        pixel.darkenMe(darkness);
+      for (int i = 0; i < row.size(); i++) {
+        row.get(i).darkenMe(darkness);
       }
     }
   }
 
-
+  /**
+   * Gets the ArrayList of ArrayList(pixel) for testing and operations.
+   *
+   * @return The ArrayList of ArrayList(pixel).
+   */
   public ArrayList<ArrayList<Pixel>> getPixels() {
     return this.filterPixels;
   }

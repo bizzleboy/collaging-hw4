@@ -1,17 +1,11 @@
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.IOException;
-import java.io.StringReader;
 
-import collagefiles.View.CollageView;
+import collagefiles.view.CollageView;
 
 /**
  * A class testing the construction and methods of the SetGameTextView class.
  */
 public class TestCollageTextView {
-
-
 
 
   /**

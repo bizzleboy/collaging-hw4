@@ -1,26 +1,25 @@
-package collagefiles.View;
+package collagefiles.view;
 
 import java.io.IOException;
 
+/**
+ * View for monitoring input output streams.
+ */
 public class CollageTextView implements CollageView {
 
-  private Appendable output;
+  private final Appendable output;
 
+  /**
+   * Instantiates an output stream type view.
+   */
   public CollageTextView() {
     this.output = System.out;
-  }
-
-  public CollageTextView(Appendable output) throws IllegalArgumentException {
-    if (output == null) {
-      throw new IllegalArgumentException("provided set game model destination cannot be null.");
-    }
-    this.output = output;
   }
 
   @Override
   public void renderMessage(String message) throws IOException {
     try {
-      this.output.append(message);
+      this.output.append(message + "\n");
     } catch (IOException a) {
       throw new IOException(a);
     }
