@@ -68,7 +68,7 @@ Add an additional layer labelled “layer-2” with the following command line p
 
 Add an image with the specified filepath to the first layer of the project, offset by 5 pixels right and 5 pixels down, with the following command line prompt:
 
-`add-image layer-1 Collaging/src/newSprite.ppm 5 5`
+`add-image layer-1 /Collaging/src/res/cherryNew.ppm`
 
 
 Filter out all colors except green on layer-1 with the following command line prompt:
@@ -84,3 +84,6 @@ Save the image of the project at a specific file location with the following com
 Save the project at a specific file location with the following command line prompt:
 
 `save-project Collaging/src/project.txt`
+
+ImageReference:
+`https://www.seekpng.com/ipng/u2e6r5r5o0r5u2t4_png-50-px-icon/`
