@@ -294,13 +294,59 @@ public class TestPixel {
   @Test
   public void testAddPixels() {
     bluePixel.addPixels(this.mixedPixel);
+    whitePixel.addPixels(this.transparentPixel);
 
 
+
+assertEquals(new Color(255,255,255),whitePixel.getPixelColor());
     assertEquals(new Color(128, 128, 128), bluePixel.getPixelColor());
 
 
     bluePixel.addPixels(redPixel);
     whitePixel.addPixels(blackPixel);
+
+  }
+  @Test
+  public void testAddPixels2() {
+
+    transparentPixel.addPixels(this.whitePixel);
+    redPixel.addPixels(bluePixel);
+    transparentPixel.addPixels(opaquePixel);
+
+
+    assertEquals(new Color(255,255,255),whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,255),redPixel.getPixelColor());
+
+
+
+
+    bluePixel.addPixels(redPixel);
+    whitePixel.addPixels(blackPixel);
+
+  }
+  @Test
+  public void testAddPixels3() {
+
+    redPixel.addPixels(bluePixel);
+    transparentPixel.addPixels(opaquePixel);
+
+
+
+    assertEquals(new Color(0,0,255),redPixel.getPixelColor());
+    assertEquals(new Color(255,255,255,128),transparentPixel.getPixelColor());
+
+
+
+    bluePixel.addPixels(redPixel);
+    whitePixel.addPixels(blackPixel);
+
+  }
+  @Test
+  public void testAddPixels4() {
+
+assertEquals(transparentPixel.getPixelColor().toString(), new Color(255,255,255,0).toString());
+    transparentPixel.addPixels(new Pixel(255,255,255,0));
+    assertEquals(new Color(255, 255, 255,0),transparentPixel.getPixelColor());
 
   }
 }

@@ -1,5 +1,7 @@
 package collagefiles.model;
 
+import java.util.List;
+
 /**
  * Represents a project that a user can perform collage functions on.
  */
@@ -44,4 +46,11 @@ public interface Project {
    * @return PPM formatted file.
    */
   String saveImage(String imagePath);
+
+  /**
+   * View the layers of this project, primarily for testing purposes
+   * @return All the layers of this project
+   */
+  public List<Layer> getLayers();
+
 }

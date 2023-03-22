@@ -220,8 +220,15 @@ public class Layer {
   public String getName() {
     return this.name;
   }
-}
 
 
+  public String toString() {
+    int numPics = 0;
+    for (Image i: this.imagesOnLayer){
+      numPics ++;
+    }
+    return this.name + " " + this.filter + " # of images placed on this layer: " + (numPics -1) +"\n" ;
+  }
+  }
 
 

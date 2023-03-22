@@ -19,7 +19,11 @@ public class BasicCollageProject implements Project {
    * @param canvasHeight Height of canvas.
    * @param maxVal       Maximum pixel value.
    */
-  public BasicCollageProject(int canvasWidth, int canvasHeight, int maxVal) {
+  public BasicCollageProject(int canvasWidth, int canvasHeight, int maxVal) throws IllegalArgumentException{
+    //ADDED EXCEPTION
+    if (canvasHeight <1 || canvasWidth <1 || maxVal < 1){
+      throw new IllegalArgumentException("invalid arg");
+    }
     this.layers = new ArrayList<Layer>();
     this.height = canvasHeight;
     this.width = canvasWidth;
@@ -123,13 +127,17 @@ public class BasicCollageProject implements Project {
 
     Layer startLayer = new Layer("base",this.width,this.height);
 
+    //MERGES THE IMAGES ON THE LAYERS
     for (Layer l: this.layers) {
       startLayer.placeImage(0,0,l.getImages().get(0));
     }
 
+    //APPLIES ALL THE FILTERS
     for (Layer l: this.layers) {
       l.applyFilter(l.getFilter());
     }
+
+
 
     imageString += startLayer.getImagePPM();
     return imageString;

@@ -1,6 +1,8 @@
 import java.io.IOException;
+import java.util.List;
 
 import collagefiles.model.Image;
+import collagefiles.model.Layer;
 import collagefiles.model.Project;
 
 class BasicCollageProjectConfirmInputsMock implements Project {
@@ -58,6 +60,11 @@ class BasicCollageProjectConfirmInputsMock implements Project {
     } catch (IOException ignore) {
       //c
     }
+    return null;
+  }
+
+  @Override
+  public List<Layer> getLayers() {
     return null;
   }
 

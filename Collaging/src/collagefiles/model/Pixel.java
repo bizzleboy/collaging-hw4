@@ -168,19 +168,24 @@ public class Pixel {
    * @param pix2 The other pixel to add.
    */
   public void addPixels(Pixel pix2) {
-    float pix1Alpha = (float) this.alpha;
-    float pix2Alpha = (float) pix2.alpha;
-    float alphaPct = (pix2Alpha / 255 + pix1Alpha / 255 * (1 - (pix2Alpha / 255)));
-    int newRed = (int) ((pix2Alpha / 255 * pix2.red + this.red * (pix1Alpha / 255)
-            * (1 - pix2Alpha / 255)) * (1 / alphaPct));
-    int newGreen = (int) ((pix2Alpha / 255 * pix2.green + this.green * (pix1Alpha / 255)
-            * (1 - pix2Alpha / 255)) * (1 / alphaPct));
-    int newBlue = (int) ((pix2Alpha / 255 * pix2.blue + this.blue * (pix1Alpha / 255)
-            * (1 - pix2Alpha / 255)) * (1 / alphaPct));
-    this.blue = newBlue;
-    this.red = newRed;
-    this.green = newGreen;
-    this.alpha = (int) (alphaPct * 255);
+    if(this.getPixelColor().toString().equals(new Color(255,255,255,0).toString())
+            && pix2.getPixelColor().toString().equals(new Color(255,255,255,0).toString())){
+      //pass, without this, adding 2 transparent pixels makes black
+    } else {
+      float pix1Alpha = (float) this.alpha;
+      float pix2Alpha = (float) pix2.alpha;
+      float alphaPct = (pix2Alpha / 255 + pix1Alpha / 255 * (1 - (pix2Alpha / 255)));
+      int newRed = Math.round((pix2Alpha / 255 * pix2.red + this.red * (pix1Alpha / 255)
+              * (1 - pix2Alpha / 255)) * (1 / alphaPct));
+      int newGreen = Math.round((pix2Alpha / 255 * pix2.green + this.green * (pix1Alpha / 255)
+              * (1 - pix2Alpha / 255)) * (1 / alphaPct));
+      int newBlue = Math.round((pix2Alpha / 255 * pix2.blue + this.blue * (pix1Alpha / 255)
+              * (1 - pix2Alpha / 255)) * (1 / alphaPct));
+      this.blue = newBlue;
+      this.red = newRed;
+      this.green = newGreen;
+      this.alpha = (int) (alphaPct * 255);
+    }
 
   }
 
@@ -192,6 +197,7 @@ public class Pixel {
   public Color getPixelColor() {
     return new Color(this.red, this.green, this.blue, this.alpha);
   }
+
 
 
 }
