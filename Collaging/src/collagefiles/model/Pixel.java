@@ -169,7 +169,8 @@ public class Pixel {
    */
   public void addPixels(Pixel pix2) {
     if(this.getPixelColor().toString().equals(new Color(255,255,255,0).toString())
-            && pix2.getPixelColor().toString().equals(new Color(255,255,255,0).toString())){
+            && pix2.getPixelColor().toString().equals(new Color(255,255,255,0).toString())
+    && pix2.getPixelColor().getAlpha() == 0 && this.getPixelColor().getAlpha() ==0){
       //pass, without this, adding 2 transparent pixels makes black
     } else {
       float pix1Alpha = (float) this.alpha;
