@@ -15,9 +15,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestImage {
 
-  Pixel redPixel;
-  Pixel greenPixel;
-  Pixel bluePixel;
+  Pixel redPixel1;
+  Pixel redPixel2;
+  Pixel redPixel3;
+  Pixel redPixel4;
+  Pixel redPixel5;
+  Pixel greenPixel1;
+  Pixel greenPixel2;
+  Pixel bluePixel1;
+  Pixel bluePixel2;
   Pixel whitePixel;
   Pixel blackPixel;
   Pixel mixedPixel;
@@ -35,9 +41,15 @@ public class TestImage {
 
   @Before
   public void init() {
-    this.redPixel = new Pixel(255, 0, 0, 255);
-    this.greenPixel = new Pixel(0, 255, 0, 255);
-    this.bluePixel = new Pixel(0, 0, 255, 255);
+    this.redPixel1 = new Pixel(255, 0, 0, 255);
+    this.redPixel2 = new Pixel(255, 0, 0, 255);
+    this.redPixel3 = new Pixel(255, 0, 0, 255);
+    this.redPixel4 = new Pixel(255, 0, 0, 255);
+    this.redPixel5 = new Pixel(255, 0, 0, 255);
+    this.greenPixel1 = new Pixel(0, 255, 0, 255);
+    this.greenPixel2 = new Pixel(0, 255, 0, 255);
+    this.bluePixel1 = new Pixel(0, 0, 255, 255);
+    this.bluePixel2 = new Pixel(0, 0, 255, 255);
     this.whitePixel = new Pixel(255, 255, 255, 255);
     this.blackPixel = new Pixel(0, 0, 0, 255);
     this.mixedPixel = new Pixel(128, 128, 128, 255);
@@ -49,13 +61,13 @@ public class TestImage {
 
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
-    Collections.addAll(row1, redPixel, redPixel, redPixel);
+    Collections.addAll(row1, redPixel1, redPixel2, redPixel3);
 
     ArrayList<Pixel> row2 = new ArrayList<Pixel>();
-    Collections.addAll(row2, redPixel, greenPixel, redPixel);
+    Collections.addAll(row2, redPixel4, greenPixel1, redPixel5);
 
     ArrayList<Pixel> row3 = new ArrayList<Pixel>();
-    Collections.addAll(row3, bluePixel, greenPixel, bluePixel);
+    Collections.addAll(row3, bluePixel1, greenPixel2, bluePixel2);
     ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
     Collections.addAll(imageGrid, row1, row2, row3);
 
@@ -87,21 +99,21 @@ public class TestImage {
     ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
     ArrayList<Pixel> row2 = new ArrayList<Pixel>();
-    Collections.addAll(row1, bluePixel, greenPixel, bluePixel);
-    Collections.addAll(row2, redPixel, greenPixel, bluePixel);
+    Collections.addAll(row1, bluePixel1, greenPixel1, bluePixel2);
+    Collections.addAll(row2, redPixel1, greenPixel2, bluePixel2);
     Collections.addAll(imageGrid, row1, row2);
     this.image2 = new Image(imageGrid);
 
     assertEquals(this.image2.getPixels().get(0).get(1).getPixelColor(),
-            this.greenPixel.getPixelColor());
+            this.greenPixel1.getPixelColor());
     assertEquals(this.image2.getPixels().get(0).get(2).getPixelColor(),
-            this.bluePixel.getPixelColor());
+            this.bluePixel1.getPixelColor());
     assertEquals(this.image2.getPixels().get(1).get(0).getPixelColor(),
-            this.redPixel.getPixelColor());
+            this.redPixel1.getPixelColor());
     assertEquals(this.image2.getPixels().get(1).get(1).getPixelColor(),
-            this.greenPixel.getPixelColor());
+            this.greenPixel2.getPixelColor());
     assertEquals(this.image2.getPixels().get(1).get(2).getPixelColor(),
-            this.bluePixel.getPixelColor());
+            this.bluePixel2.getPixelColor());
 
     assertEquals(this.image3.getPixels().get(0).get(0).getPixelColor(),
             this.backgroundPixel.getPixelColor());
@@ -116,10 +128,10 @@ public class TestImage {
   @Test
   public void testFilterImageRed() {
     ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
-    Collections.addAll(testRow1, redPixel, redPixel, redPixel);
+    Collections.addAll(testRow1, redPixel1, redPixel2, redPixel3);
 
     ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
-    Collections.addAll(testRow2, redPixel, blackPixel, redPixel);
+    Collections.addAll(testRow2, redPixel4, blackPixel, redPixel5);
 
     ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
     Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
@@ -143,10 +155,10 @@ public class TestImage {
     Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
 
     ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
-    Collections.addAll(testRow2, blackPixel, greenPixel, blackPixel);
+    Collections.addAll(testRow2, blackPixel, greenPixel1, blackPixel);
 
     ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
-    Collections.addAll(testRow3, blackPixel, greenPixel, blackPixel);
+    Collections.addAll(testRow3, blackPixel, greenPixel2, blackPixel);
 
     ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
@@ -170,7 +182,7 @@ public class TestImage {
     Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
 
     ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
-    Collections.addAll(testRow3, bluePixel, blackPixel, bluePixel);
+    Collections.addAll(testRow3, bluePixel1, blackPixel, bluePixel2);
 
     ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
@@ -342,5 +354,3 @@ public class TestImage {
     }
   }
 }
-
-
