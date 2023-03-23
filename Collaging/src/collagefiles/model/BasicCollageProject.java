@@ -127,15 +127,16 @@ public class BasicCollageProject implements Project {
 
     Layer startLayer = new Layer("base",this.width,this.height);
 
-    //MERGES THE IMAGES ON THE LAYERS
+
+    for (Layer l: this.layers) {
+      l.applyFilter(l.getFilter());
+    }
+
     for (Layer l: this.layers) {
       startLayer.placeImage(0,0,l.getImages().get(0));
     }
 
-    //APPLIES ALL THE FILTERS
-    for (Layer l: this.layers) {
-      l.applyFilter(l.getFilter());
-    }
+
 
 
 

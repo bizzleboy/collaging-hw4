@@ -51,27 +51,36 @@ public class Pixel {
    * Change the color of this pixel to red for filtering purposes.
    */
   public void colorMeRed() {
-
-    this.green = 0;
-    this.blue = 0;
+    if (this.getPixelColor().getAlpha() == 0){
+      //pass
+    } else {
+      this.green = 0;
+      this.blue = 0;
+    }
   }
 
   /**
    * Change the color of this pixel to green for filtering purposes.
    */
   public void colorMeGreen() {
-
-    this.blue = 0;
-    this.red = 0;
+    if (this.getPixelColor().getAlpha() == 0){
+      //pass
+    } else {
+      this.blue = 0;
+      this.red = 0;
+    }
   }
 
   /**
    * Change the color of this pixel to blue for filtering purposes.
    */
   public void colorMeBlue() {
-
-    this.green = 0;
-    this.red = 0;
+    if (this.getPixelColor().getAlpha() == 0){
+      //pass
+    } else {
+      this.green = 0;
+      this.red = 0;
+    }
   }
 
   /**

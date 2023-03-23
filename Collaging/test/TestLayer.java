@@ -227,7 +227,7 @@ public class TestLayer {
             .get(0).getPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
             .get(0).getPixels().get(2).get(1).getPixelColor());
-    assertEquals(new Color(255, 0, 0, 0), this.layer0.getImages()
+    assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
             .get(0).getPixels().get(4).get(4).getPixelColor());
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
@@ -247,7 +247,7 @@ public class TestLayer {
             .get(0).getPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 255, 0, 255), this.layer0.getImages()
             .get(0).getPixels().get(2).get(1).getPixelColor());
-    assertEquals(new Color(0, 255, 0, 0), this.layer0.getImages()
+    assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
             .get(0).getPixels().get(4).get(4).getPixelColor());
 
     assertEquals(new Color(0, 255, 0, 255), this.layer0.getImages()
@@ -266,7 +266,7 @@ public class TestLayer {
             .get(0).getPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
             .get(0).getPixels().get(2).get(1).getPixelColor());
-    assertEquals(new Color(0, 0, 255, 0), this.layer0.getImages()
+    assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
             .get(0).getPixels().get(4).get(4).getPixelColor());
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()

@@ -204,7 +204,7 @@ public class TestProject {
             .get(0)
             .getPixelColor() );
 
-    assertEquals(new Color(0,126,100),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(0,127,100),project1.getLayers().get(0).getImages().get(0).getPixels()
             .get(1)
             .get(1)
             .getPixelColor() );
@@ -263,7 +263,7 @@ public class TestProject {
   }
 
   @Test
-  public void testSaveProject(){
+  public void testSaveImage(){
     this.project1.addLayer("background");
 
     assertEquals("P3\n"
@@ -305,23 +305,113 @@ public class TestProject {
     this.project1.addImageToLayer("background",this.image5, 0 ,0);
 
 
-    this.layer0.placeImage(0,0,this.image1);
-    this.layer0.placeImage(0,0,this.image5);
-    assertEquals(new Color(255,128,128),project1.getLayers().get(0).getImages().get(0).getPixels()
-            .get(0)
-            .get(0)
-            .getPixelColor() );
+    assertEquals("test2\n"
+  +          "5 5\n"
+  +          "255\n"
+  +          "background normal\n"
+  +          "255 128 128 255\n"
+  +          "255 128 128 255\n"
+  +          "255 0 0 255\n"
+   +         "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 128 128 255\n"
+    +       "0 127 100 255\n"
+    +        "255 0 0 255\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "0 0 255 255\n"
+    +        "0 255 0 255\n"
+    +        "0 0 255 255\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +       "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n"
+    +        "255 255 255 0\n",this.project1.saveProject("test2"));
+  }
+  @Test
+  public void testSaveImageAddFilter(){
+    this.project1.addLayer("background");
+    this.project1.addImageToLayer("background",this.image1, 0 ,0);
+    this.project1.setFilter("background","red-component");
 
-    assertEquals(new Color(0,126,100),project1.getLayers().get(0).getImages().get(0).getPixels()
-            .get(1)
-            .get(1)
-            .getPixelColor() );
+    assertEquals("P3\n"
+ +           "#test3\n"
+ +           "5 5\n"
+ +          "255\n"
+ +           "\n"
+ +           "255 0 0\n"
+ +           "255 0 0\n"
+ +           "255 0 0\n"
+ +           "255 255 255\n"
+ +           "255 255 255\n"
+ +           "255 0 0\n"
+ +           "0 0 0\n"
+ +           "255 0 0\n"
+ +           "255 255 255\n"
+ +           "255 255 255\n"
+ +           "0 0 0\n"
+ +           "0 0 0\n"
+ +           "0 0 0\n"
+ +           "255 255 255\n"
+  +          "255 255 255\n"
+ +           "255 255 255\n"
+   +         "255 255 255\n"
+    +        "255 255 255\n"
+     +       "255 255 255\n"
+      +      "255 255 255\n"
+       +     "255 255 255\n"
+        +    "255 255 255\n"
+         +   "255 255 255\n"
+          +  "255 255 255\n"
+        +    "255 255 255" + "\n",this.project1.saveImage("test3"));
+  }
+  @Test
+  public void testAddImagesAndFiltersOnMultipleLayers(){
+    this.project1.addLayer("background");
+    this.project1.addImageToLayer("background",this.image1, 0 ,0);
+    this.project1.setFilter("background","red-component");
 
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getPixels()
-            .get(4)
-            .get(4)
-            .getPixelColor() );
+    this.project1.addLayer("layer2");
+    this.project1.addImageToLayer("layer2",this.image1, 2 ,2);
+    this.project1.setFilter("layer2","blue-component");
 
+    assertEquals("P3\n"
+ +           "#baba\n"
+ +           "5 5\n"
+ +           "255\n"
+ +           "\n"
+ +           "255 0 0\n"
+ +           "255 0 0\n"
+ +           "255 0 0\n"
+ +           "255 255 255\n"
+ +           "255 255 255\n"
+ +           "255 0 0\n"
+ +           "0 0 0\n"
+ +          "255 0 0\n"
+ +           "255 255 255\n"
+ +          "255 255 255\n"
+ +           "0 0 0\n"
+  +          "0 0 0\n"
+   +         "0 0 0\n"
+    +        "0 0 0\n"
+     +       "0 0 0\n"
+      +      "255 255 255\n"
+       +     "255 255 255\n"
+        +    "0 0 0\n"
+         +   "0 0 0\n"
+          +  "0 0 0\n"
+           + "255 255 255\n"
+            +"255 255 255\n"
+           + "0 0 255\n"
+          +  "0 0 0\n"
+           + "0 0 255\n + \n",this.project1.saveImage("baba"));
   }
 
 }
