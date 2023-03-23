@@ -1,5 +1,6 @@
 package collagefiles.view;
 
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
@@ -16,5 +17,6 @@ public interface CollageView {
    * @throws IOException if the transmission of the message to the data output fails
    */
   void renderMessage(String message) throws IOException;
+
 }
 
