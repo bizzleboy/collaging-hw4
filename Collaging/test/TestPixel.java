@@ -24,6 +24,7 @@ public class TestPixel {
 
   @Before
   public void init() {
+<<<<<<< Updated upstream
     this.redPixel = new Pixel(255, 0, 0, 255);
     this.greenPixel = new Pixel(0, 255, 0, 255);
     this.bluePixel = new Pixel(0, 0, 255, 255);
@@ -32,6 +33,16 @@ public class TestPixel {
     this.mixedPixel = new Pixel(128, 128, 128, 255);
     this.transparentPixel = new Pixel(255, 255, 255, 0);
     this.opaquePixel = new Pixel(255, 255, 255, 128);
+=======
+    this.redPixel = new Pixel(255,0,0,255);
+    this.greenPixel = new Pixel(0,255,0,255);
+    this.bluePixel = new Pixel(0,0,255,255);
+    this.whitePixel = new Pixel(255,255,255,255);
+    this.blackPixel = new Pixel(0,0,0,255);
+    this.mixedPixel = new Pixel(128,128,128,255);
+    this.transparentPixel = new Pixel(255,255,255,0);
+    this.opaquePixel = new Pixel(255,255,255,128);
+>>>>>>> Stashed changes
     this.amaranthPixel = new Pixel(159, 43, 104, 255);
   }
 
@@ -100,6 +111,7 @@ public class TestPixel {
     this.transparentPixel.colorMeRed();
     this.opaquePixel.colorMeRed();
 
+<<<<<<< Updated upstream
     assertEquals(new Color(255, 0, 0, 255), this.redPixel.getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.greenPixel.getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.bluePixel.getPixelColor());
@@ -108,6 +120,16 @@ public class TestPixel {
     assertEquals(new Color(128, 0, 0, 255), this.mixedPixel.getPixelColor());
     assertEquals(new Color(255, 0, 0, 0), this.transparentPixel.getPixelColor());
     assertEquals(new Color(255, 0, 0, 128), this.opaquePixel.getPixelColor());
+=======
+    assertEquals(new Color(255,0,0,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.greenPixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255), this.bluePixel.getPixelColor());
+    assertEquals(new Color(255,0,0,255), this.whitePixel.getPixelColor());
+    assertEquals(new Color(0,0,0,255).getAlpha(), this.blackPixel.getPixelColor().getAlpha());
+    assertEquals(new Color(128,0,0,255), this.mixedPixel.getPixelColor());
+    assertEquals(new Color(255,0,0,0), this.transparentPixel.getPixelColor());
+    assertEquals(new Color(255,0,0,128), this.opaquePixel.getPixelColor());
+>>>>>>> Stashed changes
   }
 
   @Test
