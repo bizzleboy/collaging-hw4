@@ -79,10 +79,11 @@ public class BasicCollageProject implements Project {
    */
   @Override
   public void setFilter(String layerName, String filterType) {
-    for (Layer l : this.layers) {
-      if (l.getName().equals(layerName)) {
-        l.setFilter(filterType);
-        //l.applyFilter(filterType);
+    for (int i = 0; i < this.layers.size(); i++) {
+    //for (Layer l : this.layers) {
+      if (this.layers.get(i).getName().equals(layerName)) {
+        //l.setFilter(filterType);
+        this.layers.get(i).applyFilter(filterType, this.stackToImage(i + 1));
         System.out.print("Filter set for layer\n");
         break;
       }
@@ -125,20 +126,17 @@ public class BasicCollageProject implements Project {
     imageString += ("#" + paths[paths.length-1].split("\\.")[0] + "\n");
     imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
 
-    Layer startLayer = new Layer("base",this.width,this.height);
+    Layer startLayer = new Layer("base", this.width, this.height);
 
-
-    for (Layer l: this.layers) {
-      l.applyFilter(l.getFilter());
+    for (int k = 0; k < this.layers.size(); k++) {
+      this.layers.get(k).applyFilter(this.layers.get(k).getFilter(), this.stackToImage(k + 1));
     }
 
-    for (Layer l: this.layers) {
-      startLayer.placeImage(0,0,l.getImages().get(0));
+    for (int l = 0; l < this.layers.size(); l++) {
+      startLayer.placeImage(0,0,this.layers.get(l).getImages().get(0));
     }
 
-
-
-
+    //layer.placeImage(0,0,this.stackToImage(0));
 
     imageString += startLayer.getImagePPM();
     return imageString;
@@ -152,5 +150,34 @@ public class BasicCollageProject implements Project {
    */
   public List<Layer> getLayers() {
     return this.layers;
+  }
+
+  public Image stackToImage(int startIndex) {
+
+    List<Layer> stack = new ArrayList<Layer>();
+    for (int j = startIndex + 1; j < this.layers.size(); j++) {
+      stack.add(this.layers.get(j));
+    }
+    Layer startLayer = new Layer("base",this.width,this.height);
+
+    for (int k = 0; k < stack.size(); k++) {
+      stack.get(k).applyFilter(stack.get(k).getFilter(), this.stackToImage(k + 1));
+    }
+
+    for (int l = 0; l < stack.size(); l++) {
+      startLayer.placeImage(0,0,stack.get(l).getImages().get(0));
+    }
+
+    return startLayer.getImages().get(0);
+
+
+//    for (Layer l: stack) {
+//      l.applyFilter(l.getFilter(), this.stackToImage());
+//    }
+//
+//    for (Layer l: stack) {
+//      startLayer.placeImage(0,0,l.getImages().get(0));
+//    }
+//    return startLayer;
   }
 }

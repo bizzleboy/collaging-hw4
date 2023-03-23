@@ -18,9 +18,24 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestProject {
 
-  Pixel redPixel;
-  Pixel greenPixel;
-  Pixel bluePixel;
+  Pixel redPixel1;
+  Pixel redPixel2;
+  Pixel redPixel3;
+  Pixel redPixel4;
+  Pixel redPixel5;
+  Pixel redPixel6;
+  Pixel redPixel7;
+  Pixel redPixel8;
+  Pixel redPixel9;
+  Pixel redPixel10;
+  Pixel greenPixel1;
+  Pixel greenPixel2;
+  Pixel greenPixel3;
+  Pixel greenPixel4;
+  Pixel bluePixel1;
+  Pixel bluePixel2;
+  Pixel bluePixel3;
+  Pixel bluePixel4;
   Pixel opaquePixel;
   Pixel invisiblePixel;
   Pixel opaqueBlue;
@@ -32,6 +47,7 @@ public class TestProject {
   Layer layer3;
 
   Image image1;
+  Image image1copy;
   Image image2;
   Image image3;
   Image image4;
@@ -43,14 +59,28 @@ public class TestProject {
   @Before
   public void init() {
     this.project1 = new BasicCollageProject(5,5,255);
-    this.redPixel = new Pixel(255, 0, 0, 255);
-    this.greenPixel = new Pixel(0, 255, 0, 255);
-    this.bluePixel = new Pixel(0, 0, 255, 255);
+    this.redPixel1 = new Pixel(255, 0, 0, 255);
+    this.redPixel2 = new Pixel(255, 0, 0, 255);
+    this.redPixel3 = new Pixel(255, 0, 0, 255);
+    this.redPixel4 = new Pixel(255, 0, 0, 255);
+    this.redPixel5 = new Pixel(255, 0, 0, 255);
+    this.redPixel6 = new Pixel(255, 0, 0, 255);
+    this.redPixel7 = new Pixel(255, 0, 0, 255);
+    this.redPixel8 = new Pixel(255, 0, 0, 255);
+    this.redPixel9 = new Pixel(255, 0, 0, 255);
+    this.redPixel10 = new Pixel(255, 0, 0, 255);
+    this.greenPixel1 = new Pixel(0, 255, 0, 255);
+    this.greenPixel2 = new Pixel(0, 255, 0, 255);
+    this.greenPixel3 = new Pixel(0, 255, 0, 255);
+    this.greenPixel4 = new Pixel(0, 255, 0, 255);
+    this.bluePixel1 = new Pixel(0, 0, 255, 255);
+    this.bluePixel2 = new Pixel(0, 0, 255, 255);
+    this.bluePixel3 = new Pixel(0, 0, 255, 255);
+    this.bluePixel4 = new Pixel(0, 0, 255, 255);
     this.opaquePixel = new Pixel(255, 255, 255, 128);
     this.invisiblePixel = new Pixel(new Color(255, 255, 255, 0));
     this.opaqueBlue = new Pixel(0, 0, 200, 128);
     this.opaqueRed = new Pixel(200, 0, 0, 120);
-
 
     this.layer0 = new Layer("l1", 5, 5);
     this.layer1 = new Layer("l1", 3, 3);
@@ -58,17 +88,16 @@ public class TestProject {
     this.layer3 = new Layer("l1", 11, 2);
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
-    Collections.addAll(row1, redPixel, redPixel, redPixel);
+    Collections.addAll(row1, redPixel1, redPixel2, redPixel3);
 
     ArrayList<Pixel> row2 = new ArrayList<Pixel>();
-    Collections.addAll(row2, redPixel, greenPixel, redPixel);
+    Collections.addAll(row2, redPixel4, greenPixel1, redPixel5);
 
     ArrayList<Pixel> row3 = new ArrayList<Pixel>();
-    Collections.addAll(row3, bluePixel, greenPixel, bluePixel);
+    Collections.addAll(row3, bluePixel1, greenPixel2, bluePixel2);
 
     ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
     Collections.addAll(imageGrid, row1, row2, row3);
-
 
 
 
@@ -84,9 +113,23 @@ public class TestProject {
     ArrayList<Pixel> singleRow = new ArrayList<Pixel>();
     singleRow.add(opaqueRed);
 
+
+    ArrayList<Pixel> row6 = new ArrayList<Pixel>();
+    Collections.addAll(row6, redPixel6, redPixel7, redPixel8);
+
+    ArrayList<Pixel> row7 = new ArrayList<Pixel>();
+    Collections.addAll(row7, redPixel9, greenPixel3, redPixel10);
+
+    ArrayList<Pixel> row8 = new ArrayList<Pixel>();
+    Collections.addAll(row8, bluePixel3, greenPixel4, bluePixel4);
+
+    ArrayList<ArrayList<Pixel>> imageGrid3 = new ArrayList<>();
+    Collections.addAll(imageGrid3, row6, row7, row8);
+
     singlePix.add(singleRow);
 
     this.image1 = new Image(imageGrid);
+    this.image1copy = new Image(imageGrid3);
     this.image2 = new Image(2, 2);
     this.image3 = new Image(3, 3);
     this.image4 = new Image(5, 5);
@@ -379,7 +422,7 @@ public class TestProject {
     this.project1.setFilter("background","red-component");
 
     this.project1.addLayer("layer2");
-    this.project1.addImageToLayer("layer2",this.image1, 2 ,2);
+    this.project1.addImageToLayer("layer2",this.image1copy, 2 ,2);
     this.project1.setFilter("layer2","blue-component");
 
     assertEquals("P3\n"
@@ -411,7 +454,7 @@ public class TestProject {
             +"255 255 255\n"
            + "0 0 255\n"
           +  "0 0 0\n"
-           + "0 0 255\n + \n",this.project1.saveImage("baba"));
+           + "0 0 255\n",this.project1.saveImage("baba"));
   }
 
 }

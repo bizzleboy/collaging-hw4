@@ -221,7 +221,7 @@ public class TestLayer {
   @Test
   public void testApplyFilterRed() {
     this.layer0.placeImage(0, 0, this.image1);
-    this.layer0.applyFilter("red-component");
+    this.layer0.applyFilter("red-component", new Image(1,1));
 
     assertEquals(new Color(255, 0, 0, 255), this.layer0.getImages()
             .get(0).getPixels().get(0).get(0).getPixelColor());
@@ -241,7 +241,7 @@ public class TestLayer {
   @Test
   public void testApplyFilterGreen() {
     this.layer0.placeImage(0, 0, this.image1);
-    this.layer0.applyFilter("green-component");
+    this.layer0.applyFilter("green-component", new Image(1,1));
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
             .get(0).getPixels().get(0).get(0).getPixelColor());
@@ -260,7 +260,7 @@ public class TestLayer {
   @Test
   public void testApplyFilterBlue() {
     this.layer0.placeImage(0, 0, this.image1);
-    this.layer0.applyFilter("blue-component");
+    this.layer0.applyFilter("blue-component", new Image(1,1));
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
             .get(0).getPixels().get(0).get(0).getPixelColor());
@@ -329,7 +329,7 @@ public class TestLayer {
 
   @Test
   public void testGetFilter() {
-    this.layer1.applyFilter("red-component");
+    this.layer1.applyFilter("red-component", new Image(1,1));
     assertEquals("red-component", this.layer1.getFilter());
   }
 }

@@ -68,16 +68,12 @@ public class Layer {
 
   }
 
-  public void setFilter(String filter) {
-    this.filter = filter;
-  }
-
   /**
    * Applies a filter to all the images on a layer.
    *
    * @param filter Represents filter component.
    */
-  public void applyFilter(String filter) {
+  public void applyFilter(String filter, Image backgroundImage) {
     switch (filter) {
       case "normal":
         this.filter = filter;
@@ -89,7 +85,6 @@ public class Layer {
         this.filter = filter;
         for (Image image : imagesOnLayer) {
           image.filterImageRed();
-
         }
         break;
       case "blue-component":
@@ -147,6 +142,8 @@ public class Layer {
 
         }
         break;
+      //case "difference":
+      //  this.filter = filter;
       default:
         System.out.println("Invalid Input!");
     }
