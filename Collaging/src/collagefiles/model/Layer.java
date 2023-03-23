@@ -167,7 +167,7 @@ public class Layer {
   public String getImagePPM() {
 
     String imageString = "";
-<<<<<<< Updated upstream
+
     for (List<Pixel> list : this.imagesOnLayer.get(0).filterPixels) {
       for (Pixel p : list) {
         imageString += (String.format("%d %d %d\n",
@@ -178,18 +178,7 @@ public class Layer {
       }
     }
     return imageString;
-=======
-       for (List<Pixel> list:this.imagesOnLayer.get(0).pixels){
-         for(Pixel p: list) {
-           imageString += (String.format("%d %d %d\n",
-                   (int) (p.getPixelColor().getRed() * (float) p.getPixelColor().getAlpha() / 255),
-                   (int) (p.getPixelColor().getGreen() * (float) p.getPixelColor().getAlpha() / 255),
-                   (int) (p.getPixelColor().getBlue() * (float) p.getPixelColor().getAlpha() / 255)
-                   ));
-           }
-         }
-       return imageString;
->>>>>>> Stashed changes
+
   }
 
   /**

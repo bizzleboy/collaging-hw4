@@ -67,6 +67,8 @@ public class BasicCollageProject implements Project {
         l.placeImage(xPos, yPos, imageToAdd);
         System.out.print("Image added to layer\n");
         break;
+      } else{
+        System.out.print("Image not added\n");
       }
     }
   }
