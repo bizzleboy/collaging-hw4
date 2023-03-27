@@ -228,6 +228,4 @@ public class Layer {
     }
     return this.name + " " + this.filter + " # of images placed on this layer: " + (numPics -1) +"\n" ;
   }
-  }
-
-
+}

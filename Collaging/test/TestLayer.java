@@ -23,11 +23,13 @@ public class TestLayer {
   Pixel invisiblePixel;
   Pixel opaqueBlue;
   Pixel opaqueRed;
+  Pixel amaranthPixel;
 
   Layer layer0;
   Layer layer1;
   Layer layer2;
   Layer layer3;
+  Layer layer4;
 
   Image image1;
   Image image2;
@@ -35,7 +37,8 @@ public class TestLayer {
   Image image4;
   Image image5;
   Image image6;
-
+  Image image7;
+  Image image8;
 
   @Before
   public void init() {
@@ -46,12 +49,14 @@ public class TestLayer {
     this.invisiblePixel = new Pixel(new Color(255, 255, 255, 0));
     this.opaqueBlue = new Pixel(0, 0, 200, 128);
     this.opaqueRed = new Pixel(200, 0, 0, 120);
+    this.amaranthPixel = new Pixel(159, 43, 104, 255);
 
 
     this.layer0 = new Layer("l1", 5, 5);
     this.layer1 = new Layer("l1", 3, 3);
     this.layer2 = new Layer("l1", 3, 8);
     this.layer3 = new Layer("l1", 11, 2);
+    this.layer4 = new Layer("l1",1,1);
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
     Collections.addAll(row1, redPixel, redPixel, redPixel);
@@ -76,18 +81,29 @@ public class TestLayer {
     ArrayList<ArrayList<Pixel>> imageGrid2 = new ArrayList<>();
     Collections.addAll(imageGrid2, row4, row5);
 
-    ArrayList<ArrayList<Pixel>> singlePix = new ArrayList<ArrayList<Pixel>>();
-    ArrayList<Pixel> singleRow = new ArrayList<Pixel>();
-    singleRow.add(opaqueRed);
+    ArrayList<ArrayList<Pixel>> singlePix1 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow1 = new ArrayList<Pixel>();
+    singleRow1.add(opaqueRed);
+    singlePix1.add(singleRow1);
 
-    singlePix.add(singleRow);
+    ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
+    singleRow2.add(greenPixel);
+    singlePix2.add(singleRow2);
+
+    ArrayList<ArrayList<Pixel>> singlePix3 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow3 = new ArrayList<Pixel>();
+    singleRow3.add(amaranthPixel);
+    singlePix3.add(singleRow3);
 
     this.image1 = new Image(imageGrid);
     this.image2 = new Image(2, 2);
     this.image3 = new Image(3, 3);
     this.image4 = new Image(5, 5);
     this.image5 = new Image(imageGrid2);
-    this.image6 = new Image(singlePix);
+    this.image6 = new Image(singlePix1);
+    this.image7 = new Image(singlePix2);
+    this.image8 = new Image(singlePix3);
   }
 
   @Test
@@ -277,7 +293,25 @@ public class TestLayer {
   }
 
   @Test
+  public void testApplyDifference() {
+    this.layer1.placeImage(0, 0, this.image1);
+    this.layer1.applyFilter("difference", this.image1);
+    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
+            .get(0).getPixels().get(0).get(0).getPixelColor());
+    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
+            .get(0).getPixels().get(1).get(1).getPixelColor());
+    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
+            .get(0).getPixels().get(2).get(2).getPixelColor());
+
+    this.layer4.placeImage(0,0,this.image7);
+    this.layer4.applyFilter("difference", this.image8);
+    assertEquals(new Color(159, 104, 212, 255), this.layer4.getImages()
+            .get(0).getPixels().get(0).get(0).getPixelColor());
+  }
+
+  @Test
   public void testGetLayerText() {
+    this.init();
     this.layer0.placeImage(0, 0, this.image1);
     assertEquals(
             "255 0 0 255\n"
