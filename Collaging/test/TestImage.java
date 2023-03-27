@@ -34,10 +34,10 @@ public class TestImage {
 
   Image image1;
   Image blankImage;
-
-
   Image image2;
   Image image3;
+  Image image4;
+  Image image5;
 
   @Before
   public void init() {
@@ -73,6 +73,19 @@ public class TestImage {
 
     this.image1 = new Image(imageGrid);
     this.image3 = new Image(2, 2);
+
+    ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
+    singleRow2.add(new Pixel(0, 255, 0, 255));
+    singlePix2.add(singleRow2);
+
+    ArrayList<ArrayList<Pixel>> singlePix3 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow3 = new ArrayList<Pixel>();
+    singleRow3.add(amaranthPixel);
+    singlePix3.add(singleRow3);
+
+    this.image4 = new Image(singlePix2);
+    this.image5 = new Image(singlePix3);
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -318,6 +331,8 @@ public class TestImage {
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
+
+
     this.image1.brightenImage("brighten-intensity");
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
@@ -353,4 +368,33 @@ public class TestImage {
       }
     }
   }
+
+  @Test
+  public void testFilterDifference() {
+    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
+
+    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
+
+    Image testImage = new Image(testImageGrid);
+    this.image1.differenceImage(this.image1);
+    for (int y = 0; y < 3; y++) {
+      for (int x = 0; x < 3; x++) {
+        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
+                this.image1.getPixels().get(y).get(x).getPixelColor());
+      }
+    }
+
+    this.image4.differenceImage(image5);
+    assertEquals(new Color(159, 104, 212, 255),
+            this.image4.getPixels().get(0).get(0).getPixelColor());
+  }
+
 }

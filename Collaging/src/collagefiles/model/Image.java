@@ -117,6 +117,17 @@ public class Image {
     }
   }
 
+  public void differenceImage(Image backgroundImage) {
+    this.filterPixels = this.pixels;
+    for (int i = 0; i < this.pixels.size(); i++) {
+        for (int j = 0; j < this.pixels.get(0).size(); j++) {
+          this.pixels.get(i).get(j).differenceMe(
+                  backgroundImage.pixels.get(i)
+                          .get(j));
+        }
+      }
+  }
+
   /**
    * Gets the ArrayList of ArrayList(pixel) for testing and operations.
    *

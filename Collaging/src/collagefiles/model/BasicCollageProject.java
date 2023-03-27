@@ -67,6 +67,8 @@ public class BasicCollageProject implements Project {
         l.placeImage(xPos, yPos, imageToAdd);
         System.out.print("Image added to layer\n");
         break;
+      } else{
+        System.out.print("Image not added\n");
       }
     }
   }
@@ -80,7 +82,7 @@ public class BasicCollageProject implements Project {
   @Override
   public void setFilter(String layerName, String filterType) {
     for (int i = 0; i < this.layers.size(); i++) {
-    //for (Layer l : this.layers) {
+      //for (Layer l : this.layers) {
       if (this.layers.get(i).getName().equals(layerName)) {
         //l.setFilter(filterType);
         this.layers.get(i).applyFilter(filterType, this.stackToImage(i + 1));

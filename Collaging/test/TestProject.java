@@ -1,7 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -45,6 +45,9 @@ public class TestProject {
   Layer layer1;
   Layer layer2;
   Layer layer3;
+  Layer layer4;
+  Layer layer5;
+  Layer layer6;
 
   Image image1;
   Image image1copy;
@@ -53,12 +56,16 @@ public class TestProject {
   Image image4;
   Image image5;
   Image image6;
+  Image image7;
+  Image image8;
+  Image image9;
+
   Project project1;
 
 
   @Before
   public void init() {
-    this.project1 = new BasicCollageProject(5,5,255);
+    this.project1 = new BasicCollageProject(5, 5, 255);
     this.redPixel1 = new Pixel(255, 0, 0, 255);
     this.redPixel2 = new Pixel(255, 0, 0, 255);
     this.redPixel3 = new Pixel(255, 0, 0, 255);
@@ -86,6 +93,10 @@ public class TestProject {
     this.layer1 = new Layer("l1", 3, 3);
     this.layer2 = new Layer("l1", 3, 8);
     this.layer3 = new Layer("l1", 11, 2);
+    this.layer4 = new Layer("l1", 1, 1);
+    this.layer5 = new Layer("l1", 1, 1);
+    this.layer6 = new Layer("l1", 1, 1);
+
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
     Collections.addAll(row1, redPixel1, redPixel2, redPixel3);
@@ -99,8 +110,6 @@ public class TestProject {
     ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
     Collections.addAll(imageGrid, row1, row2, row3);
 
-
-
     ArrayList<Pixel> row4 = new ArrayList<Pixel>();
     Collections.addAll(row4, opaquePixel, opaquePixel);
     ArrayList<Pixel> row5 = new ArrayList<Pixel>();
@@ -113,6 +122,20 @@ public class TestProject {
     ArrayList<Pixel> singleRow = new ArrayList<Pixel>();
     singleRow.add(opaqueRed);
 
+    ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
+    singleRow2.add(new Pixel(0, 255, 0, 255));
+    singlePix2.add(singleRow2);
+
+    ArrayList<ArrayList<Pixel>> singlePix3 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow3 = new ArrayList<Pixel>();
+    singleRow3.add(new Pixel(159, 43, 104, 255));
+    singlePix3.add(singleRow3);
+
+    ArrayList<ArrayList<Pixel>> singlePix4 = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<Pixel> singleRow4 = new ArrayList<Pixel>();
+    singleRow4.add(new Pixel(0, 0, 255, 255));
+    singlePix4.add(singleRow4);
 
     ArrayList<Pixel> row6 = new ArrayList<Pixel>();
     Collections.addAll(row6, redPixel6, redPixel7, redPixel8);
@@ -135,6 +158,10 @@ public class TestProject {
     this.image4 = new Image(5, 5);
     this.image5 = new Image(imageGrid2);
     this.image6 = new Image(singlePix);
+    this.image7 = new Image(singlePix2);
+    this.image8 = new Image(singlePix3);
+    this.image9 = new Image(singlePix4);
+
   }
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidProjectWidth(){
@@ -446,15 +473,49 @@ public class TestProject {
     +        "0 0 0\n"
      +       "0 0 0\n"
       +      "255 255 255\n"
-       +     "255 255 255\n"
-        +    "0 0 0\n"
-         +   "0 0 0\n"
-          +  "0 0 0\n"
-           + "255 255 255\n"
-            +"255 255 255\n"
-           + "0 0 255\n"
-          +  "0 0 0\n"
-           + "0 0 255\n",this.project1.saveImage("baba"));
+            + "255 255 255\n"
+            + "0 0 0\n"
+            + "0 0 0\n"
+            + "0 0 0\n"
+            + "255 255 255\n"
+            + "255 255 255\n"
+            + "0 0 255\n"
+            + "0 0 0\n"
+            + "0 0 255\n", this.project1.saveImage("baba"));
+  }
+
+
+  @Test
+  public void testDifferenceFunction() {
+
+    this.project1 = new BasicCollageProject(1, 1, 255);
+    this.project1.addLayer("l1");
+    this.project1.addLayer("l2");
+    //this.project1.addLayer("l3");
+    this.project1.addImageToLayer("name", this.image7, 0, 0);
+    this.project1.addImageToLayer("l1", this.image8, 0, 0);
+    this.project1.addImageToLayer("l2", this.image9, 0, 0);
+    this.project1.setFilter("name", "difference");
+    this.project1.setFilter("l1", "difference");
+    this.project1.setFilter("l2", "difference");
+
+    assertEquals(new Color(0,0,1,255),
+            this.project1.getLayers().get(1).getImages().get(0).getPixels().get(0).get(0).getPixelColor());
+
+
+//    this.layer1.placeImage(0, 0, this.image1);
+//    this.layer1.applyFilter("difference", this.image1);
+//    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
+//            .get(0).getPixels().get(0).get(0).getPixelColor());
+//    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
+//            .get(0).getPixels().get(1).get(1).getPixelColor());
+//    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
+//            .get(0).getPixels().get(2).get(2).getPixelColor());
+//
+//    this.layer4.placeImage(0,0,this.image7);
+//    this.layer4.applyFilter("difference", this.image8);
+//    assertEquals(new Color(159, 104, 212, 255), this.layer4.getImages()
+//            .get(0).getPixels().get(0).get(0).getPixelColor());
   }
 
 }

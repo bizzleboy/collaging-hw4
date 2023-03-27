@@ -12,7 +12,6 @@ import collagefiles.model.Project;
 import collagefiles.view.CollageGUI;
 import collagefiles.view.CollageView;
 import collagefiles.view.GUIView;
-
 public class CollageGUIController implements ActionListener {
   Project model;
   GUIView view;
@@ -20,9 +19,6 @@ public class CollageGUIController implements ActionListener {
     this.model =p;
     this.view = v;
     this.view.setListener(this);
-
-
-
 
   }
   @Override
