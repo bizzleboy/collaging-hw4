@@ -178,14 +178,14 @@ public class Pixel {
    * @param backgroundPixel the pixel directly behind this one in the composite image.
    */
   public void differenceMe(Pixel backgroundPixel) {
+
     int newRed;
     int newBlue;
     int newGreen;
 
     newRed = Math.abs(this.red - backgroundPixel.red);
-    newGreen = Math.abs(this.blue - backgroundPixel.blue);
-    newBlue = Math.abs(this.green - backgroundPixel.green);
-
+    newBlue = Math.abs(this.blue - backgroundPixel.blue);
+    newGreen = Math.abs(this.green - backgroundPixel.green);
 
     this.red = newRed;
     this.green = newGreen;

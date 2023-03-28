@@ -35,6 +35,11 @@ public class Image {
     this.filterPixels = this.pixels;
   }
 
+  public Image(int width, int height, String base) {
+    this.pixels = new ArrayList<>();
+    this.filterPixels = this.pixels;
+  }
+
   /**
    * Typical image constructor.
    * Builds from arraylist of arraylist(pixels).
@@ -104,7 +109,7 @@ public class Image {
   }
 
   /**
-   * Brighten this image based on a type of darkening.
+   * Darken this image based on a type of darkening.
    *
    * @param darkness Representing darkness type.
    */
@@ -121,11 +126,33 @@ public class Image {
     this.filterPixels = this.pixels;
     for (int i = 0; i < this.pixels.size(); i++) {
         for (int j = 0; j < this.pixels.get(0).size(); j++) {
-          this.pixels.get(i).get(j).differenceMe(
-                  backgroundImage.pixels.get(i)
+          this.filterPixels.get(i).get(j).differenceMe(
+                  backgroundImage.filterPixels.get(i)
                           .get(j));
         }
       }
+  }
+
+  public void multiplyImage(Image backgroundImage) {
+    this.filterPixels = this.pixels;
+    for (int i = 0; i < this.pixels.size(); i++) {
+      for (int j = 0; j < this.pixels.get(0).size(); j++) {
+        this.filterPixels.get(i).get(j).hslFunc(
+                backgroundImage.filterPixels.get(i)
+                        .get(j), "multiply");
+      }
+    }
+  }
+
+  public void screenImage(Image backgroundImage) {
+    this.filterPixels = this.pixels;
+    for (int i = 0; i < this.pixels.size(); i++) {
+      for (int j = 0; j < this.pixels.get(0).size(); j++) {
+        this.filterPixels.get(i).get(j).hslFunc(
+                backgroundImage.filterPixels.get(i)
+                        .get(j), "screen");
+      }
+    }
   }
 
   /**

@@ -68,6 +68,10 @@ public class Layer {
 
   }
 
+  public void setFilter(String filter) {
+    this.filter = filter;
+  }
+
   /**
    * Applies a filter to all the images on a layer.
    *
@@ -142,8 +146,30 @@ public class Layer {
 
         }
         break;
-      //case "difference":
-      //  this.filter = filter;
+      case "difference":
+        this.filter = filter;
+        if (backgroundImage.pixels.size()!=0) {
+          for (Image image : imagesOnLayer) {
+            image.differenceImage(backgroundImage);
+          }
+        }
+        break;
+      case "multiply":
+        this.filter = filter;
+        if (backgroundImage.pixels.size()!=0) {
+          for (Image image : imagesOnLayer) {
+            image.multiplyImage(backgroundImage);
+          }
+        }
+        break;
+      case "screen":
+        this.filter = filter;
+        if (backgroundImage.pixels.size()!=0) {
+          for (Image image : imagesOnLayer) {
+            image.screenImage(backgroundImage);
+          }
+        }
+        break;
       default:
         System.out.println("Invalid Input!");
     }

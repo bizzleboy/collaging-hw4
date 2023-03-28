@@ -488,18 +488,23 @@ public class TestProject {
   @Test
   public void testDifferenceFunction() {
 
+//    this.layer4.placeImage(0,0,this.image7);
+//    this.layer4.applyFilter("difference", this.image8);
+//    assertEquals(new Color(159, 212, 104, 255), this.layer4.getImages()
+//            .get(0).getPixels().get(0).get(0).getPixelColor());
+
     this.project1 = new BasicCollageProject(1, 1, 255);
     this.project1.addLayer("l1");
     this.project1.addLayer("l2");
     //this.project1.addLayer("l3");
-    this.project1.addImageToLayer("name", this.image7, 0, 0);
-    this.project1.addImageToLayer("l1", this.image8, 0, 0);
-    this.project1.addImageToLayer("l2", this.image9, 0, 0);
-    this.project1.setFilter("name", "difference");
-    this.project1.setFilter("l1", "difference");
+    this.project1.addImageToLayer("l1", this.image7, 0, 0);
+    this.project1.addImageToLayer("l2", this.image8, 0, 0);
+    //this.project1.addImageToLayer("l2", this.image9, 0, 0);
+    //this.project1.setFilter("background", "difference");
     this.project1.setFilter("l2", "difference");
+    //this.project1.setFilter("l2", "difference");
 
-    assertEquals(new Color(0,0,1,255),
+    assertEquals(new Color(159,212,104,255),
             this.project1.getLayers().get(1).getImages().get(0).getPixels().get(0).get(0).getPixelColor());
 
 

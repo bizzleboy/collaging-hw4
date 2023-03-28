@@ -298,8 +298,8 @@ public class TestPixel {
     this.amaranthPixel.differenceMe(this.greenPixel);
     this.whitePixel.differenceMe(this.blackPixel);
 
-    assertEquals(new Color(255,255,0), this.redPixel.getPixelColor());
-    assertEquals(new Color(159,104,212), this.amaranthPixel.getPixelColor());
+    assertEquals(new Color(255,0,255), this.redPixel.getPixelColor());
+    assertEquals(new Color(159,212,104), this.amaranthPixel.getPixelColor());
     assertEquals(new Color(255,255,255), this.whitePixel.getPixelColor());
 
   }

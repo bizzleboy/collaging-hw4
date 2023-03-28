@@ -393,7 +393,7 @@ public class TestImage {
     }
 
     this.image4.differenceImage(image5);
-    assertEquals(new Color(159, 104, 212, 255),
+    assertEquals(new Color(159, 212, 104, 255),
             this.image4.getPixels().get(0).get(0).getPixelColor());
   }
 

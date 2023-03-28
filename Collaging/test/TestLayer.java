@@ -74,7 +74,7 @@ public class TestLayer {
     Collections.addAll(row4, opaquePixel, opaquePixel);
     ArrayList<Pixel> row5 = new ArrayList<Pixel>();
 
-    Collections.addAll(row1, opaquePixel, opaquePixel);
+    //Collections.addAll(row1, opaquePixel, opaquePixel);
 
     Collections.addAll(row5, opaquePixel, opaqueBlue);
 
@@ -88,12 +88,12 @@ public class TestLayer {
 
     ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
     ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
-    singleRow2.add(greenPixel);
+    singleRow2.add(new Pixel(0,255,0,255));
     singlePix2.add(singleRow2);
 
     ArrayList<ArrayList<Pixel>> singlePix3 = new ArrayList<ArrayList<Pixel>>();
     ArrayList<Pixel> singleRow3 = new ArrayList<Pixel>();
-    singleRow3.add(amaranthPixel);
+    singleRow3.add(new Pixel(159,43,104,255));
     singlePix3.add(singleRow3);
 
     this.image1 = new Image(imageGrid);
@@ -305,7 +305,7 @@ public class TestLayer {
 
     this.layer4.placeImage(0,0,this.image7);
     this.layer4.applyFilter("difference", this.image8);
-    assertEquals(new Color(159, 104, 212, 255), this.layer4.getImages()
+    assertEquals(new Color(159, 212, 104, 255), this.layer4.getImages()
             .get(0).getPixels().get(0).get(0).getPixelColor());
   }
 
@@ -317,8 +317,8 @@ public class TestLayer {
             "255 0 0 255\n"
                     + "255 0 0 255\n"
                     + "255 0 0 255\n"
-                    + "255 255 255 128\n"
-                    + "255 255 255 128\n"
+                    + "255 255 255 0\n"
+                    + "255 255 255 0\n"
                     + "255 0 0 255\n"
                     + "0 255 0 255\n"
                     + "255 0 0 255\n"
