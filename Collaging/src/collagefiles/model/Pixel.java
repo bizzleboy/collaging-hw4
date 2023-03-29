@@ -195,14 +195,14 @@ public class Pixel {
   public void hslFunc(Pixel backgroundPixel, String func) {
 
     ArrayList<Double> thisHSL = this.convertRGBtoHSL(
-            (double) this.red / 255,
-            (double) this.green / 255,
-            (double) this.blue/255);
+            ((double) this.red) / 255,
+            ((double) this.green) / 255,
+            ((double) this.blue) /255);
 
     ArrayList<Double> otherHSL = this.convertRGBtoHSL(
-            (double) backgroundPixel.red / 255,
-            (double) backgroundPixel.green / 255,
-            (double) backgroundPixel.blue/255);
+            ((double) backgroundPixel.red) / 255,
+            ((double) backgroundPixel.green) / 255,
+            ((double) backgroundPixel.blue) /255);
 
     ArrayList<Double> thisRGB = new ArrayList<>();
 
