@@ -27,7 +27,7 @@ public class Main {
 //
 
     GUIView2 view= new GUIView2();
-    GUIController2 controller = new GUIController2(view,project);
+    GUIController2 controller = new GUIController2(view);
   }
 //  public static void main(String[] args) {
 //    Project model = new BasicCollageProject(10,10,255);
