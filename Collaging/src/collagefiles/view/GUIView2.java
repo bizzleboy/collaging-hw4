@@ -64,13 +64,11 @@ public class GUIView2 extends JFrame implements GUIView {
     projectPanel.add(loadProjectButton);
 
 
-
     scrollPane = new JScrollPane(mainPanel);
    // frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     frame.getContentPane().add(projectPanel, BorderLayout.NORTH);
     frame.add(layerPanel, BorderLayout.WEST);
-
 
     frame.setVisible(true);
   }

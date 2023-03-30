@@ -36,8 +36,6 @@ public class GUIController2 extends JFrame implements ActionListener {
     this.view = view;
     this.currentLayer = view.addLayer();
     this.view.setListener(this);
-
-
   }
 
   public void actionPerformed(ActionEvent e) {
@@ -95,7 +93,7 @@ public class GUIController2 extends JFrame implements ActionListener {
           y_offset = Integer.parseInt(y_string);
           Image imageToAdd = this.readImage(selectedFile.getAbsolutePath());
           this.project.addImageToLayer("bob",imageToAdd,x_offset,y_offset);
-          this.displayImage(imageToAdd.getPixels(),x_offset,y_offset);
+          this.displayImage(imageToAdd.getFilterPixels(),x_offset,y_offset);
 
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(view.getFrame(), "Invalid coordinates.");
@@ -186,3 +184,9 @@ public class GUIController2 extends JFrame implements ActionListener {
     return readImage;
   }
 }
+
+
+// create one jfram
+// create jpanels
+// never delete jframe or jpanels
+// add jlabels to jpanels

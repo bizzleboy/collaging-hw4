@@ -18,11 +18,11 @@ public class Layer {
    * @param width  Of layer.
    * @param height Of layer.
    */
-  public Layer(String name, int width, int height) {
+  public Layer(String name, int width, int height, boolean opaque) {
     this.imagesOnLayer = new ArrayList<Image>();
     this.name = name;
     this.filter = "normal";
-    Image background = new Image(width, height);
+    Image background = new Image(width, height, opaque);
     this.imagesOnLayer.add(background);
   }
 
@@ -43,7 +43,6 @@ public class Layer {
     int xIndex = xPos;
     int yIndex = yPos;
 
-
     for (List<Pixel> list : image.filterPixels) {
       if (yIndex >= this.imagesOnLayer.get(0).pixels.size()) {
         break;
@@ -52,10 +51,10 @@ public class Layer {
           if (xIndex >= this.imagesOnLayer.get(0).pixels.get(0).size()) {
             break;
           } else {
-            Pixel alteredPixel = this.imagesOnLayer.get(0).filterPixels.get(yIndex).get(xIndex);
-
+            /// THIS is where the issue is TODO
+            Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
             alteredPixel.addPixels(p);
-            this.imagesOnLayer.get(0).filterPixels.get(yIndex).set(xIndex, alteredPixel);
+            this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex, alteredPixel);
             xIndex += 1;
 
           }
@@ -64,6 +63,7 @@ public class Layer {
         yIndex += 1;
       }
     }
+    this.imagesOnLayer.get(0).filterPixels = this.imagesOnLayer.get(0).getPixels();
     this.imagesOnLayer.add(image);
 
   }
@@ -82,7 +82,7 @@ public class Layer {
       case "normal":
         this.filter = filter;
         for (Image image : imagesOnLayer) {
-          image.filterPixels = image.pixels;
+          image.filterPixels = image.getPixels();
         }
         break;
       case "red-component":

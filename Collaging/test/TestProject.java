@@ -89,13 +89,13 @@ public class TestProject {
     this.opaqueBlue = new Pixel(0, 0, 200, 128);
     this.opaqueRed = new Pixel(200, 0, 0, 120);
 
-    this.layer0 = new Layer("l1", 5, 5);
-    this.layer1 = new Layer("l1", 3, 3);
-    this.layer2 = new Layer("l1", 3, 8);
-    this.layer3 = new Layer("l1", 11, 2);
-    this.layer4 = new Layer("l1", 1, 1);
-    this.layer5 = new Layer("l1", 1, 1);
-    this.layer6 = new Layer("l1", 1, 1);
+    this.layer0 = new Layer("l1", 5, 5, false);
+    this.layer1 = new Layer("l1", 3, 3, false);
+    this.layer2 = new Layer("l1", 3, 8, false);
+    this.layer3 = new Layer("l1", 11, 2, false);
+    this.layer4 = new Layer("l1", 1, 1, false);
+    this.layer5 = new Layer("l1", 1, 1, false);
+    this.layer6 = new Layer("l1", 1, 1, false);
 
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
@@ -153,9 +153,9 @@ public class TestProject {
 
     this.image1 = new Image(imageGrid);
     this.image1copy = new Image(imageGrid3);
-    this.image2 = new Image(2, 2);
-    this.image3 = new Image(3, 3);
-    this.image4 = new Image(5, 5);
+    this.image2 = new Image(2, 2, false);
+    this.image3 = new Image(3, 3, false);
+    this.image4 = new Image(5, 5, false);
     this.image5 = new Image(imageGrid2);
     this.image6 = new Image(singlePix);
     this.image7 = new Image(singlePix2);
@@ -248,12 +248,12 @@ public class TestProject {
 
     this.layer0.placeImage(0,0,this.image1);
 
-    for(int i = 0; i < layer0.getImages().get(0).getPixels().size();i++){
-      for (int j = 0; j < layer0.getImages().get(0).getPixels().get(0).size(); j++){
-        assertEquals(layer0.getImages().get(0).getPixels().get(i).get(j).getPixelColor(),
+    for(int i = 0; i < layer0.getImages().get(0).getFilterPixels().size();i++){
+      for (int j = 0; j < layer0.getImages().get(0).getFilterPixels().get(0).size(); j++){
+        assertEquals(layer0.getImages().get(0).getFilterPixels().get(i).get(j).getPixelColor(),
                 project1.getLayers().get(0)
                         .getImages().get(0)
-                        .getPixels().get(i)
+                        .getFilterPixels().get(i)
                         .get(j).getPixelColor() );
       }
 
@@ -269,17 +269,17 @@ public class TestProject {
 
     this.layer0.placeImage(0,0,this.image1);
     this.layer0.placeImage(0,0,this.image5);
-    assertEquals(new Color(255,128,128),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(255,128,128),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(0)
             .get(0)
             .getPixelColor() );
 
-    assertEquals(new Color(0,127,100),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(0,127,100),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(1)
             .get(1)
             .getPixelColor() );
 
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(4)
             .get(4)
             .getPixelColor() );
@@ -295,37 +295,37 @@ public class TestProject {
 
 
     //Layers have yet to merge so images from one layer dont affect another
-    assertEquals(new Color(255,0,0),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(255,0,0),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(0)
             .get(0)
             .getPixelColor() );
 
-    assertEquals(new Color(0,255,0),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(0,255,0),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(1)
             .get(1)
             .getPixelColor() );
 
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getPixels()
+    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(4)
             .get(4)
             .getPixelColor() );
 
     //Layers have yet to merge so images from one layer dont affect another
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(1).getImages().get(0).getPixels()
+    assertEquals(new Color(255,255,255,0),project1.getLayers().get(1).getImages().get(0).getFilterPixels()
             .get(0)
             .get(0)
             .getPixelColor() );
 
-    assertEquals(new Color(255,255,255,128),project1.getLayers().get(1).getImages().get(0).getPixels()
+    assertEquals(new Color(255,255,255,128),project1.getLayers().get(1).getImages().get(0).getFilterPixels()
             .get(2)
             .get(2)
             .getPixelColor());
 
-    assertEquals(new Color(0,0,200,128),project1.getLayers().get(1).getImages().get(0).getPixels()
+    assertEquals(new Color(0,0,200,128),project1.getLayers().get(1).getImages().get(0).getFilterPixels()
             .get(3)
             .get(3)
             .getPixelColor() );
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(1).getImages().get(0).getPixels()
+    assertEquals(new Color(255,255,255,0),project1.getLayers().get(1).getImages().get(0).getFilterPixels()
             .get(0)
             .get(4)
             .getPixelColor() );
@@ -491,7 +491,7 @@ public class TestProject {
 //    this.layer4.placeImage(0,0,this.image7);
 //    this.layer4.applyFilter("difference", this.image8);
 //    assertEquals(new Color(159, 212, 104, 255), this.layer4.getImages()
-//            .get(0).getPixels().get(0).get(0).getPixelColor());
+//            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
 
     this.project1 = new BasicCollageProject(1, 1, 255);
     this.project1.addLayer("l1");
@@ -505,22 +505,22 @@ public class TestProject {
     //this.project1.setFilter("l2", "difference");
 
     assertEquals(new Color(159,212,104,255),
-            this.project1.getLayers().get(1).getImages().get(0).getPixels().get(0).get(0).getPixelColor());
+            this.project1.getLayers().get(1).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
 
 
 //    this.layer1.placeImage(0, 0, this.image1);
 //    this.layer1.applyFilter("difference", this.image1);
 //    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-//            .get(0).getPixels().get(0).get(0).getPixelColor());
+//            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
 //    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-//            .get(0).getPixels().get(1).get(1).getPixelColor());
+//            .get(0).getFilterPixels().get(1).get(1).getPixelColor());
 //    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-//            .get(0).getPixels().get(2).get(2).getPixelColor());
+//            .get(0).getFilterPixels().get(2).get(2).getPixelColor());
 //
 //    this.layer4.placeImage(0,0,this.image7);
 //    this.layer4.applyFilter("difference", this.image8);
 //    assertEquals(new Color(159, 104, 212, 255), this.layer4.getImages()
-//            .get(0).getPixels().get(0).get(0).getPixelColor());
+//            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
   }
 
 }
