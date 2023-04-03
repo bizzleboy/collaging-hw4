@@ -173,7 +173,7 @@ public class Layer {
       default:
         System.out.println("Invalid Input!");
     }
-
+    System.out.print(filter + " applied in layer class at layer '" + this.name + "'\n");
   }
 
   /**

@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
+import collagefiles.model.Layer;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
 import collagefiles.view.GUIView2;
@@ -59,12 +60,20 @@ public class GUIController2 extends JFrame implements ActionListener {
       String[] options = {"normal", "red-component", "blue-component","green-component"};
       String filter = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a filter:", "Filter", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
       if (filter != null) {
-        System.out.println(filter);
-        this.project.setFilter("bob", filter);
-        this.view.displayImage(this.project.getLayers().get(0).getImages().get(0),x_offset,y_offset);
-        this.view.revalidate();
-        this.view.repaint();
-
+        List<String> array = new ArrayList<>();
+        for (Layer layer : this.project.getLayers()) {
+          array.add(layer.getName());
+        }
+        String[] options2 = array.toArray(new String[0]);
+        String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
+        if (layer != null) {
+          System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
+          this.project.setFilter(layer, filter);
+          this.view.displayImage(this.project.getLayers().get(array.indexOf(layer)).getImages().get(0),x_offset,y_offset);
+          this.view.revalidate();
+          this.view.repaint();
+          System.out.print("New filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
+        }
       }
     }
 

@@ -66,10 +66,10 @@ public class BasicCollageProject implements Project {
     for (Layer l : this.layers) {
       if (l.getName().equals(layerName)) {
         l.placeImage(xPos, yPos, imageToAdd);
-        System.out.print("Image added to layer\n");
+        System.out.print("Image added to " + layerName + "\n");
         break;
       } else{
-        System.out.print("Image not added\n");
+        System.out.print("Image not added to " + layerName + "\n");
       }
     }
   }
@@ -82,11 +82,13 @@ public class BasicCollageProject implements Project {
    */
   @Override
   public void setFilter(String layerName, String filterType) {
+    System.out.print(filterType + " applied in project class \n");
     for (int i = 0; i < this.layers.size(); i++) {
       //for (Layer l : this.layers) {
       if (this.layers.get(i).getName().equals(layerName)) {
         this.layers.get(i).setFilter(filterType);
-        this.getLayers().get(0).imagesOnLayer.get(0).filterImageGreen();
+        this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
+        //this.getLayers().get(0).imagesOnLayer.get(0).filterImageGreen();
 //        if (i > 0) {
 //          this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
 //        } else {
@@ -157,6 +159,9 @@ public class BasicCollageProject implements Project {
 
   public Image stackToImage(int startIndex) {
 
+    if (startIndex < 0) {
+      return new Image(this.width, this.height, false);
+    }
 
     List<Layer> stack = new ArrayList<Layer>();
 
