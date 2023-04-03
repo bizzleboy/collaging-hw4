@@ -36,7 +36,7 @@ class BasicCollageProjectConfirmInputsMock implements Project {
   public void addImageToLayer(String layerName, Image image, int xPos, int yPos) {
     try {
       this.log.append("layerName=" + layerName
-              + " imageLength=" + image.getPixels().size()
+              + " imageLength=" + image.getFilterPixels().size()
               + " xPos=" + xPos + " yPos=" + yPos + "\n");
     } catch (IOException ignore) {
       //ic

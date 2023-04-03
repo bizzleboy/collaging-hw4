@@ -57,7 +57,7 @@ public class TestImage {
     this.opaquePixel = new Pixel(255, 255, 255, 128);
     this.amaranthPixel = new Pixel(159, 43, 104, 255);
     this.backgroundPixel = new Pixel(255, 255, 255, 0);
-    this.blankImage = new Image(5, 5);
+    this.blankImage = new Image(5, 5, false);
 
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
@@ -72,7 +72,7 @@ public class TestImage {
     Collections.addAll(imageGrid, row1, row2, row3);
 
     this.image1 = new Image(imageGrid);
-    this.image3 = new Image(2, 2);
+    this.image3 = new Image(2, 2, false);
 
     ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
     ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
@@ -93,18 +93,18 @@ public class TestImage {
     ArrayList<ArrayList<Pixel>> imageGrid = null;
     this.image3 = new Image(imageGrid);
 
-    this.image3 = new Image(-1, -1);
+    this.image3 = new Image(-1, -1, true);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidConstructionWidthTooSmall() {
-    this.image3 = new Image(0, 1);
+    this.image3 = new Image(0, 1, true);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidConstructionHeightTooSmall() {
 
-    this.image3 = new Image(1, 0);
+    this.image3 = new Image(1, 0, true);
   }
 
   @Test
@@ -117,24 +117,24 @@ public class TestImage {
     Collections.addAll(imageGrid, row1, row2);
     this.image2 = new Image(imageGrid);
 
-    assertEquals(this.image2.getPixels().get(0).get(1).getPixelColor(),
+    assertEquals(this.image2.getFilterPixels().get(0).get(1).getPixelColor(),
             this.greenPixel1.getPixelColor());
-    assertEquals(this.image2.getPixels().get(0).get(2).getPixelColor(),
+    assertEquals(this.image2.getFilterPixels().get(0).get(2).getPixelColor(),
             this.bluePixel1.getPixelColor());
-    assertEquals(this.image2.getPixels().get(1).get(0).getPixelColor(),
+    assertEquals(this.image2.getFilterPixels().get(1).get(0).getPixelColor(),
             this.redPixel1.getPixelColor());
-    assertEquals(this.image2.getPixels().get(1).get(1).getPixelColor(),
+    assertEquals(this.image2.getFilterPixels().get(1).get(1).getPixelColor(),
             this.greenPixel2.getPixelColor());
-    assertEquals(this.image2.getPixels().get(1).get(2).getPixelColor(),
+    assertEquals(this.image2.getFilterPixels().get(1).get(2).getPixelColor(),
             this.bluePixel2.getPixelColor());
 
-    assertEquals(this.image3.getPixels().get(0).get(0).getPixelColor(),
+    assertEquals(this.image3.getFilterPixels().get(0).get(0).getPixelColor(),
             this.backgroundPixel.getPixelColor());
-    assertEquals(this.image3.getPixels().get(0).get(1).getPixelColor(),
+    assertEquals(this.image3.getFilterPixels().get(0).get(1).getPixelColor(),
             this.backgroundPixel.getPixelColor());
-    assertEquals(this.image3.getPixels().get(1).get(0).getPixelColor(),
+    assertEquals(this.image3.getFilterPixels().get(1).get(0).getPixelColor(),
             this.backgroundPixel.getPixelColor());
-    assertEquals(this.image3.getPixels().get(1).get(1).getPixelColor(),
+    assertEquals(this.image3.getFilterPixels().get(1).get(1).getPixelColor(),
             this.backgroundPixel.getPixelColor());
   }
 
@@ -156,8 +156,8 @@ public class TestImage {
     this.image1.filterImageRed();
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -180,8 +180,8 @@ public class TestImage {
     this.image1.filterImageGreen();
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -204,8 +204,8 @@ public class TestImage {
     this.image1.filterImageBlue();
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -228,8 +228,8 @@ public class TestImage {
     this.image1.darkenImage("darken-value");
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -254,8 +254,8 @@ public class TestImage {
     Image testImage = new Image(testImageGrid);
     this.image1.darkenImage("darken-intensity");
 
-    assertEquals(testImage.getPixels().get(0).get(0).getPixelColor(),
-            this.image1.getPixels().get(0).get(0).getPixelColor());
+    assertEquals(testImage.getFilterPixels().get(0).get(0).getPixelColor(),
+            this.image1.getFilterPixels().get(0).get(0).getPixelColor());
 
   }
 
@@ -280,8 +280,8 @@ public class TestImage {
     this.image1.darkenImage("darken-luma");
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -304,8 +304,8 @@ public class TestImage {
     this.image1.brightenImage("brighten-value");
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -336,8 +336,8 @@ public class TestImage {
     this.image1.brightenImage("brighten-intensity");
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -363,8 +363,8 @@ public class TestImage {
     this.image1.brightenImage("brighten-luma");
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
   }
@@ -387,14 +387,22 @@ public class TestImage {
     this.image1.differenceImage(this.image1);
     for (int y = 0; y < 3; y++) {
       for (int x = 0; x < 3; x++) {
-        assertEquals(testImage.getPixels().get(y).get(x).getPixelColor(),
-                this.image1.getPixels().get(y).get(x).getPixelColor());
+        assertEquals(testImage.getFilterPixels().get(y).get(x).getPixelColor(),
+                this.image1.getFilterPixels().get(y).get(x).getPixelColor());
       }
     }
 
     this.image4.differenceImage(image5);
     assertEquals(new Color(159, 212, 104, 255),
-            this.image4.getPixels().get(0).get(0).getPixelColor());
+            this.image4.getFilterPixels().get(0).get(0).getPixelColor());
+
+  }
+
+  @Test
+  public void testGetPixels() {
+    assertEquals(new Pixel(255,0,0,255).getPixelColor(), this.image1.getPixels().get(0).get(0).getPixelColor());
+    assertEquals(new Pixel(0,0,255,255).getPixelColor(), this.image1.getPixels().get(2).get(2).getPixelColor());
+
   }
 
 }

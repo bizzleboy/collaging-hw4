@@ -52,11 +52,11 @@ public class TestLayer {
     this.amaranthPixel = new Pixel(159, 43, 104, 255);
 
 
-    this.layer0 = new Layer("l1", 5, 5);
-    this.layer1 = new Layer("l1", 3, 3);
-    this.layer2 = new Layer("l1", 3, 8);
-    this.layer3 = new Layer("l1", 11, 2);
-    this.layer4 = new Layer("l1",1,1);
+    this.layer0 = new Layer("l1", 5, 5, false);
+    this.layer1 = new Layer("l1", 3, 3, false);
+    this.layer2 = new Layer("l1", 3, 8, false);
+    this.layer3 = new Layer("l1", 11, 2, false);
+    this.layer4 = new Layer("l1",1,1, false);
 
     ArrayList<Pixel> row1 = new ArrayList<Pixel>();
     Collections.addAll(row1, redPixel, redPixel, redPixel);
@@ -97,9 +97,9 @@ public class TestLayer {
     singlePix3.add(singleRow3);
 
     this.image1 = new Image(imageGrid);
-    this.image2 = new Image(2, 2);
-    this.image3 = new Image(3, 3);
-    this.image4 = new Image(5, 5);
+    this.image2 = new Image(2, 2, false);
+    this.image3 = new Image(3, 3, false);
+    this.image4 = new Image(5, 5, false);
     this.image5 = new Image(imageGrid2);
     this.image6 = new Image(singlePix1);
     this.image7 = new Image(singlePix2);
@@ -109,8 +109,8 @@ public class TestLayer {
   @Test
   public void testValidConstruction() {
     for (int i = 0; i < 5; i++) {
-      assertEquals(this.image4.getPixels().get(i).get(i).getPixelColor(),
-              this.layer0.getImages().get(0).getPixels().get(i).get(i).getPixelColor());
+      assertEquals(this.image4.getFilterPixels().get(i).get(i).getPixelColor(),
+              this.layer0.getImages().get(0).getFilterPixels().get(i).get(i).getPixelColor());
     }
   }
 
@@ -119,58 +119,58 @@ public class TestLayer {
     this.layer0.placeImage(1, 1, this.image1);
 
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(0).get(0).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(0).get(1).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(0).get(1).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(0).get(2).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(0).get(2).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(0).get(3).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(0).get(3).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(0).get(4).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(0).get(4).getPixelColor());
 
 
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(1).get(0).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(1).get(0).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(1).get(1).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(1).get(1).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(1).get(2).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(1).get(2).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(1).get(3).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(1).get(3).getPixelColor());
 
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(2).get(0).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(2).get(0).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(2).get(1).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(0, 255, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(2).get(2).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(2).get(2).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(2).get(3).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(2).get(3).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(2).get(4).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(2).get(4).getPixelColor());
 
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(3).get(0).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(3).get(0).getPixelColor());
     assertEquals(new Color(0, 0, 255, 255),
-            this.layer0.getImages().get(0).getPixels().get(3).get(1).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(3).get(1).getPixelColor());
     assertEquals(new Color(0, 255, 0, 255),
-            this.layer0.getImages().get(0).getPixels().get(3).get(2).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(3).get(2).getPixelColor());
     assertEquals(new Color(0, 0, 255, 255),
-            this.layer0.getImages().get(0).getPixels().get(3).get(3).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(3).get(3).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(3).get(4).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(3).get(4).getPixelColor());
 
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(4).get(0).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(4).get(0).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(4).get(1).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(4).get(1).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(4).get(2).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(4).get(2).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(4).get(3).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(4).get(3).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0),
-            this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(4).get(4).getPixelColor());
 
   }
 
@@ -178,13 +178,13 @@ public class TestLayer {
   public void testPlaceImageEndOfImageAlsoTransparentFactor() {
     this.layer0.placeImage(3, 3, this.image5);
 
-    System.out.println(layer0.getImages().get(0).getPixels().get(4).get(4)
+    System.out.println(layer0.getImages().get(0).getFilterPixels().get(4).get(4)
             .getPixelColor().getAlpha());
 
     assertEquals(new Color(255, 255, 255, 128), this.layer0.getImages()
-            .get(0).getPixels().get(3).get(3).getPixelColor());
+            .get(0).getFilterPixels().get(3).get(3).getPixelColor());
     assertEquals(new Pixel(new Color(0, 0, 200, 128)).getPixelColor(),
-            this.layer0.getImages().get(0).getPixels().get(4).get(4).getPixelColor());
+            this.layer0.getImages().get(0).getFilterPixels().get(4).get(4).getPixelColor());
 
   }
 
@@ -194,12 +194,12 @@ public class TestLayer {
 
     this.layer0.placeImage(4, 4, this.image6);
 
-    this.image5.getPixels().get(1).get(1).addPixels(this.image6.getPixels().get(0).get(0));
+    this.image5.getFilterPixels().get(1).get(1).addPixels(this.image6.getFilterPixels().get(0).get(0));
 
     assertEquals(new Color(255, 255, 255, 128), this.layer0.getImages()
-            .get(0).getPixels().get(3).get(3).getPixelColor());
+            .get(0).getFilterPixels().get(3).get(3).getPixelColor());
     assertEquals(new Color(128, 0, 72, 187), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(4).getPixelColor());
 
   }
 
@@ -219,37 +219,37 @@ public class TestLayer {
     this.layer0.placeImage(3, 3, this.image1);
 
     assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(4).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
-            .get(0).getPixels().get(3).get(2).getPixelColor());
+            .get(0).getFilterPixels().get(3).get(2).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(3).get(3).getPixelColor());
+            .get(0).getFilterPixels().get(3).get(3).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(3).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(3).get(4).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(2).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(2).getPixelColor());
     assertEquals(new Color(255, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(3).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(3).getPixelColor());
     assertEquals(new Color(0, 255, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(4).getPixelColor());
   }
 
   @Test
   public void testApplyFilterRed() {
     this.layer0.placeImage(0, 0, this.image1);
-    this.layer0.applyFilter("red-component", new Image(1,1));
+    this.layer0.applyFilter("red-component", new Image(1,1, false));
 
     assertEquals(new Color(255, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(0).get(0).getPixelColor());
+            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(4).getPixelColor());
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(2).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(2).getPixelColor());
 
 
   }
@@ -257,38 +257,38 @@ public class TestLayer {
   @Test
   public void testApplyFilterGreen() {
     this.layer0.placeImage(0, 0, this.image1);
-    this.layer0.applyFilter("green-component", new Image(1,1));
+    this.layer0.applyFilter("green-component", new Image(1,1, false));
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(0).get(0).getPixelColor());
+            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 255, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(4).getPixelColor());
 
     assertEquals(new Color(0, 255, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(2).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(2).getPixelColor());
 
   }
 
   @Test
   public void testApplyFilterBlue() {
     this.layer0.placeImage(0, 0, this.image1);
-    this.layer0.applyFilter("blue-component", new Image(1,1));
+    this.layer0.applyFilter("blue-component", new Image(1,1, false));
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(0).get(0).getPixelColor());
+            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(255, 255, 255, 0), this.layer0.getImages()
-            .get(0).getPixels().get(4).get(4).getPixelColor());
+            .get(0).getFilterPixels().get(4).get(4).getPixelColor());
 
     assertEquals(new Color(0, 0, 0, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(1).getPixelColor());
     assertEquals(new Color(0, 0, 255, 255), this.layer0.getImages()
-            .get(0).getPixels().get(2).get(2).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(2).getPixelColor());
 
   }
 
@@ -297,16 +297,16 @@ public class TestLayer {
     this.layer1.placeImage(0, 0, this.image1);
     this.layer1.applyFilter("difference", this.image1);
     assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-            .get(0).getPixels().get(0).get(0).getPixelColor());
+            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-            .get(0).getPixels().get(1).get(1).getPixelColor());
+            .get(0).getFilterPixels().get(1).get(1).getPixelColor());
     assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-            .get(0).getPixels().get(2).get(2).getPixelColor());
+            .get(0).getFilterPixels().get(2).get(2).getPixelColor());
 
     this.layer4.placeImage(0,0,this.image7);
     this.layer4.applyFilter("difference", this.image8);
     assertEquals(new Color(159, 212, 104, 255), this.layer4.getImages()
-            .get(0).getPixels().get(0).get(0).getPixelColor());
+            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
   }
 
   @Test
@@ -363,7 +363,7 @@ public class TestLayer {
 
   @Test
   public void testGetFilter() {
-    this.layer1.applyFilter("red-component", new Image(1,1));
+    this.layer1.applyFilter("red-component", new Image(1,1, false));
     assertEquals("red-component", this.layer1.getFilter());
   }
 }

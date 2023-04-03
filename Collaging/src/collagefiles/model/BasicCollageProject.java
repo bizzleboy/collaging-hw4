@@ -28,6 +28,7 @@ public class BasicCollageProject implements Project {
     this.height = canvasHeight;
     this.width = canvasWidth;
     this.maxVal = maxVal;
+    this.layers.add(new Layer("background", this.width, this.height, true));
   }
 
   /**
@@ -47,7 +48,7 @@ public class BasicCollageProject implements Project {
       }
     }
     if (layerUnique) {
-      this.layers.add((new Layer(layerName, this.width, this.height)));
+      this.layers.add((new Layer(layerName, this.width, this.height, false)));
       System.out.print("Layer added\n");
     }
   }
@@ -134,7 +135,9 @@ public class BasicCollageProject implements Project {
     imageString += ("#" + paths[paths.length-1].split("\\.")[0] + "\n");
     imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
 
-    Layer startLayer = new Layer("base", this.width, this.height);
+    Layer startLayer = new Layer("base", this.width, this.height, false);
+
+    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0,"base"));
 
     startLayer.placeImage(0,0,this.stackToImage(this.layers.size()-1));
 
@@ -153,15 +156,6 @@ public class BasicCollageProject implements Project {
   }
 
   public Image stackToImage(int startIndex) {
-
-
-//    Layer startLayer = this.layers.get(this.layers.size()-1);
-//
-//    for (int j = this.layers.size() - 1; j >= 0; j--) {
-//      this.layers.get(j).applyFilter(this.layers.get(j).getFilter(), startLayer.getImages().get(0));
-//      startLayer.placeImage(0,0,this.layers.get(j).getImages().get(0));
-//    }
-//    return startLayer.getImages().get(0);
 
 
     List<Layer> stack = new ArrayList<Layer>();
