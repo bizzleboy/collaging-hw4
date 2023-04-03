@@ -3,13 +3,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,9 +17,7 @@ import collagefiles.model.Image;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
 import collagefiles.view.GUIView2;
-import collagefiles.view.ImagePanel;
 
-import java.awt.Graphics;
 
 
 public class GUIController2 extends JFrame implements ActionListener {
@@ -30,6 +26,7 @@ public class GUIController2 extends JFrame implements ActionListener {
   private int x_offset;
   private int y_offset;
   private Project project;
+  private JLabel imgHolder = new JLabel();
 
   public GUIController2(GUIView2 view) {
     super();
@@ -63,25 +60,21 @@ public class GUIController2 extends JFrame implements ActionListener {
       String filter = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a filter:", "Filter", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
       if (filter != null) {
         System.out.println(filter);
-        // TODO: Apply the selected filter to the current layer.
-        // You can use the 'filter' string to determine which filter to apply.
+        this.project.setFilter("bob", filter);
+        this.view.displayImage(this.project.getLayers().get(0).getImages().get(0),x_offset,y_offset);
+        this.view.revalidate();
+        this.view.repaint();
+
       }
     }
 
     if (command.equals("add-layer")) {
       String layerName = JOptionPane.showInputDialog(view.getFrame(), "Enter layer name:");
-      JPanel newLayer = view.addLayer();
-      JButton layerButton = new JButton(layerName);
+      this.currentLayer = view.addLayer();
 
       this.project.addLayer(layerName);
-      layerButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          System.out.println(e);
-          currentLayer = newLayer;
 
-        }
-      });
-      view.addLayerButton(layerButton);
+      view.addLayerButton(layerName);
     } else if (command.equals("add-image")) {
       JFileChooser fileChooser = new JFileChooser();
       int result = fileChooser.showOpenDialog(view.getFrame());
@@ -95,7 +88,7 @@ public class GUIController2 extends JFrame implements ActionListener {
           y_offset = Integer.parseInt(y_string);
           Image imageToAdd = this.readImage(selectedFile.getAbsolutePath());
           this.project.addImageToLayer("bob",imageToAdd,x_offset,y_offset);
-          this.displayImage(imageToAdd.getPixels(),x_offset,y_offset);
+          this.view.displayImage(this.project.getLayers().get(0).getImages().get(0),x_offset,y_offset);
 
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(view.getFrame(), "Invalid coordinates.");
@@ -106,28 +99,33 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     }
   }
-  public void displayImage(ArrayList<ArrayList<Pixel>> pixels, int xOffset, int yOffset) {
-    int width = pixels.get(0).size();
-    int height = pixels.size();
+  public void displayImage(Image pixels, int xOffset, int yOffset) {
+    int width = pixels.getPixels().size();
+    int height = pixels.getPixels().get(0).size();
 
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        Pixel pixel = pixels.get(y).get(x);
+        Pixel pixel = pixels.getPixels().get(y).get(x);
         int color =pixel.getPixelColor().getRGB();
         image.setRGB(x, y, color);
       }
     }
 
     ImageIcon icon = new ImageIcon(image);
-    JLabel label = new JLabel(icon);
-    label.setBorder(BorderFactory.createEmptyBorder(yOffset, xOffset, 0, 0));
 
-    this.view.getFrame().getContentPane().add(label, BorderLayout.CENTER);
+    this.imgHolder.setIcon(icon);
+
+
+
+    this.imgHolder.setBorder(BorderFactory.createEmptyBorder(yOffset, xOffset, 0, 0));
+
+    this.currentLayer.add(this.imgHolder);
+
+    this.view.getFrame().getContentPane().add(this.currentLayer, BorderLayout.CENTER);
     this.view.revalidate();
     this.view.getFrame().repaint();
-//    frame.pack();
-//    frame.setVisible(true);
+
   }
   private Image readImage(String path) {
     Scanner sc = null;

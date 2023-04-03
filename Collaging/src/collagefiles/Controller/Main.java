@@ -20,10 +20,10 @@ public class Main {
   public static void main(String[] args) {
     Project project = new BasicCollageProject(10 ,10,255);
 
-
-    CollageController controller = new CollageControllerImpl(new InputStreamReader(System.in),
-            new CollageTextView());
-    controller.runProgram();
+//
+//    CollageController controller = new CollageControllerImpl(new InputStreamReader(System.in),
+//            new CollageTextView());
+//    controller.runProgram();
 
     GUIView2 view= new GUIView2();
     GUIController2 controller = new GUIController2(view);

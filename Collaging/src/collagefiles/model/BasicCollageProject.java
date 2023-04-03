@@ -85,6 +85,7 @@ public class BasicCollageProject implements Project {
       //for (Layer l : this.layers) {
       if (this.layers.get(i).getName().equals(layerName)) {
         this.layers.get(i).setFilter(filterType);
+        this.getLayers().get(0).imagesOnLayer.get(0).filterImageGreen();
 //        if (i > 0) {
 //          this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
 //        } else {
@@ -95,6 +96,7 @@ public class BasicCollageProject implements Project {
       }
     }
   }
+
 
   /**
    * Saves the project in a particular format.

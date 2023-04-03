@@ -3,8 +3,11 @@ package collagefiles.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import collagefiles.controller.GUIController2;
+import collagefiles.model.Image;
+import collagefiles.model.Pixel;
 
 public class GUIView2 extends JFrame implements GUIView {
   private JButton newProjectButton;
@@ -18,6 +21,10 @@ public class GUIView2 extends JFrame implements GUIView {
   private JButton addLayerButton;
   private JButton addImageButton;
   private JButton applyFilterButton;
+  private JLabel imgHolder;
+
+  private JPanel imageView;
+
 
   public GUIView2() {
     super();
@@ -41,7 +48,7 @@ public class GUIView2 extends JFrame implements GUIView {
     layerPanel = new JPanel();
     layerPanel.setLayout(new BoxLayout(layerPanel,BoxLayout.Y_AXIS));
 
-    applyFilterButton = new JButton("Add Layer");
+    applyFilterButton = new JButton("Apply Filter");
     buttonPanel.add(applyFilterButton);
     applyFilterButton.setActionCommand("apply-filter");
 
@@ -64,6 +71,14 @@ public class GUIView2 extends JFrame implements GUIView {
     projectPanel.add(loadProjectButton);
 
 
+    this.imageView = new JPanel();
+    this.imageView.setBackground(Color.blue);
+    this.imageView.setOpaque(true);
+    this.frame.getContentPane().add(imageView,BorderLayout.CENTER);
+
+    imgHolder = new JLabel();
+
+
 
     scrollPane = new JScrollPane(mainPanel);
    // frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
@@ -73,6 +88,7 @@ public class GUIView2 extends JFrame implements GUIView {
 
 
     frame.setVisible(true);
+
   }
 
   @Override
@@ -90,17 +106,51 @@ public class GUIView2 extends JFrame implements GUIView {
 
   public JPanel addLayer() {
     JPanel newLayer = new JPanel();
-    newLayer.setOpaque(false);
+    newLayer.setOpaque(true);
+    newLayer.setLayout(new FlowLayout(1));
 
-    newLayer.setLayout(null);
+
     mainPanel.add(newLayer);
     mainPanel.repaint();
     return newLayer;
   }
 
-  public void addLayerButton(JButton layerButton) {
+  public void addLayerButton(String layerName) {
+    JButton layerButton = new JButton(layerName);
     layerPanel.add(layerButton);
+    layerButton.setActionCommand(layerName);
     layerPanel.revalidate();
     layerPanel.repaint();
+
+  }
+
+  public void displayImage(Image pixels, int xOffset, int yOffset) {
+    int width = pixels.getPixels().size();
+    int height = pixels.getPixels().get(0).size();
+
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        Pixel pixel = pixels.getPixels().get(y).get(x);
+        int color =pixel.getPixelColor().getRGB();
+        image.setRGB(x, y, color);
+      }
+    }
+
+    ImageIcon icon = new ImageIcon(image);
+
+    this.imgHolder.setIcon(icon);
+
+
+
+    this.imgHolder.setBorder(BorderFactory.createEmptyBorder(yOffset, xOffset, 0, 0));
+
+    this.imageView.add(this.imgHolder);
+
+    this.revalidate();
+    this.frame.repaint();
+
   }
 }
+
+//delegate layer buttons here
