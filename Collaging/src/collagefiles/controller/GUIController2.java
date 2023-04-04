@@ -276,7 +276,7 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     this.project = new BasicCollageProject(width, height, maxVal);
 
-    while (sc.hasNextLine() && tracker == 3 + ((width * height) + 1) *layerTracker) {
+    while (sc.hasNextLine() && tracker <= 3 + ((width * height) + 1) *layerTracker) {
 
 
       ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
@@ -304,6 +304,10 @@ public class GUIController2 extends JFrame implements ActionListener {
       this.project.addLayer(layerName);
       this.project.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
       this.project.setFilter(layerName, filterName);
+
+      if(!sc.hasNext()){
+        tracker+=1;
+      }
 
     }
     return this.project;
