@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +26,7 @@ import collagefiles.view.GUIView2;
 
 public class GUIController2 extends JFrame implements ActionListener {
   private GUIView2 view;
-  private JPanel currentLayer;
+
   private int x_offset;
   private int y_offset;
   private Project project;
@@ -33,7 +35,7 @@ public class GUIController2 extends JFrame implements ActionListener {
   public GUIController2(GUIView2 view) {
     super();
     this.view = view;
-    this.currentLayer = view.addLayer();
+
     this.view.setListener(this);
 
 
@@ -41,6 +43,75 @@ public class GUIController2 extends JFrame implements ActionListener {
 
   public void actionPerformed(ActionEvent e) {
     String command = e.getActionCommand();
+
+    if (command.equals("save-image")) {
+      JFileChooser fileChooser = new JFileChooser();
+      String fileName = JOptionPane.showInputDialog(view.getFrame(), "Enter image name");
+      fileChooser.setDialogTitle("Choose a directory to save the file");
+      fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+      int userSelection = fileChooser.showSaveDialog(view.getFrame());
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+        System.out.println("Save image to: " + filePath);
+        String imageString = this.project.saveImage(filePath +"/"+fileName);
+        System.out.print(imageString);
+        File file = new File(filePath +"/"+fileName+".ppm");
+        FileWriter fr = null;
+        try {
+          fr = new FileWriter(file);
+          fr.write(imageString);
+          fr.close();
+        } catch (IOException r) {
+
+        }
+
+        JOptionPane.showMessageDialog(view.getFrame(), "Saved");
+      }
+
+
+    }
+
+
+
+    if (command.equals("load-project")) {
+      JFileChooser fileChooser = new JFileChooser();
+      int result = fileChooser.showOpenDialog(view.getFrame());
+      if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        this.project = this.readProject(selectedFile.getAbsolutePath());
+        System.out.println(this.project.getLayers().size());
+        this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),0,0);
+
+      }
+    }
+    if(command.equals("save-project")){
+      JFileChooser fileChooser = new JFileChooser();
+      String fileName = JOptionPane.showInputDialog(view.getFrame(), "Enter project name");
+      fileChooser.setDialogTitle("Choose a directory to save the project");
+      fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+      int userSelection = fileChooser.showSaveDialog(view.getFrame());
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+        System.out.println("Save image to: " + filePath);
+        String imageString = this.project.saveProject(filePath +"/"+fileName);
+        System.out.print(imageString);
+        File file = new File(filePath +"/"+fileName+".txt");
+        FileWriter fr = null;
+        try {
+          fr = new FileWriter(file);
+          fr.write(imageString);
+          fr.close();
+        } catch (IOException r) {
+
+        }
+
+        JOptionPane.showMessageDialog(view.getFrame(), "Saved");
+      }
+
+    }
+
 
     if (command.equals("new-project")) {
       String pHeightS = JOptionPane.showInputDialog(view.getFrame(), "Enter Project Height");
@@ -55,6 +126,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       }
 
       this.project = new BasicCollageProject(pWidth, pHeight,255);
+      this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),0,0);
     }
 
     if (command.equals("apply-filter")) {
@@ -68,13 +140,11 @@ public class GUIController2 extends JFrame implements ActionListener {
         String[] options2 = array.toArray(new String[0]);
         String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
         if (layer != null) {
-//          this.view.revalidate();
-//          this.view.repaint();
+
           System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
           this.project.setFilter(layer, filter);
-//          this.view.revalidate();
-//          this.view.repaint();
-          this.view.displayImage(this.project.getLayers().get(array.indexOf(layer)).getImages().get(0),x_offset,y_offset);
+
+          this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),x_offset,y_offset);
           this.view.revalidate();
           this.view.repaint();
           System.out.print("New filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
@@ -84,7 +154,6 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     if (command.equals("add-layer")) {
       String layerName = JOptionPane.showInputDialog(view.getFrame(), "Enter layer name:");
-      this.currentLayer = view.addLayer();
 
       this.project.addLayer(layerName);
 
@@ -113,16 +182,8 @@ public class GUIController2 extends JFrame implements ActionListener {
           if (layer != null) {
             this.project.addImageToLayer(layer, imageToAdd, x_offset, y_offset);
             this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),x_offset,y_offset);
-            //this.view.displayImage(this.project.getLayers().get(array.indexOf(layer)).getImages().get(0),x_offset,y_offset);
-            this.view.revalidate();
-            this.view.repaint();
+
           }
-
-
-
-
-          //this.project.addImageToLayer("bob", imageToAdd, x_offset, y_offset);
-          //this.view.displayImage(this.project.getLayers().get(0).getImages().get(0), x_offset, y_offset);
 
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(view.getFrame(), "Invalid coordinates.");
@@ -133,34 +194,7 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     }
   }
-  public void displayImage(Image pixels, int xOffset, int yOffset) {
-    int width = pixels.getPixels().size();
-    int height = pixels.getPixels().get(0).size();
 
-    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        Pixel pixel = pixels.getPixels().get(y).get(x);
-        int color =pixel.getPixelColor().getRGB();
-        image.setRGB(x, y, color);
-      }
-    }
-
-    ImageIcon icon = new ImageIcon(image);
-
-    this.imgHolder.setIcon(icon);
-
-
-
-    this.imgHolder.setBorder(BorderFactory.createEmptyBorder(yOffset, xOffset, 0, 0));
-
-    this.currentLayer.add(this.imgHolder);
-
-    this.view.getFrame().getContentPane().add(this.currentLayer, BorderLayout.CENTER);
-    this.view.revalidate();
-    this.view.getFrame().repaint();
-
-  }
   private Image readImage(String path) {
     Scanner sc = null;
 
@@ -216,5 +250,62 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     Image readImage = new Image(pixels);
     return readImage;
+  }
+
+  private Project readProject(String path) throws IllegalArgumentException {
+    Scanner sc = null;
+
+    try {
+      sc = new Scanner(new FileInputStream(path));
+    } catch (FileNotFoundException e) {
+     JOptionPane.showMessageDialog(view.getFrame(),"Invaldid file");
+    }
+
+    int tracker = 3;
+    int layerTracker = 0;
+    String title = null;
+    int width = -1;
+    int height = -1;
+    int maxVal = -1;
+
+
+    title = sc.next();
+    width = sc.nextInt();
+    height = sc.nextInt();
+    maxVal = sc.nextInt();
+
+    this.project = new BasicCollageProject(width, height, maxVal);
+
+    while (sc.hasNextLine() && tracker == 3 + ((width * height) + 1) *layerTracker) {
+
+
+      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
+
+      String layerName = sc.next();
+
+      String filterName = sc.next();
+
+      tracker += 1;
+      layerTracker += 1;
+
+      for (int y = 0; y < height; y++) {
+        nextPixels.add(new ArrayList<Pixel>());
+      }
+      for (List l : nextPixels) {
+        for (int x = 0; x < width; x++) {
+          int r = sc.nextInt();
+          int g = sc.nextInt();
+          int b = sc.nextInt();
+          int a = sc.nextInt();
+          tracker += 1;
+          l.add(new Pixel(r, g, b, a));
+        }
+      }
+      this.project.addLayer(layerName);
+      this.project.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
+      this.project.setFilter(layerName, filterName);
+
+    }
+    return this.project;
   }
 }

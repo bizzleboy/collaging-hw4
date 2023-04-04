@@ -90,12 +90,6 @@ public class BasicCollageProject implements Project {
         this.layers.get(i).setFilter(filterType);
         this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
 
-//        if (i > 0) {
-//          this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
-//        } else {
-//          this.layers.get(i).applyFilter(filterType, new Image(0,0,"base"));
-//        }
-//        System.out.print("Filter set for layer\n");
         break;
       }
     }
@@ -140,7 +134,7 @@ public class BasicCollageProject implements Project {
 
     Layer startLayer = new Layer("base", this.width, this.height, false);
 
-    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0,"base"));
+    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0));
 
     startLayer.placeImage(0,0,this.stackToImage(this.layers.size()-1));
 
@@ -161,7 +155,7 @@ public class BasicCollageProject implements Project {
   public Image stackToImage(int startIndex) {
 
     if (startIndex < 0) {
-      return new Image(this.width, this.height, false);
+      return new Image(this.width, this.height);
     }
 
     List<Layer> stack = new ArrayList<Layer>();
@@ -171,7 +165,7 @@ public class BasicCollageProject implements Project {
     }
 
     Layer startLayer = stack.get(0);
-    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0,"base"));
+    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0));
 
     for (int k = 1; k < stack.size(); k++) {
       stack.get(k).applyFilter(stack.get(k).getFilter(), startLayer.getImages().get(0));

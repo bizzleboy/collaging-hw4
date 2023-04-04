@@ -22,6 +22,9 @@ public class GUIView2 extends JFrame implements GUIView {
   private JButton addImageButton;
   private JButton applyFilterButton;
   private JLabel imgHolder;
+  private JButton saveImageButton;
+  private JButton saveProjectButton;
+
 
   private JPanel imageView;
 
@@ -70,21 +73,33 @@ public class GUIView2 extends JFrame implements GUIView {
     loadProjectButton.setActionCommand("load-project");
     projectPanel.add(loadProjectButton);
 
+    saveImageButton = new JButton("Save Image");
+    saveImageButton.setActionCommand("save-image");
+    projectPanel.add(saveImageButton);
+
+    saveProjectButton = new JButton("Save Project");
+    saveProjectButton.setActionCommand("save-project");
+    projectPanel.add(saveProjectButton);
+
 
     this.imageView = new JPanel();
     this.imageView.setBackground(Color.blue);
     this.imageView.setOpaque(true);
-    this.frame.getContentPane().add(imageView,BorderLayout.CENTER);
+
 
     imgHolder = new JLabel();
 
 
+    scrollPane = new JScrollPane(imageView);
 
-    scrollPane = new JScrollPane(mainPanel);
-   // frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     frame.getContentPane().add(projectPanel, BorderLayout.NORTH);
     frame.add(layerPanel, BorderLayout.WEST);
+
+    this.frame.getContentPane().add(scrollPane,BorderLayout.CENTER);
 
 
     frame.setVisible(true);
@@ -98,6 +113,8 @@ public class GUIView2 extends JFrame implements GUIView {
     newProjectButton.addActionListener(listener);
     loadProjectButton.addActionListener(listener);
     applyFilterButton.addActionListener(listener);
+    saveImageButton.addActionListener(listener);
+    saveProjectButton.addActionListener(listener);
   }
 
   public JFrame getFrame() {
@@ -134,6 +151,9 @@ public class GUIView2 extends JFrame implements GUIView {
         Pixel pixel = pixels.getFilterPixels().get(y).get(x);
         int color =pixel.getPixelColor().getRGB();
         image.setRGB(x, y, color);
+
+        this.frame.revalidate();
+        this.frame.repaint();
       }
     }
 
@@ -145,7 +165,7 @@ public class GUIView2 extends JFrame implements GUIView {
 
     this.imageView.add(this.imgHolder);
 
-    this.revalidate();
+    this.frame.revalidate();
     this.frame.repaint();
 
   }

@@ -39,7 +39,7 @@ public class Image {
     this.filterPixels = this.getPixels();
   }
 
-  public Image(int width, int height, String base) {
+  public Image(int width, int height) {
     this.pixels = new ArrayList<>();
     this.filterPixels = this.getPixels();
     ;
