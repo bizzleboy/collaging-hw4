@@ -87,7 +87,7 @@ public class BasicCollageProject implements Project {
     for (int i = 0; i < this.layers.size(); i++) {
       //for (Layer l : this.layers) {
       if (this.layers.get(i).getName().equals(layerName)) {
-        this.layers.get(i).setFilter(filterType);
+        //this.layers.get(i).setFilter(filterType);
         this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
 
         break;

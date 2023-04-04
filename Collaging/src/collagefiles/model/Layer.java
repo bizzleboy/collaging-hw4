@@ -215,7 +215,7 @@ public class Layer {
    */
   public String getImageTxt() {
     String imageString = "";
-    for (List<Pixel> list : this.imagesOnLayer.get(0).filterPixels) {
+    for (List<Pixel> list : this.imagesOnLayer.get(0).pixels) {
       for (Pixel p : list) {
 
         imageString += (String.format("%d %d %d %d\n",

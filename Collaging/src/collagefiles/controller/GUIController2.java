@@ -86,6 +86,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       }
     }
     if(command.equals("save-project")){
+
       JFileChooser fileChooser = new JFileChooser();
       String fileName = JOptionPane.showInputDialog(view.getFrame(), "Enter project name");
       fileChooser.setDialogTitle("Choose a directory to save the project");
@@ -93,6 +94,11 @@ public class GUIController2 extends JFrame implements ActionListener {
 
       int userSelection = fileChooser.showSaveDialog(view.getFrame());
       if (userSelection == JFileChooser.APPROVE_OPTION) {
+        for(Layer l: this.project.getLayers()){
+          String saveFilter = l.getFilter();
+          this.project.setFilter(l.getName(),"normal");
+          l.setFilter(saveFilter);
+        }
         String filePath = fileChooser.getSelectedFile().getAbsolutePath();
         System.out.println("Save image to: " + filePath);
         String imageString = this.project.saveProject(filePath +"/"+fileName);
@@ -143,6 +149,10 @@ public class GUIController2 extends JFrame implements ActionListener {
 
           System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
           this.project.setFilter(layer, filter);
+          this.project.getLayers().get(array.indexOf(layer)).setFilter(filter);
+
+
+
 
           this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),x_offset,y_offset);
           this.view.revalidate();
