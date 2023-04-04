@@ -61,11 +61,13 @@ public class TestProject {
   Image image9;
 
   Project project1;
+  Project project1copy;
 
 
   @Before
   public void init() {
     this.project1 = new BasicCollageProject(5, 5, 255);
+    this.project1copy = new BasicCollageProject(5, 5, 255);
     this.redPixel1 = new Pixel(255, 0, 0, 255);
     this.redPixel2 = new Pixel(255, 0, 0, 255);
     this.redPixel3 = new Pixel(255, 0, 0, 255);
@@ -89,7 +91,7 @@ public class TestProject {
     this.opaqueBlue = new Pixel(0, 0, 200, 128);
     this.opaqueRed = new Pixel(200, 0, 0, 120);
 
-    this.layer0 = new Layer("l1", 5, 5, false);
+    this.layer0 = new Layer("l1", 5, 5, true);
     this.layer1 = new Layer("l1", 3, 3, false);
     this.layer2 = new Layer("l1", 3, 8, false);
     this.layer3 = new Layer("l1", 11, 2, false);
@@ -279,7 +281,7 @@ public class TestProject {
             .get(1)
             .getPixelColor() );
 
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
+    assertEquals(new Color(255,255,255,255),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
             .get(4)
             .get(4)
             .getPixelColor() );
@@ -305,7 +307,7 @@ public class TestProject {
             .get(1)
             .getPixelColor() );
 
-    assertEquals(new Color(255,255,255,0),project1.getLayers().get(0).getImages().get(0).getFilterPixels()
+    assertEquals(new Color(255,255,255,0),project1.getLayers().get(1).getImages().get(0).getFilterPixels()
             .get(4)
             .get(4)
             .getPixelColor() );
@@ -382,28 +384,28 @@ public class TestProject {
   +          "255 128 128 255\n"
   +          "255 128 128 255\n"
   +          "255 0 0 255\n"
-   +         "255 255 255 0\n"
-    +        "255 255 255 0\n"
+   +         "255 255 255 255\n"
+    +        "255 255 255 255\n"
     +        "255 128 128 255\n"
     +       "0 127 100 255\n"
     +        "255 0 0 255\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
     +        "0 0 255 255\n"
     +        "0 255 0 255\n"
     +        "0 0 255 255\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +       "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n"
-    +        "255 255 255 0\n",this.project1.saveProject("test2"));
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +       "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n"
+    +        "255 255 255 255\n",this.project1.saveProject("test2"));
   }
   @Test
   public void testSaveImageAddFilter(){
@@ -411,36 +413,44 @@ public class TestProject {
     this.project1.addImageToLayer("background",this.image1, 0 ,0);
     this.project1.setFilter("background","red-component");
 
-    assertEquals("P3\n"
- +           "#test3\n"
- +           "5 5\n"
- +          "255\n"
- +           "\n"
- +           "255 0 0\n"
- +           "255 0 0\n"
- +           "255 0 0\n"
- +           "255 255 255\n"
- +           "255 255 255\n"
- +           "255 0 0\n"
- +           "0 0 0\n"
- +           "255 0 0\n"
- +           "255 255 255\n"
- +           "255 255 255\n"
- +           "0 0 0\n"
- +           "0 0 0\n"
- +           "0 0 0\n"
- +           "255 255 255\n"
-  +          "255 255 255\n"
- +           "255 255 255\n"
-   +         "255 255 255\n"
-    +        "255 255 255\n"
-     +       "255 255 255\n"
-      +      "255 255 255\n"
-       +     "255 255 255\n"
-        +    "255 255 255\n"
-         +   "255 255 255\n"
-          +  "255 255 255\n"
-        +    "255 255 255" + "\n",this.project1.saveImage("test3"));
+    assertEquals(new Color(255,0,0,255),this.project1.getLayers()
+            .get(0).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
+    assertEquals(new Color(0,0,0,255),this.project1.getLayers()
+            .get(0).getImages().get(0).getFilterPixels().get(1).get(1).getPixelColor());
+    assertEquals(new Color(255,0,0,255),this.project1.getLayers()
+            .get(0).getImages().get(0).getFilterPixels().get(2).get(4).getPixelColor());
+
+
+    assertEquals(    "P3\n" +
+            "#test3\n" +
+            "5 5\n" +
+            "255\n" +
+            "\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "0 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "0 0 0\n" +
+            "0 0 0\n" +
+            "0 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n" +
+            "255 0 0\n",this.project1.saveImage("test3"));
   }
   @Test
   public void testAddImagesAndFiltersOnMultipleLayers(){
@@ -451,6 +461,13 @@ public class TestProject {
     this.project1.addLayer("layer2");
     this.project1.addImageToLayer("layer2",this.image1copy, 2 ,2);
     this.project1.setFilter("layer2","blue-component");
+
+    assertEquals(new Color(255,0,0,255),this.project1.getLayers()
+            .get(0).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
+    assertEquals(new Color(0,0,0,255),this.project1.getLayers()
+            .get(0).getImages().get(0).getFilterPixels().get(1).get(1).getPixelColor());
+    assertEquals(new Color(255,0,0,255),this.project1.getLayers()
+            .get(0).getImages().get(0).getFilterPixels().get(2).get(4).getPixelColor());
 
     assertEquals("P3\n"
  +           "#baba\n"
@@ -463,16 +480,17 @@ public class TestProject {
  +           "255 255 255\n"
  +           "255 255 255\n"
  +           "255 0 0\n"
- +           "0 0 0\n"
+ +           "0 255 0\n"
  +          "255 0 0\n"
  +           "255 255 255\n"
  +          "255 255 255\n"
- +           "0 0 0\n"
-  +          "0 0 0\n"
-   +         "0 0 0\n"
+ +           "0 0 255\n"
+   +         "0 255 0\n"
     +        "0 0 0\n"
-     +       "0 0 0\n"
-      +      "255 255 255\n"
+            + "0 0 0\n"
+            + "0 0 0\n"
+
+            +      "255 255 255\n"
             + "255 255 255\n"
             + "0 0 0\n"
             + "0 0 0\n"
@@ -505,7 +523,7 @@ public class TestProject {
     //this.project1.setFilter("l2", "difference");
 
     assertEquals(new Color(159,212,104,255),
-            this.project1.getLayers().get(1).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
+            this.project1.getLayers().get(2).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
 
 
 //    this.layer1.placeImage(0, 0, this.image1);
