@@ -66,6 +66,7 @@ public class BasicCollageProject implements Project {
     for (Layer l : this.layers) {
       if (l.getName().equals(layerName)) {
         l.placeImage(xPos, yPos, imageToAdd);
+        //l.applyFilter(l.getFilter(), this.stackToImage());
         System.out.print("Image added to " + layerName + "\n");
         break;
       } else{
@@ -88,7 +89,7 @@ public class BasicCollageProject implements Project {
       if (this.layers.get(i).getName().equals(layerName)) {
         this.layers.get(i).setFilter(filterType);
         this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
-        //this.getLayers().get(0).imagesOnLayer.get(0).filterImageGreen();
+
 //        if (i > 0) {
 //          this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
 //        } else {

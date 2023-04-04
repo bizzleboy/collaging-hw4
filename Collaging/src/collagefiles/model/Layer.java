@@ -55,6 +55,7 @@ public class Layer {
             Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
             alteredPixel.addPixels(p);
             this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex, alteredPixel);
+            this.imagesOnLayer.get(0).filterPixels.get(yIndex).set(xIndex, alteredPixel);
             xIndex += 1;
 
           }
@@ -63,7 +64,7 @@ public class Layer {
         yIndex += 1;
       }
     }
-    this.imagesOnLayer.get(0).filterPixels = this.imagesOnLayer.get(0).getPixels();
+    //this.imagesOnLayer.get(0).filterPixels = this.imagesOnLayer.get(0).getPixels();
     this.imagesOnLayer.add(image);
 
   }

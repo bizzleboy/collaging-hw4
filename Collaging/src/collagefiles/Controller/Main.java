@@ -20,13 +20,13 @@ public class Main {
   public static void main(String[] args) {
     Project project = new BasicCollageProject(10 ,10,255);
 
-//
-//    CollageController controller = new CollageControllerImpl(new InputStreamReader(System.in),
-//            new CollageTextView());
-//    controller.runProgram();
 
-    GUIView2 view= new GUIView2();
-    GUIController2 controller2 = new GUIController2(view);
+    CollageController controller = new CollageControllerImpl(new InputStreamReader(System.in),
+            new CollageTextView());
+    controller.runProgram();
+
+//    GUIView2 view= new GUIView2();
+//    GUIController2 controller2 = new GUIController2(view);
   }
 //  public static void main(String[] args) {
 //    Project model = new BasicCollageProject(10,10,255);

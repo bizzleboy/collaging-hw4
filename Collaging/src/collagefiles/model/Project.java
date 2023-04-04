@@ -49,8 +49,11 @@ public interface Project {
 
   /**
    * View the layers of this project, primarily for testing purposes
+   *
    * @return All the layers of this project
    */
   public List<Layer> getLayers();
 
+
+  public Image stackToImage(int startIndex);
 }

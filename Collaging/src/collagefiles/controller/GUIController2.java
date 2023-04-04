@@ -1,16 +1,17 @@
 package collagefiles.controller;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.*;
 
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
@@ -67,8 +68,12 @@ public class GUIController2 extends JFrame implements ActionListener {
         String[] options2 = array.toArray(new String[0]);
         String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
         if (layer != null) {
+//          this.view.revalidate();
+//          this.view.repaint();
           System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
           this.project.setFilter(layer, filter);
+//          this.view.revalidate();
+//          this.view.repaint();
           this.view.displayImage(this.project.getLayers().get(array.indexOf(layer)).getImages().get(0),x_offset,y_offset);
           this.view.revalidate();
           this.view.repaint();
@@ -84,6 +89,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       this.project.addLayer(layerName);
 
       view.addLayerButton(layerName);
+
     } else if (command.equals("add-image")) {
       JFileChooser fileChooser = new JFileChooser();
       int result = fileChooser.showOpenDialog(view.getFrame());
@@ -96,8 +102,27 @@ public class GUIController2 extends JFrame implements ActionListener {
           x_offset = Integer.parseInt(x_string);
           y_offset = Integer.parseInt(y_string);
           Image imageToAdd = this.readImage(selectedFile.getAbsolutePath());
-          this.project.addImageToLayer("bob",imageToAdd,x_offset,y_offset);
-          this.view.displayImage(this.project.getLayers().get(0).getImages().get(0),x_offset,y_offset);
+          List<String> array = new ArrayList<>();
+          for (Layer layer : this.project.getLayers()) {
+            array.add(layer.getName());
+          }
+          String[] options2 = array.toArray(new String[0]);
+          String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
+
+
+          if (layer != null) {
+            this.project.addImageToLayer(layer, imageToAdd, x_offset, y_offset);
+            this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),x_offset,y_offset);
+            //this.view.displayImage(this.project.getLayers().get(array.indexOf(layer)).getImages().get(0),x_offset,y_offset);
+            this.view.revalidate();
+            this.view.repaint();
+          }
+
+
+
+
+          //this.project.addImageToLayer("bob", imageToAdd, x_offset, y_offset);
+          //this.view.displayImage(this.project.getLayers().get(0).getImages().get(0), x_offset, y_offset);
 
         } catch (NumberFormatException ex) {
           JOptionPane.showMessageDialog(view.getFrame(), "Invalid coordinates.");

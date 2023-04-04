@@ -131,7 +131,7 @@ public class GUIView2 extends JFrame implements GUIView {
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        Pixel pixel = pixels.getPixels().get(y).get(x);
+        Pixel pixel = pixels.getFilterPixels().get(y).get(x);
         int color =pixel.getPixelColor().getRGB();
         image.setRGB(x, y, color);
       }
@@ -140,8 +140,6 @@ public class GUIView2 extends JFrame implements GUIView {
     ImageIcon icon = new ImageIcon(image);
 
     this.imgHolder.setIcon(icon);
-
-
 
     this.imgHolder.setBorder(BorderFactory.createEmptyBorder(yOffset, xOffset, 0, 0));
 
