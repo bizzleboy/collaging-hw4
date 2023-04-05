@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-
-import collagefiles.controller.GUIController2;
 import collagefiles.model.Image;
 import collagefiles.model.Pixel;
 
+/**
+ * Implementation of a view for a collage project.
+ * Gives user the option to make projects.
+ * Load projects, save images, apply filters and layers and add images.
+ */
 public class GUIView2 extends JFrame implements GUIView {
   private JButton newProjectButton;
   private JButton loadProjectButton;
@@ -25,10 +28,11 @@ public class GUIView2 extends JFrame implements GUIView {
   private JButton saveImageButton;
   private JButton saveProjectButton;
 
-
   private JPanel imageView;
 
-
+  /**
+   * Constructor for a GUIView2 that sets up all primary panels and buttons.
+   */
   public GUIView2() {
     super();
 
@@ -109,6 +113,10 @@ public class GUIView2 extends JFrame implements GUIView {
 
   }
 
+  /**
+   * Attatches listener to all primary buttons.
+   * @param listener Controller that hears events.
+   */
   @Override
   public void setListener(ActionListener listener) {
     addLayerButton.addActionListener(listener);
@@ -120,21 +128,18 @@ public class GUIView2 extends JFrame implements GUIView {
     saveProjectButton.addActionListener(listener);
   }
 
+  /**
+   * Returns the frame of the view for message rendering purposes.
+   * @return This frame.
+   */
   public JFrame getFrame() {
     return frame;
   }
 
-  public JPanel addLayer() {
-    JPanel newLayer = new JPanel();
-    newLayer.setOpaque(true);
-    newLayer.setLayout(new FlowLayout(1));
-
-
-    mainPanel.add(newLayer);
-    mainPanel.repaint();
-    return newLayer;
-  }
-
+  /**
+   * Adds a layer to list of layers visible on gui.
+   * @param layerName Name of the layer as a string.
+   */
   public void addLayerButton(String layerName) {
     JLabel spacing = new JLabel(" ");
     layerPanel.add(spacing);
@@ -146,6 +151,10 @@ public class GUIView2 extends JFrame implements GUIView {
 
   }
 
+  /**
+   * Removes all layers. Used for making new project.
+   * Or loading an old project.
+   */
   public void removeLayers() {
     Component[] components = layerPanel.getComponents();
 
@@ -160,6 +169,12 @@ public class GUIView2 extends JFrame implements GUIView {
 
   }
 
+  /**
+   * Renders image on layer panel as a buffered image.
+   * @param pixels List of List<pixels> to be processed.
+   * @param xOffset Offsets rendered image x pixels to the right.
+   * @param yOffset Offsets rendered image y pixels down.
+   */
   public void displayImage(Image pixels, int xOffset, int yOffset) {
     int width = pixels.getPixels().size();
     int height = pixels.getPixels().get(0).size();
@@ -189,14 +204,21 @@ public class GUIView2 extends JFrame implements GUIView {
 
   }
 
+  /**
+   * Displays simple popup box.
+   * @param message Message in popup box.
+   */
   public void renderMessage(String message){
     JOptionPane.showMessageDialog(this.frame,message);
   }
 
+  /**
+   *
+   * @param message Displayed message in popup box.
+   * @return
+   */
   public String renderInput(String message){
     return JOptionPane.showInputDialog(this.frame,message);
   }
 
 }
-
-//delegate layer buttons here

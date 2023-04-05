@@ -1,10 +1,6 @@
 package collagefiles.controller;
-
-import java.io.InputStreamReader;
-
-
 import collagefiles.model.BasicCollageProject;
-import collagefiles.view.CollageTextView;
+
 import collagefiles.model.Project;
 import collagefiles.view.GUIView2;
 

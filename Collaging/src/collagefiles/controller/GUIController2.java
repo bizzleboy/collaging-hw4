@@ -3,7 +3,6 @@ package collagefiles.controller;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,10 +19,14 @@ import collagefiles.model.Image;
 import collagefiles.model.Layer;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
+import collagefiles.view.GUIView;
 import collagefiles.view.GUIView2;
 
 
-
+/**
+ * Implementation of a controller that passes inputs and user commands to the view.
+ * Provides functionality for adding images, layers, filters, saving, and more.
+ */
 public class GUIController2 extends JFrame implements ActionListener {
   private GUIView2 view;
 
@@ -32,6 +35,10 @@ public class GUIController2 extends JFrame implements ActionListener {
   private Project project;
   private JLabel imgHolder = new JLabel();
 
+  /**
+   * Constructor which instantiates the view and attatches all listeners.
+   * @param view desired view.
+   */
   public GUIController2(GUIView2 view) {
     super();
     this.view = view;
@@ -41,6 +48,10 @@ public class GUIController2 extends JFrame implements ActionListener {
 
   }
 
+  /**
+   * Various user actions like adding images, layers,filters,saving, etc.
+   * @param e the event to be processed.
+   */
   public void actionPerformed(ActionEvent e) {
     String command = e.getActionCommand();
 
@@ -216,6 +227,11 @@ public class GUIController2 extends JFrame implements ActionListener {
     }
   }
 
+  /**
+   * Reads in an image(ppm) and converts it to an Image (list of list of pixels).
+   * @param path Path to image on computer.
+   * @return Image from computer.
+   */
   private Image readImage(String path) {
     Scanner sc = null;
 
@@ -273,6 +289,12 @@ public class GUIController2 extends JFrame implements ActionListener {
     return readImage;
   }
 
+  /**
+   * Takes in a text file and converts it into a project.
+   * @param path Path to
+   * @return
+   * @throws IllegalArgumentException
+   */
   private Project readProject(String path) throws IllegalArgumentException {
     Scanner sc = null;
 
