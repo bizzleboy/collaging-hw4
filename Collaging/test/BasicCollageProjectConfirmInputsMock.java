@@ -68,4 +68,9 @@ class BasicCollageProjectConfirmInputsMock implements Project {
     return null;
   }
 
+  @Override
+  public Image stackToImage(int startIndex) {
+    return null;
+  }
+
 }

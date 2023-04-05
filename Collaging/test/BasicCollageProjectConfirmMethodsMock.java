@@ -65,4 +65,9 @@ class BasicCollageProjectConfirmMethodsMock implements Project {
   public List<Layer> getLayers() {
     return null;
   }
+
+  @Override
+  public Image stackToImage(int startIndex) {
+    return null;
+  }
 }

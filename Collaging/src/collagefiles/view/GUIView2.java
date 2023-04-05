@@ -50,6 +50,9 @@ public class GUIView2 extends JFrame implements GUIView {
 
     layerPanel = new JPanel();
     layerPanel.setLayout(new BoxLayout(layerPanel,BoxLayout.Y_AXIS));
+    layerPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+    layerPanel.add(new JLabel("Layers:"));
+    layerPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
     applyFilterButton = new JButton("Apply Filter");
     buttonPanel.add(applyFilterButton);
@@ -83,7 +86,7 @@ public class GUIView2 extends JFrame implements GUIView {
 
 
     this.imageView = new JPanel();
-    this.imageView.setBackground(Color.blue);
+    this.imageView.setBackground(Color.gray);
     this.imageView.setOpaque(true);
 
 
@@ -133,11 +136,27 @@ public class GUIView2 extends JFrame implements GUIView {
   }
 
   public void addLayerButton(String layerName) {
-    JButton layerButton = new JButton(layerName);
-    layerPanel.add(layerButton);
-    layerButton.setActionCommand(layerName);
+    JLabel spacing = new JLabel(" ");
+    layerPanel.add(spacing);
+    JLabel layerLabel = new JLabel(layerName);
+    layerPanel.add(layerLabel);
+
     layerPanel.revalidate();
     layerPanel.repaint();
+
+  }
+
+  public void removeLayers() {
+    Component[] components = layerPanel.getComponents();
+
+// iterate over the components and do something with them
+    for (Component component : components) {
+      // do something with the component
+      layerPanel.remove(component);
+    }
+
+    layerPanel.add(new JLabel("Layers:"));
+    layerPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
   }
 
@@ -169,6 +188,15 @@ public class GUIView2 extends JFrame implements GUIView {
     this.frame.repaint();
 
   }
+
+  public void renderMessage(String message){
+    JOptionPane.showMessageDialog(this.frame,message);
+  }
+
+  public String renderInput(String message){
+    return JOptionPane.showInputDialog(this.frame,message);
+  }
+
 }
 
 //delegate layer buttons here

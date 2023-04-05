@@ -46,7 +46,7 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     if (command.equals("save-image")) {
       JFileChooser fileChooser = new JFileChooser();
-      String fileName = JOptionPane.showInputDialog(view.getFrame(), "Enter image name");
+      String fileName =this.view.renderInput("Enter image name");
       fileChooser.setDialogTitle("Choose a directory to save the file");
       fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -78,6 +78,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       JFileChooser fileChooser = new JFileChooser();
       int result = fileChooser.showOpenDialog(view.getFrame());
       if (result == JFileChooser.APPROVE_OPTION) {
+        this.view.removeLayers();
         File selectedFile = fileChooser.getSelectedFile();
         this.project = this.readProject(selectedFile.getAbsolutePath());
         System.out.println(this.project.getLayers().size());
@@ -88,7 +89,7 @@ public class GUIController2 extends JFrame implements ActionListener {
     if(command.equals("save-project")){
 
       JFileChooser fileChooser = new JFileChooser();
-      String fileName = JOptionPane.showInputDialog(view.getFrame(), "Enter project name");
+      String fileName = this.view.renderInput("Enter project name");
       fileChooser.setDialogTitle("Choose a directory to save the project");
       fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -131,21 +132,25 @@ public class GUIController2 extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(view.getFrame(), "Invalid height/width.");
       }
 
+      this.view.removeLayers();
       this.project = new BasicCollageProject(pWidth, pHeight,255);
+      this.view.removeLayers();
       this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),0,0);
     }
 
     if (command.equals("apply-filter")) {
-      String[] options = {"normal", "red-component", "blue-component","green-component"};
+      String[] options = {"normal", "red-component", "blue-component","green-component","brighten-value","darken-value","brighten-luma","darken-luma","brighten-intensity","difference","multiply","screen"};
       String filter = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a filter:", "Filter", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
       if (filter != null) {
         List<String> array = new ArrayList<>();
         for (Layer layer : this.project.getLayers()) {
-          array.add(layer.getName());
+          if(layer.getName()!= "background") {
+            array.add(layer.getName());
+          }
         }
         String[] options2 = array.toArray(new String[0]);
         String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
-        if (layer != null) {
+        if (layer != null ) {
 
           System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
           this.project.setFilter(layer, filter);
@@ -163,11 +168,15 @@ public class GUIController2 extends JFrame implements ActionListener {
     }
 
     if (command.equals("add-layer")) {
-      String layerName = JOptionPane.showInputDialog(view.getFrame(), "Enter layer name:");
+      String layerName = this.view.renderInput( "Enter layer name:");
+      if(layerName==null){
 
-      this.project.addLayer(layerName);
+      }else{
+        this.project.addLayer(layerName);
 
-      view.addLayerButton(layerName);
+        view.addLayerButton(layerName);
+      }
+
 
     } else if (command.equals("add-image")) {
       JFileChooser fileChooser = new JFileChooser();
@@ -175,15 +184,17 @@ public class GUIController2 extends JFrame implements ActionListener {
       if (result == JFileChooser.APPROVE_OPTION) {
         File selectedFile = fileChooser.getSelectedFile();
 
-        String x_string = JOptionPane.showInputDialog(view.getFrame(), "Enter x-coordinate:");
-        String y_string = JOptionPane.showInputDialog(view.getFrame(), "Enter y-coordinate:");
+        String x_string = this.view.renderInput("Enter x-coordinate:");
+        String y_string = this.view.renderInput("Enter y-coordinate:");
         try {
           x_offset = Integer.parseInt(x_string);
           y_offset = Integer.parseInt(y_string);
           Image imageToAdd = this.readImage(selectedFile.getAbsolutePath());
           List<String> array = new ArrayList<>();
           for (Layer layer : this.project.getLayers()) {
-            array.add(layer.getName());
+            if(layer.getName()!= "background") {
+              array.add(layer.getName());
+            }
           }
           String[] options2 = array.toArray(new String[0]);
           String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
@@ -196,7 +207,7 @@ public class GUIController2 extends JFrame implements ActionListener {
           }
 
         } catch (NumberFormatException ex) {
-          JOptionPane.showMessageDialog(view.getFrame(), "Invalid coordinates.");
+          this.view.renderMessage("Invalid coordinates.");
         }
       }
 
@@ -212,7 +223,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       sc = new Scanner(new FileInputStream(path));
     } catch (FileNotFoundException e) {
 
-        JOptionPane.showMessageDialog(view.getFrame(), ("File " + path + " not found!"));
+       this.view.renderMessage("File " + path + " not found!");
 
     }
     StringBuilder imageBuilder = new StringBuilder();
@@ -230,7 +241,7 @@ public class GUIController2 extends JFrame implements ActionListener {
     token = sc.next();
     if (!token.equals("P3")) {
 
-        JOptionPane.showMessageDialog(view.getFrame(),("Invalid PPM file: plain RAW file should begin with P3"));
+        this.view.renderMessage("Invalid PPM file: plain RAW file should begin with P3");
 
     }
     int width = sc.nextInt();
@@ -268,7 +279,7 @@ public class GUIController2 extends JFrame implements ActionListener {
     try {
       sc = new Scanner(new FileInputStream(path));
     } catch (FileNotFoundException e) {
-     JOptionPane.showMessageDialog(view.getFrame(),"Invaldid file");
+     this.view.renderMessage("invalid file");
     }
 
     int tracker = 3;
@@ -314,6 +325,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       this.project.addLayer(layerName);
       this.project.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
       this.project.setFilter(layerName, filterName);
+      this.view.addLayerButton(layerName);
 
       if(!sc.hasNext()){
         tracker+=1;
