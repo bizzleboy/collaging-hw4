@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Collaging:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Collaging_jar</output-path>
+    <root id="archive" name="Collaging.jar">
+      <element id="module-output" name="Collaging" />
+    </root>
+  </artifact>
+</component>
