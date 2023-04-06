@@ -1,4 +1,4 @@
-package collagefiles.controller;
+package collagefiles.Controller;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,8 +19,8 @@ import collagefiles.model.Image;
 import collagefiles.model.Layer;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
-import collagefiles.view.GUIView;
-import collagefiles.view.GUIView2;
+import collagefiles.View.GUIView;
+import collagefiles.View.GUIView2;
 
 
 /**
@@ -163,17 +163,14 @@ public class GUIController2 extends JFrame implements ActionListener {
         String layer = (String) JOptionPane.showInputDialog(view.getFrame(), "Choose a layer:", "Layer", JOptionPane.QUESTION_MESSAGE, null, options2, options2[0]);
         if (layer != null ) {
 
-          System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
+          System.out.print("Old filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer) + 1).getFilter() + "\n");
           this.project.setFilter(layer, filter);
-          this.project.getLayers().get(array.indexOf(layer)).setFilter(filter);
-
-
-
+          this.project.getLayers().get(array.indexOf(layer) + 1).setFilter(filter);
 
           this.view.displayImage(this.project.stackToImage(this.project.getLayers().size()-1),x_offset,y_offset);
           this.view.revalidate();
           this.view.repaint();
-          System.out.print("New filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer)).getFilter() + "\n");
+          System.out.print("New filter of " + layer + ": " + this.project.getLayers().get(array.indexOf(layer) + 1).getFilter() + "\n");
         }
       }
     }

@@ -2,10 +2,10 @@ import org.junit.Test;
 
 import java.io.StringReader;
 
-import collagefiles.controller.CollageController;
-import collagefiles.controller.CollageControllerImpl;
+import collagefiles.Controller.CollageController;
+import collagefiles.Controller.CollageControllerImpl;
 import collagefiles.model.Project;
-import collagefiles.view.CollageTextView;
+import collagefiles.View.CollageTextView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,26 +56,26 @@ public class TestCollageControllerImpl {
 
   @Test
   public void testAddImageToLayer() {
-    Readable in = new StringReader("new-project 60 60 add-image name "
-            +   "/Users/dylaningham/Downloads/CS3500/collaging-hw4/Collaging/src/newSprite.ppm  "
+    Readable in = new StringReader("new-project 60 60 add-layer l1 add-image l1 "
+            +  "Collaging/src/res/newSprite.ppm "
             +  "10 10 q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmMethodsMock p = new BasicCollageProjectConfirmMethodsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
     controller.runProgram();
-    assertEquals("addImageToLayer ", log.toString());
+    assertEquals("addLayer addImageToLayer ", log.toString());
   }
 
   @Test
   public void testAddImageToLayerInputs() {
-    Readable in = new StringReader("new-project 2 2 add-image name "
-            +  "/Users/dylaningham/Downloads/CS3500/collaging-hw4/Collaging/src/newSprite.ppm  "
+    Readable in = new StringReader("new-project 2 2 add-layer l1 add-image l1 "
+            +  "Collaging/src/res/newSprite.ppm "
             + "10 10 q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmInputsMock p = new BasicCollageProjectConfirmInputsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
     controller.runProgram();
-    assertEquals("layerName=name imageLength=100 xPos=10 yPos=10\n", log.toString());
+    assertEquals("layerName=l1\nlayerName=l1 imageLength=100 xPos=10 yPos=10\n", log.toString());
   }
 
   @Test
@@ -100,7 +100,7 @@ public class TestCollageControllerImpl {
 
   @Test
   public void testSaveImage() {
-    Readable in = new StringReader("new-project 60 60 save-image Collaging/src/image1.ppm q");
+    Readable in = new StringReader("new-project 60 60 save-image Collaging/src/res/image1.ppm q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmMethodsMock p = new BasicCollageProjectConfirmMethodsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
@@ -110,17 +110,17 @@ public class TestCollageControllerImpl {
 
   @Test
   public void testSaveImageInputs() {
-    Readable in = new StringReader("new-project 60 60 save-image Collaging/src/image1.ppm q");
+    Readable in = new StringReader("new-project 60 60 save-image Collaging/src/res/image1.ppm q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmInputsMock p = new BasicCollageProjectConfirmInputsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
     controller.runProgram();
-    assertEquals("imagePath=Collaging/src/image1.ppm\n", log.toString());
+    assertEquals("imagePath=Collaging/src/res/image1.ppm\n", log.toString());
   }
 
   @Test
   public void testSaveProject() {
-    Readable in = new StringReader("new-project 60 60 save-project Collaging/src/project1 q");
+    Readable in = new StringReader("new-project 60 60 save-project Collaging/src/res/project1 q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmMethodsMock p = new BasicCollageProjectConfirmMethodsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
@@ -131,12 +131,12 @@ public class TestCollageControllerImpl {
   @Test
   public void testSaveProjectInputs() {
     Readable in =
-            new StringReader("new-project 60 60 save-project Collaging/src/project1.txt q");
+            new StringReader("new-project 60 60 save-project Collaging/src/res/project1.txt q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmInputsMock p = new BasicCollageProjectConfirmInputsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
     controller.runProgram();
-    assertEquals("ProjectPath=Collaging/src/project1.txt\n", log.toString());
+    assertEquals("ProjectPath=Collaging/src/res/project1.txt\n", log.toString());
   }
 
 }

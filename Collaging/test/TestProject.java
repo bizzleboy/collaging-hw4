@@ -409,9 +409,9 @@ public class TestProject {
   }
   @Test
   public void testSaveImageAddFilter(){
-    this.project1.addLayer("background");
-    this.project1.addImageToLayer("background",this.image1, 0 ,0);
-    this.project1.setFilter("background","red-component");
+    this.project1.addLayer("l1");
+    this.project1.addImageToLayer("l1",this.image1, 0 ,0);
+    this.project1.setFilter("l1","red-component");
 
     assertEquals(new Color(255,0,0,255),this.project1.getLayers()
             .get(0).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
@@ -464,9 +464,9 @@ public class TestProject {
 
     assertEquals(new Color(255,0,0,255),this.project1.getLayers()
             .get(0).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
-    assertEquals(new Color(0,0,0,255),this.project1.getLayers()
+    assertEquals(new Color(0,255,0,255),this.project1.getLayers()
             .get(0).getImages().get(0).getFilterPixels().get(1).get(1).getPixelColor());
-    assertEquals(new Color(255,0,0,255),this.project1.getLayers()
+    assertEquals(new Color(255,255,255,255),this.project1.getLayers()
             .get(0).getImages().get(0).getFilterPixels().get(2).get(4).getPixelColor());
 
     assertEquals("P3\n"
@@ -524,21 +524,6 @@ public class TestProject {
 
     assertEquals(new Color(159,212,104,255),
             this.project1.getLayers().get(2).getImages().get(0).getFilterPixels().get(0).get(0).getPixelColor());
-
-
-//    this.layer1.placeImage(0, 0, this.image1);
-//    this.layer1.applyFilter("difference", this.image1);
-//    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-//            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
-//    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-//            .get(0).getFilterPixels().get(1).get(1).getPixelColor());
-//    assertEquals(new Color(0, 0, 0, 255), this.layer1.getImages()
-//            .get(0).getFilterPixels().get(2).get(2).getPixelColor());
-//
-//    this.layer4.placeImage(0,0,this.image7);
-//    this.layer4.applyFilter("difference", this.image8);
-//    assertEquals(new Color(159, 104, 212, 255), this.layer4.getImages()
-//            .get(0).getFilterPixels().get(0).get(0).getPixelColor());
   }
 
 }

@@ -87,8 +87,9 @@ public class BasicCollageProject implements Project {
     for (int i = 0; i < this.layers.size(); i++) {
       //for (Layer l : this.layers) {
       if (this.layers.get(i).getName().equals(layerName)) {
-        //this.layers.get(i).setFilter(filterType);
-        this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
+        System.out.print(layerName + " " + this.layers.get(i).getName());
+        this.layers.get(i).setFilter(filterType);
+        //this.layers.get(i).applyFilter(filterType, this.stackToImage(i - 1));
 
         break;
       }
@@ -152,6 +153,11 @@ public class BasicCollageProject implements Project {
     return this.layers;
   }
 
+  /**
+   * Returns a composite image of all the layers below a specified layer
+   * @param startIndex the index of the layer underneath which to get the composite image
+   * @return a composite image of the below layers
+   */
   public Image stackToImage(int startIndex) {
 
     if (startIndex < 0) {

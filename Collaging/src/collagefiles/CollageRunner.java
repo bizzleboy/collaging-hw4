@@ -1,7 +1,7 @@
 //package collagefiles;
 //
 //
-//import collagefiles.view.GUIView;
+//import collagefiles.View.GUIView;
 //
 //public class CollageRunner {
 //  public static void main(String[] args){
