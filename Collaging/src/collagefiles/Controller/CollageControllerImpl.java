@@ -1,4 +1,4 @@
-package collagefiles.controller;
+package collagefiles.Controller;
 
 
 import java.awt.Color;
@@ -15,7 +15,7 @@ import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
-import collagefiles.view.CollageView;
+import collagefiles.View.CollageView;
 
 /**
  * Controller for operating collage project.

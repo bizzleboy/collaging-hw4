@@ -1,4 +1,4 @@
-package collagefiles.view;
+package collagefiles.View;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;

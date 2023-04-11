@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-import collagefiles.view.CollageView;
+import collagefiles.View.CollageView;
 
 /**
  * A class testing the construction and methods of the SetGameTextView class.

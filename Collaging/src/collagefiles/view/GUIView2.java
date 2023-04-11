@@ -1,4 +1,4 @@
-package collagefiles.view;
+package collagefiles.View;
 
 import javax.swing.*;
 import java.awt.*;
