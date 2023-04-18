@@ -1,0 +1,43 @@
+new-project 30 30 
+
+add-layer layer2 add-image layer2 /Collaging/res/smiletest.ppm 5 5
+
+add-layer layer3 add-image layer3 /Collaging/res/smiletest.ppm 10 10
+
+set-filter layer3 difference
+save-image /Collaging/res/ difference.ppm
+
+set-filter layer3 screen
+save-image /Collaging/res/ screen.ppm
+
+set-filter layer3 darken-value
+save-image /Collaging/res/ darkenvalue.ppm
+
+set-filter layer3 darken-luma
+save-image /Collaging/res/ darkenluma.ppm
+
+set-filter layer3 darken-intensity
+save-image /Collaging/res/ darkenintensity.ppm
+
+set-filter layer3 brighten-value
+save-image /Collaging/res/ brightenvalue.ppm
+
+set-filter layer3 brighten-luma
+save-image /Collaging/res/ brightenluma.ppm
+
+set-filter layer3 brighten-intensity
+save-image /Collaging/res/ brightenintensity.ppm
+
+set-filter layer3 red-component
+save-image /Collaging/res/ redcomponent.ppm
+
+set-filter layer3 green-component
+save-image /Collaging/res/ greencomponent.ppm
+
+set-filter layer3 blue-component
+save-image /Collaging/res/ bluecomponent.ppm
+
+set-filter layer3 normal
+save-image /Collaging/res/ normal.ppm
+
+save-project /Collaging/res/project.txt

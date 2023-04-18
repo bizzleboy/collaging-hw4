@@ -2,10 +2,10 @@ import org.junit.Test;
 
 import java.io.StringReader;
 
-import collagefiles.Controller.CollageController;
-import collagefiles.Controller.CollageControllerImpl;
+import collagefiles.controller.CollageController;
+import collagefiles.controller.CollageControllerImpl;
 import collagefiles.model.Project;
-import collagefiles.View.CollageTextView;
+import collagefiles.view.CollageTextView;
 
 import static org.junit.Assert.assertEquals;
 
@@ -57,8 +57,8 @@ public class TestCollageControllerImpl {
   @Test
   public void testAddImageToLayer() {
     Readable in = new StringReader("new-project 60 60 add-layer l1 add-image l1 "
-            +  "Collaging/src/res/newSprite.ppm "
-            +  "10 10 q");
+            + "Collaging/src/res/newSprite.ppm "
+            + "10 10 q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmMethodsMock p = new BasicCollageProjectConfirmMethodsMock(log);
     CollageController controller = new CollageControllerImpl(in, p, new CollageTextView());
@@ -69,7 +69,7 @@ public class TestCollageControllerImpl {
   @Test
   public void testAddImageToLayerInputs() {
     Readable in = new StringReader("new-project 2 2 add-layer l1 add-image l1 "
-            +  "Collaging/src/res/newSprite.ppm "
+            + "Collaging/src/res/newSprite.ppm "
             + "10 10 q");
     Appendable log = new StringBuilder();
     BasicCollageProjectConfirmInputsMock p = new BasicCollageProjectConfirmInputsMock(log);

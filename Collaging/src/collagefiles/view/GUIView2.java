@@ -1,11 +1,23 @@
-package collagefiles.View;
+package collagefiles.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import collagefiles.model.Image;
-import collagefiles.model.Pixel;
+import java.awt.Component;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.OverlayLayout;
 
 /**
  * Implementation of a view for a collage project.
@@ -16,11 +28,9 @@ public class GUIView2 extends JFrame implements GUIView {
   private JButton newProjectButton;
   private JButton loadProjectButton;
   private JFrame frame;
-  private JPanel mainPanel;
-  private JPanel buttonPanel;
-  private JPanel projectPanel;
+
   private JPanel layerPanel;
-  private JScrollPane scrollPane;
+
   private JButton addLayerButton;
   private JButton addImageButton;
   private JButton applyFilterButton;
@@ -41,22 +51,22 @@ public class GUIView2 extends JFrame implements GUIView {
     frame.setSize(600, 600);
     frame.setLayout(new BorderLayout());
 
-    mainPanel = new JPanel();
-    mainPanel.setMaximumSize(new Dimension(500,500));
+    JPanel mainPanel = new JPanel();
+    mainPanel.setMaximumSize(new Dimension(500, 500));
     mainPanel.setLayout(new OverlayLayout(mainPanel));
     mainPanel.setBackground(Color.white);
 
-    buttonPanel = new JPanel();
+    JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new FlowLayout());
 
-    projectPanel = new JPanel();
+    JPanel projectPanel = new JPanel();
     projectPanel.setLayout(new FlowLayout());
 
     layerPanel = new JPanel();
-    layerPanel.setLayout(new BoxLayout(layerPanel,BoxLayout.Y_AXIS));
+    layerPanel.setLayout(new BoxLayout(layerPanel, BoxLayout.Y_AXIS));
     layerPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     layerPanel.add(new JLabel("Layers:"));
-    layerPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    layerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
     applyFilterButton = new JButton("Apply Filter");
     buttonPanel.add(applyFilterButton);
@@ -97,7 +107,7 @@ public class GUIView2 extends JFrame implements GUIView {
     imgHolder = new JLabel();
 
 
-    scrollPane = new JScrollPane(imageView);
+    JScrollPane scrollPane = new JScrollPane(imageView);
 
     scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -106,7 +116,7 @@ public class GUIView2 extends JFrame implements GUIView {
     frame.getContentPane().add(projectPanel, BorderLayout.NORTH);
     frame.add(layerPanel, BorderLayout.WEST);
 
-    this.frame.getContentPane().add(scrollPane,BorderLayout.CENTER);
+    this.frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
 
     frame.setVisible(true);
@@ -115,6 +125,7 @@ public class GUIView2 extends JFrame implements GUIView {
 
   /**
    * Attatches listener to all primary buttons.
+   *
    * @param listener Controller that hears events.
    */
   @Override
@@ -130,6 +141,7 @@ public class GUIView2 extends JFrame implements GUIView {
 
   /**
    * Returns the frame of the view for message rendering purposes.
+   *
    * @return This frame.
    */
   public JFrame getFrame() {
@@ -138,6 +150,7 @@ public class GUIView2 extends JFrame implements GUIView {
 
   /**
    * Adds a layer to list of layers visible on gui.
+   *
    * @param layerName Name of the layer as a string.
    */
   public void addLayerButton(String layerName) {
@@ -158,38 +171,27 @@ public class GUIView2 extends JFrame implements GUIView {
   public void removeLayers() {
     Component[] components = layerPanel.getComponents();
 
-// iterate over the components and do something with them
+    // iterate over the components and do something with them
     for (Component component : components) {
       // do something with the component
       layerPanel.remove(component);
     }
 
     layerPanel.add(new JLabel("Layers:"));
-    layerPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    layerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
   }
 
   /**
    * Renders image on layer panel as a buffered image.
-   * @param pixels List of List<pixels> to be processed.
+   *
+   * @param image  BufferedImage to be processed.
    * @param xOffset Offsets rendered image x pixels to the right.
    * @param yOffset Offsets rendered image y pixels down.
    */
-  public void displayImage(Image pixels, int xOffset, int yOffset) {
-    int width = pixels.getPixels().size();
-    int height = pixels.getPixels().get(0).size();
-
-    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        Pixel pixel = pixels.getFilterPixels().get(y).get(x);
-        int color =pixel.getPixelColor().getRGB();
-        image.setRGB(x, y, color);
-
-        this.frame.revalidate();
-        this.frame.repaint();
-      }
-    }
+  public void displayImage(BufferedImage image, int xOffset, int yOffset) {
+    //This method was modified to remove the creation of the buffered image.
+    //We delegated that to the controller instead.
 
     ImageIcon icon = new ImageIcon(image);
 
@@ -204,21 +206,24 @@ public class GUIView2 extends JFrame implements GUIView {
 
   }
 
+
+
   /**
    * Displays simple popup box.
+   *
    * @param message Message in popup box.
    */
-  public void renderMessage(String message){
-    JOptionPane.showMessageDialog(this.frame,message);
+  public void renderMessage(String message) {
+    JOptionPane.showMessageDialog(this.frame, message);
   }
 
   /**
-   *
+   * Display input box.
    * @param message Displayed message in popup box.
    * @return
    */
-  public String renderInput(String message){
-    return JOptionPane.showInputDialog(this.frame,message);
+  public String renderInput(String message) {
+    return JOptionPane.showInputDialog(this.frame, message);
   }
 
 }

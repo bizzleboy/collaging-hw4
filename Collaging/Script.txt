@@ -1,1 +1,0 @@
-new-project 150 150 add-layer l1 add-image l1 /Users/parkerbrandt/ood/collaging-hw4/Collaging/res/newSprite.ppm 0 0  add-image l1 /Users/parkerbrandt/ood/collaging-hw4/Collaging/res/newSprite.ppm 0 0 set-filter l1 red-component save-image /Users/parkerbrandt/ood/collaging-hw4/Collaging/res/newSpriteDoubleRed.ppm

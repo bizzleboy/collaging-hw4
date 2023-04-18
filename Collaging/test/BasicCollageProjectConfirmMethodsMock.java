@@ -51,15 +51,7 @@ class BasicCollageProjectConfirmMethodsMock implements Project {
     }
   }
 
-  @Override
-  public String saveImage(String imagePath) {
-    try {
-      this.log.append("saveImage ");
-    } catch (IOException ignore) {
-      //do nothing
-    }
-    return null;
-  }
+
 
   @Override
   public List<Layer> getLayers() {

@@ -29,9 +29,9 @@ public class Pixel {
   /**
    * Pixel constructor that is created on provided rgba values.
    *
-   * @param red Integer representing red.
+   * @param red   Integer representing red.
    * @param green Integer representing green.
-   * @param blue Integer representing blue.
+   * @param blue  Integer representing blue.
    * @param alpha Integer representing alpha.
    * @throws IllegalArgumentException If negative values or values over 255 are provided.
    */
@@ -52,7 +52,7 @@ public class Pixel {
    * Change the color of this pixel to red for filtering purposes.
    */
   public void colorMeRed() {
-    if (this.getPixelColor().getAlpha() == 0){
+    if (this.getPixelColor().getAlpha() == 0) {
       //pass
     } else {
       this.green = 0;
@@ -64,7 +64,7 @@ public class Pixel {
    * Change the color of this pixel to green for filtering purposes.
    */
   public void colorMeGreen() {
-    if (this.getPixelColor().getAlpha() == 0){
+    if (this.getPixelColor().getAlpha() == 0) {
       //pass
     } else {
       this.blue = 0;
@@ -76,7 +76,7 @@ public class Pixel {
    * Change the color of this pixel to blue for filtering purposes.
    */
   public void colorMeBlue() {
-    if (this.getPixelColor().getAlpha() == 0){
+    if (this.getPixelColor().getAlpha() == 0) {
       //pass
     } else {
       this.green = 0;
@@ -175,6 +175,7 @@ public class Pixel {
   /**
    * Adjust the pixel based on the difference between its values and the values of the
    * pixel behind in the composite image.
+   *
    * @param backgroundPixel the pixel directly behind this one in the composite image.
    */
   public void differenceMe(Pixel backgroundPixel) {
@@ -192,17 +193,23 @@ public class Pixel {
     this.blue = newBlue;
   }
 
+  /**
+   * Applied a specified filter function to the pixel based on this pixel and the.
+   * Background  pixel's HSL values.
+   * @param backgroundPixel The pixel to filter this pixel by.
+   * @param func The filter function to apply to this filter.
+   */
   public void hslFunc(Pixel backgroundPixel, String func) {
 
     ArrayList<Double> thisHSL = this.convertRGBtoHSL(
             ((double) this.red) / 255,
             ((double) this.green) / 255,
-            ((double) this.blue) /255);
+            ((double) this.blue) / 255);
 
     ArrayList<Double> otherHSL = this.convertRGBtoHSL(
             ((double) backgroundPixel.red) / 255,
             ((double) backgroundPixel.green) / 255,
-            ((double) backgroundPixel.blue) /255);
+            ((double) backgroundPixel.blue) / 255);
 
     ArrayList<Double> thisRGB = new ArrayList<>();
 
@@ -232,9 +239,9 @@ public class Pixel {
    * @param pix2 The other pixel to add.
    */
   public void addPixels(Pixel pix2) {
-    if(this.getPixelColor().toString().equals(new Color(255,255,255,0).toString())
-            && pix2.getPixelColor().toString().equals(new Color(255,255,255,0).toString())
-    && pix2.getPixelColor().getAlpha() == 0 && this.getPixelColor().getAlpha() ==0){
+    if (this.getPixelColor().toString().equals(new Color(255, 255, 255, 0).toString())
+            && pix2.getPixelColor().toString().equals(new Color(255, 255, 255, 0).toString())
+            && pix2.getPixelColor().getAlpha() == 0 && this.getPixelColor().getAlpha() == 0) {
       //pass, without this, adding 2 transparent pixels makes black
     } else {
       float pix1Alpha = (float) this.alpha;
@@ -264,13 +271,9 @@ public class Pixel {
   }
 
 
-
-
-
-
   /**
-   * Convers an RGB representation in the range 0-1 into an HSL
-   * representation where
+   * Convers an RGB representation in the range 0-1 into an HSL.
+   * Representation where.
    * <ul>
    * <li> 0 &lt;= H &lt; 360</li>
    * <li> 0 &lt;= S &lt;= 1</li>
@@ -283,13 +286,14 @@ public class Pixel {
    */
   public ArrayList<Double> convertRGBtoHSL(double r, double g, double b) {
 
-    ArrayList<Double> HSLs = new ArrayList<Double>();
+    ArrayList<Double> hsls = new ArrayList<Double>();
     double componentMax = Math.max(r, Math.max(g, b));
     double componentMin = Math.min(r, Math.min(g, b));
     double delta = componentMax - componentMin;
 
     double lightness = (componentMax + componentMin) / 2;
-    double hue, saturation;
+    double hue;
+    double saturation;
     if (delta == 0) {
       hue = 0;
       saturation = 0;
@@ -313,24 +317,23 @@ public class Pixel {
       hue = hue * 60;
     }
 
-    HSLs.add(hue);
-    HSLs.add(saturation);
-    HSLs.add(lightness);
+    hsls.add(hue);
+    hsls.add(saturation);
+    hsls.add(lightness);
 
-    return HSLs;
+    return hsls;
 
-    //System.out.println("RGB (" + r + "," + g + "," + b + ") to HSL => (" + hue + "," + saturation + "," + lightness + ")");
   }
 
 
   /**
-   * Convers an HSL representation where
+   * Convers an HSL representation where.
    * <ul>
    * <li> 0 &lt;= H &lt; 360</li>
    * <li> 0 &lt;= S &lt;= 1</li>
    * <li> 0 &lt;= L &lt;= 1</li>
    * </ul>
-   * into an RGB representation where each component is in the range 0-1
+   * Into an RGB representation where each component is in the range 0-1.
    *
    * @param hue        hue of the HSL representation
    * @param saturation saturation of the HSL representation
@@ -339,18 +342,17 @@ public class Pixel {
 
   public ArrayList<Double> convertHSLtoRGB(double hue, double saturation, double lightness) {
 
-    ArrayList<Double> RGBs = new ArrayList<Double>();
+    ArrayList<Double> rgbs = new ArrayList<Double>();
 
     double r = convertFn(hue, saturation, lightness, 0) * 255;
     double g = convertFn(hue, saturation, lightness, 8) * 255;
     double b = convertFn(hue, saturation, lightness, 4) * 255;
 
-    RGBs.add(r);
-    RGBs.add(g);
-    RGBs.add(b);
+    rgbs.add(r);
+    rgbs.add(g);
+    rgbs.add(b);
 
-    return RGBs;
-    //System.out.println("HSL (" + hue + "," + saturation + "," + lightness + ") to RGB => (" + r + "," + g + "," + b + ")");
+    return rgbs;
   }
 
   /*
@@ -363,7 +365,6 @@ public class Pixel {
 
     return lightness - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)));
   }
-
 
 
 }

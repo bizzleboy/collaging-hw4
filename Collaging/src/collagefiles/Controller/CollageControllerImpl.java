@@ -1,7 +1,9 @@
-package collagefiles.Controller;
+package collagefiles.controller;
 
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,11 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
+
 import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Image;
 import collagefiles.model.Pixel;
 import collagefiles.model.Project;
-import collagefiles.View.CollageView;
+import collagefiles.view.CollageView;
 
 /**
  * Controller for operating collage project.
@@ -156,7 +161,7 @@ public class CollageControllerImpl implements CollageController {
             }
           }
           if (this.currentProject == null) {
-            this.currentProject = this.readProject(loadProjectPath);
+            this.currentProject = this.readProject(this.printPath() + loadProjectPath);
             try {
               this.view.renderMessage("project loaded");
             } catch (IOException a) {
@@ -181,7 +186,7 @@ public class CollageControllerImpl implements CollageController {
               }
             }
             String projectString = this.currentProject.saveProject(saveProjectPath);
-            File file = new File(saveProjectPath);
+            File file = new File(this.printPath() + saveProjectPath);
             FileWriter fr = null;
             try {
               fr = new FileWriter(file);
@@ -214,17 +219,21 @@ public class CollageControllerImpl implements CollageController {
                 throw new IllegalStateException(a);
               }
             }
-            String imageString = this.currentProject.saveImage(saveImagePath);
-            System.out.print(imageString);
-            File file = new File(saveImagePath);
-            FileWriter fr = null;
             try {
-              fr = new FileWriter(file);
-              fr.write(imageString);
-              fr.close();
-            } catch (IOException e) {
-              //donezo
+              this.view.renderMessage("enter image name with file extension");
+            } catch (IOException a) {
+              throw new IllegalStateException(a);
             }
+            String saveImageName = scan.next();
+            if (saveImageName.equals("q")) {
+              try {
+                this.view.renderMessage("program quit!");
+                return;
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
+            }
+            this.saveImageNew(this.printPath() + saveImagePath, saveImageName);
             try {
               this.view.renderMessage("image saved");
             } catch (IOException a) {
@@ -362,7 +371,7 @@ public class CollageControllerImpl implements CollageController {
               throw new IllegalStateException(a);
             }
             this.currentProject.addImageToLayer(layerToAddTo,
-                    this.readImage(imageToAdd), xPos, yPos);
+                    this.readImage(this.printPath() + imageToAdd), xPos, yPos);
             try {
               this.view.renderMessage("image added to layer");
             } catch (IOException a) {
@@ -506,5 +515,82 @@ public class CollageControllerImpl implements CollageController {
     return readImage;
   }
 
+  /**
+   * New method for saving images, converts view to bufferedImage.
+   * @param filepath Path where you want to save file.
+   * @param fileName Name of file.
+   */
+  public void saveImageNew(String filepath, String fileName) {
+    Scanner fileScanner = new Scanner(this.input);
+
+    Image finalImage = this.currentProject.stackToImage(
+            this.currentProject.getLayers().size() - 1);
+    int width = finalImage.getPixels().get(0).size();
+    int height = finalImage.getPixels().size();
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        Color color = finalImage.getPixels().get(i).get(j).getPixelColor();
+        image.setRGB(j, i, color.getRGB());
+      }
+    }
+
+
+    File outputFile = new File(filepath + File.separator + fileName);
+
+    try {
+      if (fileName.split("\\.")[1].equals("ppm")) {
+        System.out.println(fileName);
+        saveAsPPM(image, outputFile);
+      } else {
+        ImageIO.write(image, fileName.split("\\.")[1], outputFile);
+      }
+    } catch (IOException e) {
+      System.err.println("Error saving the image file: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Coverts a buffered image into a ppm.
+   * @param image The composite image of all layers and such.
+   * @param outputFile The path to save the ppm to.
+   * @throws IOException Standard IO catch
+   */
+  private void saveAsPPM(BufferedImage image, File outputFile) throws IOException {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+      int width = image.getWidth();
+      int height = image.getHeight();
+
+      // Write PPM header
+      writer.write("P3\n");
+      writer.write(width + " " + height + "\n");
+      writer.write("255\n");
+
+      // Write pixel data
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          Color color = new Color(image.getRGB(j, i));
+          writer.write(color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " ");
+        }
+        writer.write("\n");
+      }
+
+    }
+  }
+
+  /**
+   * Renders the relative path for saving images.
+   * @return String of the path.
+   */
+  private String printPath() {
+    String path = String.format("%s/%s", System.getProperty("user.dir"),
+            this.getClass().getPackage().getName().replace(".", "/"));
+    System.out.print(path.split("out/")[0].split("Collaging/")[0]);
+    return path.split("out/")[0].split("Collaging/")[0];
+  }
+
+
+
 }
-//
+

@@ -39,21 +39,19 @@ public interface Project {
    */
   void setFilter(String layerName, String filterType);
 
-  /**
-   * Saves the image as a PPM.
-   *
-   * @param imagePath Destination of particular image.
-   * @return PPM formatted file.
-   */
-  String saveImage(String imagePath);
 
   /**
-   * View the layers of this project, primarily for testing purposes
+   * View the layers of this project, primarily for testing purposes.
    *
-   * @return All the layers of this project
+   * @return All the layers of this project.
    */
   public List<Layer> getLayers();
 
-
+  /**
+   * Returns a composite image of all the layers below a specified layer.
+   *
+   * @param startIndex the index of the layer underneath which to get the composite image.
+   * @return a composite image of the below layers.
+   */
   public Image stackToImage(int startIndex);
 }

@@ -1,11 +1,11 @@
-package collagefiles.View;
+package collagefiles.view;
 
 import java.io.IOException;
 
 /**
  * View for monitoring input output streams.
  */
-public class CollageTextView implements CollageView {
+public class CollageTextView implements collagefiles.view.CollageView {
 
   private final Appendable output;
 

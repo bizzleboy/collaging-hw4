@@ -47,21 +47,13 @@ class BasicCollageProjectConfirmInputsMock implements Project {
   public void setFilter(String layerName, String filterType) {
     try {
       this.log.append("layerName=" + layerName
-             + " filterType=" + filterType + "\n");
+              + " filterType=" + filterType + "\n");
     } catch (IOException ignore) {
       //catch
     }
   }
 
-  @Override
-  public String saveImage(String imagePath) {
-    try {
-      this.log.append("imagePath=" + imagePath + "\n");
-    } catch (IOException ignore) {
-      //c
-    }
-    return null;
-  }
+
 
   @Override
   public List<Layer> getLayers() {

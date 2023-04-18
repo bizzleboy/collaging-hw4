@@ -39,10 +39,13 @@ public class Image {
     this.filterPixels = this.getPixels();
   }
 
-  public Image(int width, int height) {
+  /**
+   * Another standard image constructor. Creates a copy of the pixels for.
+   * Non-destructive image creation.
+   */
+  public Image() {
     this.pixels = new ArrayList<>();
     this.filterPixels = this.getPixels();
-    ;
   }
 
   /**
@@ -127,6 +130,11 @@ public class Image {
     }
   }
 
+  /**
+   * Get the difference in RGB values of image and the composite image beneath it.
+   *
+   * @param backgroundImage Representing the composite image on the layers beneath this image.
+   */
   public void differenceImage(Image backgroundImage) {
     this.filterPixels = this.getPixels();
     for (int i = 0; i < this.pixels.size(); i++) {
@@ -138,6 +146,11 @@ public class Image {
     }
   }
 
+  /**
+   * Darken this image based on the RGB values of the composite image from the layer's beneath it.
+   *
+   * @param backgroundImage Representing the composite image on the layers beneath this image.
+   */
   public void multiplyImage(Image backgroundImage) {
     this.filterPixels = this.getPixels();
     for (int i = 0; i < this.pixels.size(); i++) {
@@ -148,6 +161,12 @@ public class Image {
       }
     }
   }
+
+  /**
+   * Lighten this image based on the RGB values of the composite image from the layer's beneath it.
+   *
+   * @param backgroundImage Representing the composite image on the layers beneath this image.
+   */
 
   public void screenImage(Image backgroundImage) {
     this.filterPixels = this.getPixels();
@@ -187,7 +206,7 @@ public class Image {
       copy.add(newRow);
     }
     return copy;
-    }
+  }
 
 
 }

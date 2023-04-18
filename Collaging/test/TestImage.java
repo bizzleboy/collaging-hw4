@@ -400,8 +400,10 @@ public class TestImage {
 
   @Test
   public void testGetPixels() {
-    assertEquals(new Pixel(255,0,0,255).getPixelColor(), this.image1.getPixels().get(0).get(0).getPixelColor());
-    assertEquals(new Pixel(0,0,255,255).getPixelColor(), this.image1.getPixels().get(2).get(2).getPixelColor());
+    assertEquals(new Pixel(255, 0, 0, 255).getPixelColor(),
+            this.image1.getPixels().get(0).get(0).getPixelColor());
+    assertEquals(new Pixel(0, 0, 255, 255).getPixelColor(),
+            this.image1.getPixels().get(2).get(2).getPixelColor());
 
   }
 

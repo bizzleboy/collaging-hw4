@@ -149,7 +149,7 @@ public class Layer {
         break;
       case "difference":
         this.filter = filter;
-        if (backgroundImage.pixels.size()!=0) {
+        if (backgroundImage.pixels.size() != 0) {
           for (Image image : imagesOnLayer) {
             image.differenceImage(backgroundImage);
           }
@@ -157,7 +157,7 @@ public class Layer {
         break;
       case "multiply":
         this.filter = filter;
-        if (backgroundImage.pixels.size()!=0) {
+        if (backgroundImage.pixels.size() != 0) {
           for (Image image : imagesOnLayer) {
             image.multiplyImage(backgroundImage);
           }
@@ -165,7 +165,7 @@ public class Layer {
         break;
       case "screen":
         this.filter = filter;
-        if (backgroundImage.pixels.size()!=0) {
+        if (backgroundImage.pixels.size() != 0) {
           for (Image image : imagesOnLayer) {
             image.screenImage(backgroundImage);
           }
@@ -247,12 +247,17 @@ public class Layer {
     return this.name;
   }
 
-
+  /**
+   * Converts each layer to a string description of the images.
+   *
+   * @return String of the images.
+   */
   public String toString() {
     int numPics = 0;
-    for (Image i: this.imagesOnLayer){
-      numPics ++;
+    for (Image i : this.imagesOnLayer) {
+      numPics++;
     }
-    return this.name + " " + this.filter + " # of images placed on this layer: " + (numPics -1) +"\n" ;
+    return this.name + " " + this.filter + " # of images placed on this layer: "
+            + (numPics - 1) + "\n";
   }
 }

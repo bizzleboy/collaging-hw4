@@ -1,4 +1,4 @@
-package collagefiles.Controller;
+package collagefiles.controller;
 
 /**
  * Represents a controller that assists the user in adding images.

@@ -3,9 +3,11 @@ package collagefiles.model;
 import java.util.ArrayList;
 import java.util.List;
 //memes
+
 /**
  * Represents a collage project that can handle PPMs.
  */
+
 public class BasicCollageProject implements Project {
   private final List<Layer> layers;
   private final int height;
@@ -19,9 +21,10 @@ public class BasicCollageProject implements Project {
    * @param canvasHeight Height of canvas.
    * @param maxVal       Maximum pixel value.
    */
-  public BasicCollageProject(int canvasWidth, int canvasHeight, int maxVal) throws IllegalArgumentException{
+  public BasicCollageProject(int canvasWidth,
+                             int canvasHeight, int maxVal) throws IllegalArgumentException {
     //ADDED EXCEPTION
-    if (canvasHeight <1 || canvasWidth <1 || maxVal < 1){
+    if (canvasHeight < 1 || canvasWidth < 1 || maxVal < 1) {
       throw new IllegalArgumentException("invalid arg");
     }
     this.layers = new ArrayList<Layer>();
@@ -66,10 +69,9 @@ public class BasicCollageProject implements Project {
     for (Layer l : this.layers) {
       if (l.getName().equals(layerName)) {
         l.placeImage(xPos, yPos, imageToAdd);
-        //l.applyFilter(l.getFilter(), this.stackToImage());
         System.out.print("Image added to " + layerName + "\n");
         break;
-      } else{
+      } else {
         System.out.print("Image not added to " + layerName + "\n");
       }
     }
@@ -118,29 +120,7 @@ public class BasicCollageProject implements Project {
     return projectString;
   }
 
-  /**
-   * Saves the image as a PPM.
-   *
-   * @param imagePath Destination of particular image.
-   * @return PPM formatted file.
-   */
-  @Override
-  public String saveImage(String imagePath) {
-    String imageString = "";
-    String[] paths = imagePath.split("/");
-    imageString += "P3\n";
-    imageString += ("#" + paths[paths.length-1].split("\\.")[0] + "\n");
-    imageString += (this.width + " " + this.height + "\n" + this.maxVal + "\n" + "\n");
 
-    Layer startLayer = new Layer("base", this.width, this.height, false);
-
-    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0));
-
-    startLayer.placeImage(0,0,this.stackToImage(this.layers.size()-1));
-
-    imageString += startLayer.getImagePPM();
-    return imageString;
-  }
 
 
   /**
@@ -153,14 +133,15 @@ public class BasicCollageProject implements Project {
   }
 
   /**
-   * Returns a composite image of all the layers below a specified layer
-   * @param startIndex the index of the layer underneath which to get the composite image
-   * @return a composite image of the below layers
+   * Returns a composite image of all the layers below a specified layer.
+   *
+   * @param startIndex the index of the layer underneath which to get the composite image.
+   * @return a composite image of the below layers.
    */
   public Image stackToImage(int startIndex) {
 
     if (startIndex < 0) {
-      return new Image(this.width, this.height);
+      return new Image();
     }
 
     List<Layer> stack = new ArrayList<Layer>();
@@ -170,11 +151,11 @@ public class BasicCollageProject implements Project {
     }
 
     Layer startLayer = stack.get(0);
-    startLayer.applyFilter(startLayer.getFilter(),new Image(0,0));
+    startLayer.applyFilter(startLayer.getFilter(), new Image());
 
     for (int k = 1; k < stack.size(); k++) {
       stack.get(k).applyFilter(stack.get(k).getFilter(), startLayer.getImages().get(0));
-      startLayer.placeImage(0,0,stack.get(k).getImages().get(0));
+      startLayer.placeImage(0, 0, stack.get(k).getImages().get(0));
     }
 
     return startLayer.getImages().get(0);
