@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.util.List;
 
 import collagefiles.model.Image;
+import collagefiles.model.ImageInterface;
 import collagefiles.model.Layer;
+import collagefiles.model.LayerInterface;
 import collagefiles.model.Project;
 
 class BasicCollageProjectConfirmMethodsMock implements Project {
@@ -34,7 +36,7 @@ class BasicCollageProjectConfirmMethodsMock implements Project {
   }
 
   @Override
-  public void addImageToLayer(String layerName, Image image, int xPos, int yPos) {
+  public void addImageToLayer(String layerName, ImageInterface image, int xPos, int yPos) {
     try {
       this.log.append("addImageToLayer ");
     } catch (IOException ignore) {
@@ -54,7 +56,7 @@ class BasicCollageProjectConfirmMethodsMock implements Project {
 
 
   @Override
-  public List<Layer> getLayers() {
+  public List<LayerInterface> getLayers() {
     return null;
   }
 

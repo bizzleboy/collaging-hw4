@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * Represents a layer, that contains images and filters.
  */
-public class Layer {
-  List<Image> imagesOnLayer;
+public class Layer implements LayerInterface {
+  List<ImageInterface> imagesOnLayer;
   private String filter;
   private final String name;
 
@@ -19,43 +19,35 @@ public class Layer {
    * @param height Of layer.
    */
   public Layer(String name, int width, int height, boolean opaque) {
-    this.imagesOnLayer = new ArrayList<Image>();
+    this.imagesOnLayer = new ArrayList<ImageInterface>();
     this.name = name;
     this.filter = "normal";
-    Image background = new Image(width, height, opaque);
+    ImageInterface background = new Image(width, height, opaque);
     this.imagesOnLayer.add(background);
   }
 
-  /**
-   * Adds image onto specified coordinate of layer's background image.
-   * Mutates the background image to copy over the specified image.
-   *
-   * @param xPos  Horizontal position on background image.
-   * @param yPos  Vertical position on background image.
-   * @param image Image to be added on background.
-   * @throws IllegalArgumentException If positions are invalid.
-   */
-  public void placeImage(int xPos, int yPos, Image image) throws IllegalArgumentException {
-    if (xPos < 0 || yPos >= this.imagesOnLayer.get(0).pixels.size() || yPos < 0
-            || xPos >= this.imagesOnLayer.get(0).pixels.get(0).size()) {
+  @Override
+  public void placeImage(int xPos, int yPos, ImageInterface image) throws IllegalArgumentException {
+    if (xPos < 0 || yPos >= this.imagesOnLayer.get(0).getPixels().size() || yPos < 0
+            || xPos >= this.imagesOnLayer.get(0).getPixels().get(0).size()) {
       throw new IllegalArgumentException("Invalid positions");
     }
     int xIndex = xPos;
     int yIndex = yPos;
 
-    for (List<Pixel> list : image.filterPixels) {
-      if (yIndex >= this.imagesOnLayer.get(0).pixels.size()) {
+    for (List<PixelInterface> list : image.getFilterPixels()) {
+      if (yIndex >= this.imagesOnLayer.get(0).getPixels().size()) {
         break;
       } else {
-        for (Pixel p : list) {
-          if (xIndex >= this.imagesOnLayer.get(0).pixels.get(0).size()) {
+        for (PixelInterface p : list) {
+          if (xIndex >= this.imagesOnLayer.get(0).getPixels().get(0).size()) {
             break;
           } else {
             /// THIS is where the issue is TODO
-            Pixel alteredPixel = this.imagesOnLayer.get(0).pixels.get(yIndex).get(xIndex);
+            PixelInterface alteredPixel = this.imagesOnLayer.get(0).getPixels().get(yIndex).get(xIndex);
             alteredPixel.addPixels(p);
-            this.imagesOnLayer.get(0).pixels.get(yIndex).set(xIndex, alteredPixel);
-            this.imagesOnLayer.get(0).filterPixels.get(yIndex).set(xIndex, alteredPixel);
+            this.imagesOnLayer.get(0).getPixels().get(yIndex).set(xIndex, alteredPixel);
+            this.imagesOnLayer.get(0).getFilterPixels().get(yIndex).set(xIndex, alteredPixel);
             xIndex += 1;
 
           }
@@ -69,104 +61,102 @@ public class Layer {
 
   }
 
+  @Override
   public void setFilter(String filter) {
     this.filter = filter;
   }
 
-  /**
-   * Applies a filter to all the images on a layer.
-   *
-   * @param filter Represents filter component.
-   */
-  public void applyFilter(String filter, Image backgroundImage) {
+  @Override
+  public void applyFilter(String filter, ImageInterface backgroundImage) {
     switch (filter) {
       case "normal":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
-          image.filterPixels = image.getPixels();
+        for (ImageInterface image : imagesOnLayer) {
+          ArrayList<ArrayList<PixelInterface>> imagePixels = image.getFilterPixels();
+          imagePixels = image.getPixels();
         }
         break;
       case "red-component":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.filterImageRed();
         }
         break;
       case "blue-component":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.filterImageBlue();
 
         }
         break;
       case "green-component":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.filterImageGreen();
 
         }
         break;
       case "brighten-value":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.brightenImage("brighten-value");
         }
         break;
       case "darken-value":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.darkenImage("darken-value");
 
         }
         break;
       case "brighten-luma":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.brightenImage("brighten-luma");
 
         }
         break;
       case "darken-luma":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.darkenImage("darken-luma");
 
         }
         break;
       case "brighten-intensity":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.brightenImage("brighten-intensity");
 
         }
         break;
       case "darken-intensity":
         this.filter = filter;
-        for (Image image : imagesOnLayer) {
+        for (ImageInterface image : imagesOnLayer) {
           image.darkenImage("darken-intensity");
 
         }
         break;
       case "difference":
         this.filter = filter;
-        if (backgroundImage.pixels.size() != 0) {
-          for (Image image : imagesOnLayer) {
+        if (backgroundImage.getPixels().size() != 0) {
+          for (ImageInterface image : imagesOnLayer) {
             image.differenceImage(backgroundImage);
           }
         }
         break;
       case "multiply":
         this.filter = filter;
-        if (backgroundImage.pixels.size() != 0) {
-          for (Image image : imagesOnLayer) {
+        if (backgroundImage.getPixels().size() != 0) {
+          for (ImageInterface image : imagesOnLayer) {
             image.multiplyImage(backgroundImage);
           }
         }
         break;
       case "screen":
         this.filter = filter;
-        if (backgroundImage.pixels.size() != 0) {
-          for (Image image : imagesOnLayer) {
+        if (backgroundImage.getPixels().size() != 0) {
+          for (ImageInterface image : imagesOnLayer) {
             image.screenImage(backgroundImage);
           }
         }
@@ -177,26 +167,18 @@ public class Layer {
     System.out.print(filter + " applied in layer class at layer '" + this.name + "'\n");
   }
 
-  /**
-   * Acquires the images on the layer.
-   *
-   * @return All the images of this layer.
-   */
-  public List<Image> getImages() {
+  @Override
+  public List<ImageInterface> getImages() {
     return this.imagesOnLayer;
   }
 
-  /**
-   * Formats the layer images into a PPM file.
-   *
-   * @return String representing image ppm.
-   */
+  @Override
   public String getImagePPM() {
 
     String imageString = "";
 
-    for (List<Pixel> list : this.imagesOnLayer.get(0).filterPixels) {
-      for (Pixel p : list) {
+    for (List<PixelInterface> list : this.imagesOnLayer.get(0).getFilterPixels()) {
+      for (PixelInterface p : list) {
         imageString += (String.format("%d %d %d\n",
                 p.getPixelColor().getRed(),
                 p.getPixelColor().getGreen(),
@@ -208,15 +190,11 @@ public class Layer {
 
   }
 
-  /**
-   * Formats image into more general text file.
-   *
-   * @return String format of layer images.
-   */
+  @Override
   public String getImageTxt() {
     String imageString = "";
-    for (List<Pixel> list : this.imagesOnLayer.get(0).pixels) {
-      for (Pixel p : list) {
+    for (List<PixelInterface> list : this.imagesOnLayer.get(0).getPixels()) {
+      for (PixelInterface p : list) {
 
         imageString += (String.format("%d %d %d %d\n",
                 p.getPixelColor().getRed(),
@@ -229,32 +207,20 @@ public class Layer {
     return imageString;
   }
 
-  /**
-   * Returns the filter of this layer.
-   *
-   * @return String representing filter.
-   */
+  @Override
   public String getFilter() {
     return this.filter;
   }
 
-  /**
-   * Returns the name of the layer.
-   *
-   * @return name of layer.
-   */
+  @Override
   public String getName() {
     return this.name;
   }
 
-  /**
-   * Converts each layer to a string description of the images.
-   *
-   * @return String of the images.
-   */
+  @Override
   public String toString() {
     int numPics = 0;
-    for (Image i : this.imagesOnLayer) {
+    for (ImageInterface i : this.imagesOnLayer) {
       numPics++;
     }
     return this.name + " " + this.filter + " # of images placed on this layer: "

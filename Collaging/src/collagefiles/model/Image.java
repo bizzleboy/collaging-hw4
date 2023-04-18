@@ -7,9 +7,9 @@ import java.util.List;
  * A representation of an image, primarily displayed as.
  * An arraylist of arraylist(pixels).
  */
-public class Image {
-  protected ArrayList<ArrayList<Pixel>> pixels;
-  ArrayList<ArrayList<Pixel>> filterPixels;
+public class Image implements ImageInterface {
+  protected ArrayList<ArrayList<PixelInterface>> pixels;
+  ArrayList<ArrayList<PixelInterface>> filterPixels;
 
   /**
    * Creates a blank image of a specified size.
@@ -22,7 +22,7 @@ public class Image {
     if (width < 1 || height < 1) {
       throw new IllegalArgumentException("Invalid height/width");
     }
-    this.pixels = new ArrayList<ArrayList<Pixel>>();
+    this.pixels = new ArrayList<ArrayList<PixelInterface>>();
 
     for (int i = 0; i < height; i++) {
       this.pixels.add(new ArrayList<>());
@@ -55,7 +55,7 @@ public class Image {
    * @param pixelList What image is constructed from.
    * @throws IllegalArgumentException Null pixel lists provided.
    */
-  public Image(ArrayList<ArrayList<Pixel>> pixelList) throws IllegalArgumentException {
+  public Image(ArrayList<ArrayList<PixelInterface>> pixelList) throws IllegalArgumentException {
     if (pixelList == null) {
       throw new IllegalArgumentException("Invalid pixelList");
     }
@@ -63,143 +63,108 @@ public class Image {
     this.filterPixels = this.getPixels();
   }
 
-  /**
-   * Filter this image red by iterating through each of its pixels.
-   */
+  @Override
   public void filterImageRed() {
 
     this.filterPixels = this.getPixels();
-    for (List<Pixel> row : this.filterPixels) {
-      for (Pixel pixel : row) {
+    for (List<PixelInterface> row : this.filterPixels) {
+      for (PixelInterface pixel : row) {
         pixel.colorMeRed();
 
       }
     }
   }
 
-  /**
-   * Filter this image green by iterating through each of its pixels.
-   */
+  @Override
   public void filterImageGreen() {
 
     this.filterPixels = this.getPixels();
-    for (List<Pixel> row : this.filterPixels) {
-      for (Pixel pixel : row) {
+    for (List<PixelInterface> row : this.filterPixels) {
+      for (PixelInterface pixel : row) {
         pixel.colorMeGreen();
       }
     }
   }
 
-  /**
-   * Filter this image blue by iterating through each of its pixels.
-   */
+  @Override
   public void filterImageBlue() {
     this.filterPixels = this.getPixels();
-    for (List<Pixel> row : this.filterPixels) {
-      for (Pixel pixel : row) {
+    for (List<PixelInterface> row : this.filterPixels) {
+      for (PixelInterface pixel : row) {
         pixel.colorMeBlue();
       }
     }
   }
 
-  /**
-   * Brighten this image based on a type of brightening.
-   *
-   * @param brightness Representing brightness type.
-   */
+  @Override
   public void brightenImage(String brightness) {
     this.filterPixels = this.getPixels();
-    for (List<Pixel> row : this.filterPixels) {
-      for (Pixel pixel : row) {
+    for (List<PixelInterface> row : this.filterPixels) {
+      for (PixelInterface pixel : row) {
         pixel.brightenMe(brightness);
       }
     }
   }
 
-  /**
-   * Darken this image based on a type of darkening.
-   *
-   * @param darkness Representing darkness type.
-   */
+  @Override
   public void darkenImage(String darkness) {
     this.filterPixels = this.getPixels();
-    for (List<Pixel> row : this.filterPixels) {
+    for (List<PixelInterface> row : this.filterPixels) {
       for (int i = 0; i < row.size(); i++) {
         row.get(i).darkenMe(darkness);
       }
     }
   }
 
-  /**
-   * Get the difference in RGB values of image and the composite image beneath it.
-   *
-   * @param backgroundImage Representing the composite image on the layers beneath this image.
-   */
-  public void differenceImage(Image backgroundImage) {
+  @Override
+  public void differenceImage(ImageInterface backgroundImage) {
     this.filterPixels = this.getPixels();
     for (int i = 0; i < this.pixels.size(); i++) {
       for (int j = 0; j < this.pixels.get(0).size(); j++) {
         this.filterPixels.get(i).get(j).differenceMe(
-                backgroundImage.filterPixels.get(i)
+                backgroundImage.getFilterPixels().get(i)
                         .get(j));
       }
     }
   }
 
-  /**
-   * Darken this image based on the RGB values of the composite image from the layer's beneath it.
-   *
-   * @param backgroundImage Representing the composite image on the layers beneath this image.
-   */
-  public void multiplyImage(Image backgroundImage) {
+  @Override
+  public void multiplyImage(ImageInterface backgroundImage) {
     this.filterPixels = this.getPixels();
     for (int i = 0; i < this.pixels.size(); i++) {
       for (int j = 0; j < this.pixels.get(0).size(); j++) {
         this.filterPixels.get(i).get(j).hslFunc(
-                backgroundImage.filterPixels.get(i)
+                backgroundImage.getFilterPixels().get(i)
                         .get(j), "multiply");
       }
     }
   }
 
-  /**
-   * Lighten this image based on the RGB values of the composite image from the layer's beneath it.
-   *
-   * @param backgroundImage Representing the composite image on the layers beneath this image.
-   */
-
-  public void screenImage(Image backgroundImage) {
+  @Override
+  public void screenImage(ImageInterface backgroundImage) {
     this.filterPixels = this.getPixels();
     for (int i = 0; i < this.pixels.size(); i++) {
       for (int j = 0; j < this.pixels.get(0).size(); j++) {
         this.filterPixels.get(i).get(j).hslFunc(
-                backgroundImage.filterPixels.get(i)
+                backgroundImage.getFilterPixels().get(i)
                         .get(j), "screen");
       }
     }
   }
 
-  /**
-   * Gets the ArrayList of ArrayList(pixel) for testing and operations.
-   *
-   * @return The ArrayList of ArrayList(pixel).
-   */
-  public ArrayList<ArrayList<Pixel>> getFilterPixels() {
+  @Override
+  public ArrayList<ArrayList<PixelInterface>> getFilterPixels() {
     return this.filterPixels;
   }
 
-  /**
-   * Gets the pixels of the image for creating deep copies.
-   *
-   * @return The ArrayList of ArrayList(pixel).
-   */
-  public ArrayList<ArrayList<Pixel>> getPixels() {
+  @Override
+  public ArrayList<ArrayList<PixelInterface>> getPixels() {
 
-    ArrayList<ArrayList<Pixel>> copy = new ArrayList<ArrayList<Pixel>>();
+    ArrayList<ArrayList<PixelInterface>> copy = new ArrayList<ArrayList<PixelInterface>>();
 
-    for (ArrayList<Pixel> pixelRow : (ArrayList<ArrayList<Pixel>>) this.pixels.clone()) {
-      ArrayList<Pixel> newRow = new ArrayList<>();
-      for (Pixel pix : pixelRow) {
+    for (ArrayList<PixelInterface> pixelRow : (ArrayList<ArrayList<PixelInterface>>) this.pixels.clone()) {
+      ArrayList<PixelInterface> newRow = new ArrayList<>();
+      for (PixelInterface pix : pixelRow) {
         Pixel newPix = new Pixel(pix.getPixelColor());
         newRow.add(newPix);
       }

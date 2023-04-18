@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class BasicCollageProject implements Project {
-  private final List<Layer> layers;
+  private final List<LayerInterface> layers;
   private final int height;
   private final int width;
   private final int maxVal;
@@ -27,7 +27,7 @@ public class BasicCollageProject implements Project {
     if (canvasHeight < 1 || canvasWidth < 1 || maxVal < 1) {
       throw new IllegalArgumentException("invalid arg");
     }
-    this.layers = new ArrayList<Layer>();
+    this.layers = new ArrayList<LayerInterface>();
     this.height = canvasHeight;
     this.width = canvasWidth;
     this.maxVal = maxVal;
@@ -44,7 +44,7 @@ public class BasicCollageProject implements Project {
 
     boolean layerUnique = true;
 
-    for (Layer l : this.layers) {
+    for (LayerInterface l : this.layers) {
       if (l.getName().equals(layerName)) {
         layerUnique = false;
         System.out.print("Layer with this name already exists\n");
@@ -65,8 +65,8 @@ public class BasicCollageProject implements Project {
    * @param yPos       Vertical coordinate to add to on layer.
    */
   @Override
-  public void addImageToLayer(String layerName, Image imageToAdd, int xPos, int yPos) {
-    for (Layer l : this.layers) {
+  public void addImageToLayer(String layerName, ImageInterface imageToAdd, int xPos, int yPos) {
+    for (LayerInterface l : this.layers) {
       if (l.getName().equals(layerName)) {
         l.placeImage(xPos, yPos, imageToAdd);
         System.out.print("Image added to " + layerName + "\n");
@@ -113,7 +113,7 @@ public class BasicCollageProject implements Project {
     projectString += ("\n");
     projectString += (this.maxVal);
     projectString += ("\n");
-    for (Layer l : this.layers) {
+    for (LayerInterface l : this.layers) {
       projectString += (l.getName() + " " + l.getFilter() + "\n");
       projectString += (l.getImageTxt());
     }
@@ -128,7 +128,7 @@ public class BasicCollageProject implements Project {
    *
    * @return Layers in this project.
    */
-  public List<Layer> getLayers() {
+  public List<LayerInterface> getLayers() {
     return this.layers;
   }
 
@@ -138,19 +138,20 @@ public class BasicCollageProject implements Project {
    * @param startIndex the index of the layer underneath which to get the composite image.
    * @return a composite image of the below layers.
    */
-  public Image stackToImage(int startIndex) {
+  @Override
+  public ImageInterface stackToImage(int startIndex) {
 
     if (startIndex < 0) {
       return new Image();
     }
 
-    List<Layer> stack = new ArrayList<Layer>();
+    List<LayerInterface> stack = new ArrayList<LayerInterface>();
 
     for (int j = 0; j <= startIndex; j++) {
       stack.add(this.layers.get(j));
     }
 
-    Layer startLayer = stack.get(0);
+    LayerInterface startLayer = stack.get(0);
     startLayer.applyFilter(startLayer.getFilter(), new Image());
 
     for (int k = 1; k < stack.size(); k++) {

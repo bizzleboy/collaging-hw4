@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Represents a singular pixel that will be displayed on a layer. Can be 1 of any RGB color.
  */
-public class Pixel {
+public class Pixel implements PixelInterface {
 
   private int red;
   private int green;
@@ -48,9 +48,7 @@ public class Pixel {
     this.alpha = alpha;
   }
 
-  /**
-   * Change the color of this pixel to red for filtering purposes.
-   */
+  @Override
   public void colorMeRed() {
     if (this.getPixelColor().getAlpha() == 0) {
       //pass
@@ -60,9 +58,7 @@ public class Pixel {
     }
   }
 
-  /**
-   * Change the color of this pixel to green for filtering purposes.
-   */
+  @Override
   public void colorMeGreen() {
     if (this.getPixelColor().getAlpha() == 0) {
       //pass
@@ -72,9 +68,7 @@ public class Pixel {
     }
   }
 
-  /**
-   * Change the color of this pixel to blue for filtering purposes.
-   */
+  @Override
   public void colorMeBlue() {
     if (this.getPixelColor().getAlpha() == 0) {
       //pass
@@ -84,11 +78,7 @@ public class Pixel {
     }
   }
 
-  /**
-   * Brighten the pixel based on a type of brightness.
-   *
-   * @param brightnessType Type of brightness.
-   */
+  @Override
   public void brightenMe(String brightnessType) {
     int brightness;
     switch (brightnessType) {
@@ -128,11 +118,7 @@ public class Pixel {
     this.blue = newBlue;
   }
 
-  /**
-   * Darken the pixel based on a type of darkness.
-   *
-   * @param darknessType Type of darkness.
-   */
+  @Override
   public void darkenMe(String darknessType) {
     int darkness;
     switch (darknessType) {
@@ -172,34 +158,24 @@ public class Pixel {
     this.blue = newBlue;
   }
 
-  /**
-   * Adjust the pixel based on the difference between its values and the values of the
-   * pixel behind in the composite image.
-   *
-   * @param backgroundPixel the pixel directly behind this one in the composite image.
-   */
-  public void differenceMe(Pixel backgroundPixel) {
+  @Override
+  public void differenceMe(PixelInterface backgroundPixel) {
 
     int newRed;
     int newBlue;
     int newGreen;
 
-    newRed = Math.abs(this.red - backgroundPixel.red);
-    newBlue = Math.abs(this.blue - backgroundPixel.blue);
-    newGreen = Math.abs(this.green - backgroundPixel.green);
+    newRed = Math.abs(this.red - backgroundPixel.getPixelColor().getRed());
+    newBlue = Math.abs(this.blue - backgroundPixel.getPixelColor().getBlue());
+    newGreen = Math.abs(this.green - backgroundPixel.getPixelColor().getGreen());
 
     this.red = newRed;
     this.green = newGreen;
     this.blue = newBlue;
   }
 
-  /**
-   * Applied a specified filter function to the pixel based on this pixel and the.
-   * Background  pixel's HSL values.
-   * @param backgroundPixel The pixel to filter this pixel by.
-   * @param func The filter function to apply to this filter.
-   */
-  public void hslFunc(Pixel backgroundPixel, String func) {
+  @Override
+  public void hslFunc(PixelInterface backgroundPixel, String func) {
 
     ArrayList<Double> thisHSL = this.convertRGBtoHSL(
             ((double) this.red) / 255,
@@ -207,9 +183,9 @@ public class Pixel {
             ((double) this.blue) / 255);
 
     ArrayList<Double> otherHSL = this.convertRGBtoHSL(
-            ((double) backgroundPixel.red) / 255,
-            ((double) backgroundPixel.green) / 255,
-            ((double) backgroundPixel.blue) / 255);
+            ((double) backgroundPixel.getPixelColor().getRed()) / 255,
+            ((double) backgroundPixel.getPixelColor().getGreen()) / 255,
+            ((double) backgroundPixel.getPixelColor().getBlue()) / 255);
 
     ArrayList<Double> thisRGB = new ArrayList<>();
 
@@ -233,25 +209,21 @@ public class Pixel {
     }
   }
 
-  /**
-   * Perform pixel math in order to account for varying alpha levels.
-   *
-   * @param pix2 The other pixel to add.
-   */
-  public void addPixels(Pixel pix2) {
+  @Override
+  public void addPixels(PixelInterface pix2) {
     if (this.getPixelColor().toString().equals(new Color(255, 255, 255, 0).toString())
             && pix2.getPixelColor().toString().equals(new Color(255, 255, 255, 0).toString())
             && pix2.getPixelColor().getAlpha() == 0 && this.getPixelColor().getAlpha() == 0) {
       //pass, without this, adding 2 transparent pixels makes black
     } else {
       float pix1Alpha = (float) this.alpha;
-      float pix2Alpha = (float) pix2.alpha;
+      float pix2Alpha = (float) pix2.getPixelColor().getAlpha();
       float alphaPct = (pix2Alpha / 255 + pix1Alpha / 255 * (1 - (pix2Alpha / 255)));
-      int newRed = Math.round((pix2Alpha / 255 * pix2.red + this.red * (pix1Alpha / 255)
+      int newRed = Math.round((pix2Alpha / 255 * pix2.getPixelColor().getRed() + this.red * (pix1Alpha / 255)
               * (1 - pix2Alpha / 255)) * (1 / alphaPct));
-      int newGreen = Math.round((pix2Alpha / 255 * pix2.green + this.green * (pix1Alpha / 255)
+      int newGreen = Math.round((pix2Alpha / 255 * pix2.getPixelColor().getGreen() + this.green * (pix1Alpha / 255)
               * (1 - pix2Alpha / 255)) * (1 / alphaPct));
-      int newBlue = Math.round((pix2Alpha / 255 * pix2.blue + this.blue * (pix1Alpha / 255)
+      int newBlue = Math.round((pix2Alpha / 255 * pix2.getPixelColor().getBlue() + this.blue * (pix1Alpha / 255)
               * (1 - pix2Alpha / 255)) * (1 / alphaPct));
       this.blue = newBlue;
       this.red = newRed;
@@ -261,29 +233,13 @@ public class Pixel {
 
   }
 
-  /**
-   * Returns the color of this pixel for testing purposes.
-   *
-   * @return Color of the pixel.
-   */
+  @Override
   public Color getPixelColor() {
     return new Color(this.red, this.green, this.blue, this.alpha);
   }
 
 
-  /**
-   * Convers an RGB representation in the range 0-1 into an HSL.
-   * Representation where.
-   * <ul>
-   * <li> 0 &lt;= H &lt; 360</li>
-   * <li> 0 &lt;= S &lt;= 1</li>
-   * <li> 0 &lt;= L &lt;= 1</li>
-   * </ul>
-   *
-   * @param r red value of the RGB between 0 and 1
-   * @param g green value of the RGB between 0 and 1
-   * @param b blue value of the RGB between 0 and 1
-   */
+  @Override
   public ArrayList<Double> convertRGBtoHSL(double r, double g, double b) {
 
     ArrayList<Double> hsls = new ArrayList<Double>();
@@ -326,20 +282,7 @@ public class Pixel {
   }
 
 
-  /**
-   * Convers an HSL representation where.
-   * <ul>
-   * <li> 0 &lt;= H &lt; 360</li>
-   * <li> 0 &lt;= S &lt;= 1</li>
-   * <li> 0 &lt;= L &lt;= 1</li>
-   * </ul>
-   * Into an RGB representation where each component is in the range 0-1.
-   *
-   * @param hue        hue of the HSL representation
-   * @param saturation saturation of the HSL representation
-   * @param lightness  lightness of the HSL representation
-   */
-
+  @Override
   public ArrayList<Double> convertHSLtoRGB(double hue, double saturation, double lightness) {
 
     ArrayList<Double> rgbs = new ArrayList<Double>();

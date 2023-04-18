@@ -29,7 +29,7 @@ public interface Project {
    * @param xPos      Horizontal coordinate to add to on layer.
    * @param yPos      Vertical coordinate to add to on layer.
    */
-  void addImageToLayer(String layerName, Image image, int xPos, int yPos);
+  void addImageToLayer(String layerName, ImageInterface image, int xPos, int yPos);
 
   /**
    * Changes the filter of the specified layer.
@@ -45,7 +45,7 @@ public interface Project {
    *
    * @return All the layers of this project.
    */
-  public List<Layer> getLayers();
+  public List<LayerInterface> getLayers();
 
   /**
    * Returns a composite image of all the layers below a specified layer.
@@ -53,5 +53,5 @@ public interface Project {
    * @param startIndex the index of the layer underneath which to get the composite image.
    * @return a composite image of the below layers.
    */
-  public Image stackToImage(int startIndex);
+  public ImageInterface stackToImage(int startIndex);
 }

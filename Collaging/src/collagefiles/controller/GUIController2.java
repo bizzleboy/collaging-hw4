@@ -21,9 +21,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import collagefiles.model.BasicCollageProject;
-import collagefiles.model.Image;
-import collagefiles.model.Layer;
-import collagefiles.model.Pixel;
+
+import collagefiles.model.ImageInterface;
+
+
+import collagefiles.model.LayerInterface;
+import collagefiles.model.PixelInterface;
 import collagefiles.model.Project;
 import collagefiles.view.GUIView;
 
@@ -40,7 +43,7 @@ public class GUIController2 extends JFrame implements ActionListener {
   private Project project;
 
 
-  private Image imageToAdd;
+  private ImageInterface imageToAdd;
 
   /**
    * Constructor which instantiates the view and attatches all listeners.
@@ -109,7 +112,7 @@ public class GUIController2 extends JFrame implements ActionListener {
 
       int userSelection = fileChooser.showSaveDialog(view.getFrame());
       if (userSelection == JFileChooser.APPROVE_OPTION) {
-        for (Layer l : this.project.getLayers()) {
+        for (LayerInterface l : this.project.getLayers()) {
           String saveFilter = l.getFilter();
           this.project.setFilter(l.getName(), "normal");
           l.setFilter(saveFilter);
@@ -167,7 +170,7 @@ public class GUIController2 extends JFrame implements ActionListener {
               null, options, options[0]);
       if (filter != null) {
         List<String> array = new ArrayList<>();
-        for (Layer layer : this.project.getLayers()) {
+        for (LayerInterface layer : this.project.getLayers()) {
           if (!layer.getName().equals("background")) {
             array.add(layer.getName());
           }
@@ -218,7 +221,7 @@ public class GUIController2 extends JFrame implements ActionListener {
 
 
           List<String> array = new ArrayList<>();
-          for (Layer layer : this.project.getLayers()) {
+          for (LayerInterface layer : this.project.getLayers()) {
             if (!layer.getName().equals("background")) {
               array.add(layer.getName());
             }
@@ -263,7 +266,7 @@ public class GUIController2 extends JFrame implements ActionListener {
    * @param path Path to image on computer.
    * @return Image from computer.
    */
-  private Image readImage(String path) {
+  private ImageInterface readImage(String path) {
     Scanner sc = null;
 
     try {
@@ -297,12 +300,12 @@ public class GUIController2 extends JFrame implements ActionListener {
 
     int maxVal = sc.nextInt();
 
-    ArrayList<ArrayList<Pixel>> pixels;
+    ArrayList<ArrayList<PixelInterface>> pixels;
     pixels = new ArrayList<>();
 
     //adding the rows of pixels
     for (int i = 0; i < height; i++) {
-      pixels.add(new ArrayList<Pixel>());
+      pixels.add(new ArrayList<PixelInterface>());
     }
     //adding pixels to each row
     for (List l : pixels) {
@@ -316,7 +319,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       }
     }
 
-    Image readImage = new Image(pixels);
+    ImageInterface readImage = new Image(pixels);
     return readImage;
   }
 
@@ -357,7 +360,7 @@ public class GUIController2 extends JFrame implements ActionListener {
     while (sc.hasNextLine() && tracker <= 3 + ((width * height) + 1) * layerTracker) {
 
 
-      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
+      ArrayList<ArrayList<PixelInterface>> nextPixels = new ArrayList<>();
 
       String layerName = sc.next();
 
@@ -367,7 +370,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       layerTracker += 1;
 
       for (int y = 0; y < height; y++) {
-        nextPixels.add(new ArrayList<Pixel>());
+        nextPixels.add(new ArrayList<PixelInterface>());
       }
       for (List l : nextPixels) {
         for (int x = 0; x < width; x++) {
@@ -381,6 +384,8 @@ public class GUIController2 extends JFrame implements ActionListener {
       }
       this.project.addLayer(layerName);
       this.project.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
+
+
       this.project.setFilter(layerName, filterName);
       this.view.addLayerButton(layerName);
 
@@ -401,14 +406,14 @@ public class GUIController2 extends JFrame implements ActionListener {
     return extension;
   }
 
-  private BufferedImage renderImage(Image pixels) {
+  private BufferedImage renderImage(ImageInterface pixels) {
     int width = pixels.getPixels().size();
     int height = pixels.getPixels().get(0).size();
 
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        Pixel pixel = pixels.getFilterPixels().get(y).get(x);
+        PixelInterface pixel = pixels.getFilterPixels().get(y).get(x);
 
         int color = pixel.getPixelColor().getRGB();
 
@@ -426,8 +431,8 @@ public class GUIController2 extends JFrame implements ActionListener {
    * @param filepath Path to image.
    * @return Image to be rendered.
    */
-  public Image readPngJpeg(String filepath) {
-    ArrayList<ArrayList<Pixel>> imageColors = new ArrayList<>();
+  public ImageInterface readPngJpeg(String filepath) {
+    ArrayList<ArrayList<PixelInterface>> imageColors = new ArrayList<>();
 
     try {
       BufferedImage image = ImageIO.read(new File(filepath));
@@ -435,12 +440,10 @@ public class GUIController2 extends JFrame implements ActionListener {
       int height = image.getHeight();
 
       for (int i = 0; i < height; i++) {
-        ArrayList<Pixel> rowPixels = new ArrayList<>();
+        ArrayList<PixelInterface> rowPixels = new ArrayList<>();
         for (int j = 0; j < width; j++) {
           int rgb = image.getRGB(j, i);
           Color color = new Color(rgb);
-
-
 
           rowPixels.add(new Pixel(color.getRed(), color.getGreen(),
                   color.getBlue(), color.getAlpha()));
@@ -464,7 +467,7 @@ public class GUIController2 extends JFrame implements ActionListener {
   public void saveImageNew(String filepath, String fileName) {
     // Create a BufferedImage from the ArrayList<ArrayList<Color>>
 
-    Image finalImage = this.project.stackToImage(
+    ImageInterface finalImage = this.project.stackToImage(
             this.project.getLayers().size() - 1);
     int width = finalImage.getPixels().get(0).size();
     int height = finalImage.getPixels().size();
@@ -503,7 +506,7 @@ public class GUIController2 extends JFrame implements ActionListener {
    *
    * @param image      The composite image of all layers and such.
    * @param outputFile The path to save the ppm to.
-   * @throws IOException Standard IO catch
+   * @throws IOException Standard IO catch.
    */
   private void saveAsPPM(BufferedImage image, File outputFile) throws IOException {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
