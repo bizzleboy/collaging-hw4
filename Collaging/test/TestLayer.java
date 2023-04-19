@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import collagefiles.model.Image;
+import collagefiles.model.ImageInterface;
 import collagefiles.model.Layer;
+import collagefiles.model.LayerInterface;
 import collagefiles.model.Pixel;
+import collagefiles.model.PixelInterface;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,29 +19,29 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestLayer {
 
-  Pixel redPixel;
-  Pixel greenPixel;
-  Pixel bluePixel;
-  Pixel opaquePixel;
-  Pixel invisiblePixel;
-  Pixel opaqueBlue;
-  Pixel opaqueRed;
-  Pixel amaranthPixel;
+  PixelInterface redPixel;
+  PixelInterface greenPixel;
+  PixelInterface bluePixel;
+  PixelInterface opaquePixel;
+  PixelInterface invisiblePixel;
+  PixelInterface opaqueBlue;
+  PixelInterface opaqueRed;
+  PixelInterface amaranthPixel;
 
-  Layer layer0;
-  Layer layer1;
-  Layer layer2;
-  Layer layer3;
-  Layer layer4;
+  LayerInterface layer0;
+  LayerInterface layer1;
+  LayerInterface layer2;
+  LayerInterface layer3;
+  LayerInterface layer4;
 
-  Image image1;
-  Image image2;
-  Image image3;
-  Image image4;
-  Image image5;
-  Image image6;
-  Image image7;
-  Image image8;
+  ImageInterface image1;
+  ImageInterface image2;
+  ImageInterface image3;
+  ImageInterface image4;
+  ImageInterface image5;
+  ImageInterface image6;
+  ImageInterface image7;
+  ImageInterface image8;
 
   @Before
   public void init() {
@@ -58,41 +61,41 @@ public class TestLayer {
     this.layer3 = new Layer("l1", 11, 2, false);
     this.layer4 = new Layer("l1", 1, 1, false);
 
-    ArrayList<Pixel> row1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row1 = new ArrayList<PixelInterface>();
     Collections.addAll(row1, redPixel, redPixel, redPixel);
 
-    ArrayList<Pixel> row2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row2 = new ArrayList<PixelInterface>();
     Collections.addAll(row2, redPixel, greenPixel, redPixel);
 
-    ArrayList<Pixel> row3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row3 = new ArrayList<PixelInterface>();
     Collections.addAll(row3, bluePixel, greenPixel, bluePixel);
 
-    ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> imageGrid = new ArrayList<>();
     Collections.addAll(imageGrid, row1, row2, row3);
 
-    ArrayList<Pixel> row4 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row4 = new ArrayList<PixelInterface>();
     Collections.addAll(row4, opaquePixel, opaquePixel);
-    ArrayList<Pixel> row5 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row5 = new ArrayList<PixelInterface>();
 
     //Collections.addAll(row1, opaquePixel, opaquePixel);
 
     Collections.addAll(row5, opaquePixel, opaqueBlue);
 
-    ArrayList<ArrayList<Pixel>> imageGrid2 = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> imageGrid2 = new ArrayList<>();
     Collections.addAll(imageGrid2, row4, row5);
 
-    ArrayList<ArrayList<Pixel>> singlePix1 = new ArrayList<ArrayList<Pixel>>();
-    ArrayList<Pixel> singleRow1 = new ArrayList<Pixel>();
+    ArrayList<ArrayList<PixelInterface>> singlePix1 = new ArrayList<ArrayList<PixelInterface>>();
+    ArrayList<PixelInterface> singleRow1 = new ArrayList<PixelInterface>();
     singleRow1.add(opaqueRed);
     singlePix1.add(singleRow1);
 
-    ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
-    ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
+    ArrayList<ArrayList<PixelInterface>> singlePix2 = new ArrayList<ArrayList<PixelInterface>>();
+    ArrayList<PixelInterface> singleRow2 = new ArrayList<PixelInterface>();
     singleRow2.add(new Pixel(0, 255, 0, 255));
     singlePix2.add(singleRow2);
 
-    ArrayList<ArrayList<Pixel>> singlePix3 = new ArrayList<ArrayList<Pixel>>();
-    ArrayList<Pixel> singleRow3 = new ArrayList<Pixel>();
+    ArrayList<ArrayList<PixelInterface>> singlePix3 = new ArrayList<ArrayList<PixelInterface>>();
+    ArrayList<PixelInterface> singleRow3 = new ArrayList<PixelInterface>();
     singleRow3.add(new Pixel(159, 43, 104, 255));
     singlePix3.add(singleRow3);
 

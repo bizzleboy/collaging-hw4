@@ -1,7 +1,10 @@
 package collagefiles.model;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 //memes
 
 /**
@@ -161,4 +164,41 @@ public class BasicCollageProject implements Project {
 
     return startLayer.getImages().get(0);
   }
+
+  @Override
+  public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate) {
+    for (List l : imageToCreate) {
+      for (int x = 0; x < width; x++) {
+        int r = sc.nextInt();
+        int g = sc.nextInt();
+        int b = sc.nextInt();
+        int a = sc.nextInt();
+        l.add(new Pixel(r, g, b, a));
+      }
+    }
+    return new Image(imageToCreate);
+  }
+
+  @Override
+  public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate) {
+    ArrayList<ArrayList<PixelInterface>> imageColors = new ArrayList<>();
+
+    int width = imageToCreate.getWidth();
+    int height = imageToCreate.getHeight();
+
+    for (int i = 0; i < height; i++) {
+      ArrayList<PixelInterface> rowPixels = new ArrayList<>();
+      for (int j = 0; j < width; j++) {
+        int rgb = imageToCreate.getRGB(j, i);
+        Color color = new Color(rgb);
+
+        rowPixels.add(new Pixel(color.getRed(), color.getGreen(),
+                color.getBlue(), color.getAlpha()));
+      }
+      imageColors.add(rowPixels);
+    }
+
+    return new Image(imageColors);
+  }
+
 }

@@ -1,10 +1,14 @@
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import collagefiles.model.Image;
 import collagefiles.model.ImageInterface;
 import collagefiles.model.Layer;
 import collagefiles.model.LayerInterface;
+import collagefiles.model.PixelInterface;
 import collagefiles.model.Project;
 
 class BasicCollageProjectConfirmInputsMock implements Project {
@@ -64,6 +68,16 @@ class BasicCollageProjectConfirmInputsMock implements Project {
 
   @Override
   public ImageInterface stackToImage(int startIndex) {
+    return null;
+  }
+
+  @Override
+  public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate) {
+    return null;
+  }
+
+  @Override
+  public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate) {
     return null;
   }
 

@@ -17,8 +17,11 @@ import javax.imageio.ImageIO;
 
 
 import collagefiles.model.BasicCollageProject;
-import collagefiles.model.Image;
+
+import collagefiles.model.ImageInterface;
+
 import collagefiles.model.Pixel;
+import collagefiles.model.PixelInterface;
 import collagefiles.model.Project;
 import collagefiles.view.CollageView;
 
@@ -425,7 +428,7 @@ public class CollageControllerImpl implements CollageController {
 
     while (sc.hasNextLine() && tracker < 3 + width * height + layerTracker) {
 
-      ArrayList<ArrayList<Pixel>> nextPixels = new ArrayList<>();
+      ArrayList<ArrayList<PixelInterface>> nextPixels = new ArrayList<>();
 
       String layerName = sc.next();
       String filterName = sc.next();
@@ -433,26 +436,17 @@ public class CollageControllerImpl implements CollageController {
       tracker += 1;
 
       for (int y = 0; y < height; y++) {
-        nextPixels.add(new ArrayList<Pixel>());
+        nextPixels.add(new ArrayList<PixelInterface>());
       }
-      for (List l : nextPixels) {
-        for (int x = 0; x < width; x++) {
-          int r = sc.nextInt();
-          int g = sc.nextInt();
-          int b = sc.nextInt();
-          int a = sc.nextInt();
-          tracker += 1;
-          l.add(new Pixel(r, g, b, a));
-        }
-      }
+
       this.currentProject.addLayer(layerName);
-      this.currentProject.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
+      this.currentProject.addImageToLayer(layerName, this.currentProject.LoadImagePixelsFromProject(sc,nextPixels), 0, 0);
       this.currentProject.setFilter(layerName, filterName);
     }
     return this.currentProject;
   }
 
-  private Image readImage(String path) {
+  private ImageInterface readImage(String path) {
     Scanner sc = null;
 
     try {
@@ -492,26 +486,16 @@ public class CollageControllerImpl implements CollageController {
 
     int maxVal = sc.nextInt();
 
-    ArrayList<ArrayList<Pixel>> pixels;
+    ArrayList<ArrayList<PixelInterface>> pixels;
     pixels = new ArrayList<>();
 
     //adding the rows of pixels
     for (int i = 0; i < height; i++) {
-      pixels.add(new ArrayList<Pixel>());
-    }
-    //adding pixels to each row
-    for (List l : pixels) {
-      for (int j = 0; j < width; j++) {
-        int r = sc.nextInt();
-        int g = sc.nextInt();
-        int b = sc.nextInt();
-        l.add(new Pixel(new Color(r, g, b)));
-
-
-      }
+      pixels.add(new ArrayList<PixelInterface>());
     }
 
-    Image readImage = new Image(pixels);
+
+    ImageInterface readImage = this.currentProject.LoadImagePixelsFromProject(sc,pixels);
     return readImage;
   }
 
@@ -523,7 +507,7 @@ public class CollageControllerImpl implements CollageController {
   public void saveImageNew(String filepath, String fileName) {
     Scanner fileScanner = new Scanner(this.input);
 
-    Image finalImage = this.currentProject.stackToImage(
+    ImageInterface finalImage = this.currentProject.stackToImage(
             this.currentProject.getLayers().size() - 1);
     int width = finalImage.getPixels().get(0).size();
     int height = finalImage.getPixels().size();

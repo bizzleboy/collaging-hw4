@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import collagefiles.model.Image;
+import collagefiles.model.ImageInterface;
 import collagefiles.model.Pixel;
+import collagefiles.model.PixelInterface;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,29 +17,29 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestImage {
 
-  Pixel redPixel1;
-  Pixel redPixel2;
-  Pixel redPixel3;
-  Pixel redPixel4;
-  Pixel redPixel5;
-  Pixel greenPixel1;
-  Pixel greenPixel2;
-  Pixel bluePixel1;
-  Pixel bluePixel2;
-  Pixel whitePixel;
-  Pixel blackPixel;
-  Pixel mixedPixel;
-  Pixel transparentPixel;
-  Pixel opaquePixel;
-  Pixel amaranthPixel;
-  Pixel backgroundPixel;
+  PixelInterface redPixel1;
+  PixelInterface redPixel2;
+  PixelInterface redPixel3;
+  PixelInterface redPixel4;
+  PixelInterface redPixel5;
+  PixelInterface greenPixel1;
+  PixelInterface greenPixel2;
+  PixelInterface bluePixel1;
+  PixelInterface bluePixel2;
+  PixelInterface whitePixel;
+  PixelInterface blackPixel;
+  PixelInterface mixedPixel;
+  PixelInterface transparentPixel;
+  PixelInterface opaquePixel;
+  PixelInterface amaranthPixel;
+  PixelInterface backgroundPixel;
 
-  Image image1;
-  Image blankImage;
-  Image image2;
-  Image image3;
-  Image image4;
-  Image image5;
+  ImageInterface image1;
+  ImageInterface blankImage;
+  ImageInterface image2;
+  ImageInterface image3;
+  ImageInterface image4;
+  ImageInterface image5;
 
   @Before
   public void init() {
@@ -60,27 +62,27 @@ public class TestImage {
     this.blankImage = new Image(5, 5, false);
 
 
-    ArrayList<Pixel> row1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row1 = new ArrayList<PixelInterface>();
     Collections.addAll(row1, redPixel1, redPixel2, redPixel3);
 
-    ArrayList<Pixel> row2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row2 = new ArrayList<PixelInterface>();
     Collections.addAll(row2, redPixel4, greenPixel1, redPixel5);
 
-    ArrayList<Pixel> row3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> row3 = new ArrayList<PixelInterface>();
     Collections.addAll(row3, bluePixel1, greenPixel2, bluePixel2);
-    ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> imageGrid = new ArrayList<>();
     Collections.addAll(imageGrid, row1, row2, row3);
 
     this.image1 = new Image(imageGrid);
     this.image3 = new Image(2, 2, false);
 
-    ArrayList<ArrayList<Pixel>> singlePix2 = new ArrayList<ArrayList<Pixel>>();
-    ArrayList<Pixel> singleRow2 = new ArrayList<Pixel>();
+    ArrayList<ArrayList<PixelInterface>> singlePix2 = new ArrayList<ArrayList<PixelInterface>>();
+    ArrayList<PixelInterface> singleRow2 = new ArrayList<PixelInterface>();
     singleRow2.add(new Pixel(0, 255, 0, 255));
     singlePix2.add(singleRow2);
 
-    ArrayList<ArrayList<Pixel>> singlePix3 = new ArrayList<ArrayList<Pixel>>();
-    ArrayList<Pixel> singleRow3 = new ArrayList<Pixel>();
+    ArrayList<ArrayList<PixelInterface>> singlePix3 = new ArrayList<ArrayList<PixelInterface>>();
+    ArrayList<PixelInterface> singleRow3 = new ArrayList<PixelInterface>();
     singleRow3.add(amaranthPixel);
     singlePix3.add(singleRow3);
 
@@ -90,7 +92,7 @@ public class TestImage {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidConstructionNullGrid() {
-    ArrayList<ArrayList<Pixel>> imageGrid = null;
+    ArrayList<ArrayList<PixelInterface>> imageGrid = null;
     this.image3 = new Image(imageGrid);
 
     this.image3 = new Image(-1, -1, true);
@@ -109,9 +111,9 @@ public class TestImage {
 
   @Test
   public void testValidConstruction() {
-    ArrayList<ArrayList<Pixel>> imageGrid = new ArrayList<>();
-    ArrayList<Pixel> row1 = new ArrayList<Pixel>();
-    ArrayList<Pixel> row2 = new ArrayList<Pixel>();
+    ArrayList<ArrayList<PixelInterface>> imageGrid = new ArrayList<>();
+    ArrayList<PixelInterface> row1 = new ArrayList<PixelInterface>();
+    ArrayList<PixelInterface> row2 = new ArrayList<PixelInterface>();
     Collections.addAll(row1, bluePixel1, greenPixel1, bluePixel2);
     Collections.addAll(row2, redPixel1, greenPixel2, bluePixel2);
     Collections.addAll(imageGrid, row1, row2);
@@ -140,16 +142,16 @@ public class TestImage {
 
   @Test
   public void testFilterImageRed() {
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, redPixel1, redPixel2, redPixel3);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, redPixel4, blackPixel, redPixel5);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -164,16 +166,16 @@ public class TestImage {
 
   @Test
   public void testFilterImageGreen() {
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, blackPixel, greenPixel1, blackPixel);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, blackPixel, greenPixel2, blackPixel);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -188,16 +190,16 @@ public class TestImage {
 
   @Test
   public void testFilterImageBlue() {
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, bluePixel1, blackPixel, bluePixel2);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -212,16 +214,16 @@ public class TestImage {
 
   @Test
   public void testFilterDarkenValue() {
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -239,16 +241,16 @@ public class TestImage {
     Pixel darkenRedIntensity = new Pixel(new Color(170, 0, 0));
     Pixel darkenGreenIntensity = new Pixel(new Color(0, 170, 0));
     Pixel darkenBlueIntensity = new Pixel(new Color(0, 0, 170));
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, darkenRedIntensity, darkenRedIntensity, darkenRedIntensity);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, darkenRedIntensity, darkenGreenIntensity, darkenRedIntensity);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, darkenBlueIntensity, darkenGreenIntensity, darkenBlueIntensity);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -264,16 +266,16 @@ public class TestImage {
     Pixel darkenRedLuma = new Pixel(new Color(201, 0, 0));
     Pixel darkenGreenLuma = new Pixel(new Color(0, 73, 0));
     Pixel darkenBlueLuma = new Pixel(new Color(0, 0, 237));
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, darkenRedLuma, darkenRedLuma, darkenRedLuma);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, darkenRedLuma, darkenGreenLuma, darkenRedLuma);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, darkenBlueLuma, darkenGreenLuma, darkenBlueLuma);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -288,16 +290,16 @@ public class TestImage {
 
   @Test
   public void testFilterBrightenValue() {
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, whitePixel, whitePixel, whitePixel);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, whitePixel, whitePixel, whitePixel);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, whitePixel, whitePixel, whitePixel);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -315,19 +317,19 @@ public class TestImage {
     Pixel brightenRedIntensity = new Pixel(new Color(255, 85, 85));
     Pixel brightenGreenIntensity = new Pixel(new Color(85, 255, 85));
     Pixel brightenBlueIntensity = new Pixel(new Color(85, 85, 255));
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, brightenRedIntensity,
             brightenRedIntensity, brightenRedIntensity);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, brightenRedIntensity,
             brightenGreenIntensity, brightenRedIntensity);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, brightenBlueIntensity,
             brightenGreenIntensity, brightenBlueIntensity);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -347,16 +349,16 @@ public class TestImage {
     Pixel brightenRedLuma = new Pixel(new Color(255, 54, 54));
     Pixel brightenGreenLuma = new Pixel(new Color(182, 255, 182));
     Pixel brightenBlueLuma = new Pixel(new Color(18, 18, 255));
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, brightenRedLuma, brightenRedLuma, brightenRedLuma);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, brightenRedLuma, brightenGreenLuma, brightenRedLuma);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, brightenBlueLuma, brightenGreenLuma, brightenBlueLuma);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);
@@ -371,16 +373,16 @@ public class TestImage {
 
   @Test
   public void testFilterDifference() {
-    ArrayList<Pixel> testRow1 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow1 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow1, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow2 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow2 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow2, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<Pixel> testRow3 = new ArrayList<Pixel>();
+    ArrayList<PixelInterface> testRow3 = new ArrayList<PixelInterface>();
     Collections.addAll(testRow3, blackPixel, blackPixel, blackPixel);
 
-    ArrayList<ArrayList<Pixel>> testImageGrid = new ArrayList<>();
+    ArrayList<ArrayList<PixelInterface>> testImageGrid = new ArrayList<>();
     Collections.addAll(testImageGrid, testRow1, testRow2, testRow3);
 
     Image testImage = new Image(testImageGrid);

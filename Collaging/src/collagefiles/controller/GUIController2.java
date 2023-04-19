@@ -308,18 +308,9 @@ public class GUIController2 extends JFrame implements ActionListener {
       pixels.add(new ArrayList<PixelInterface>());
     }
     //adding pixels to each row
-    for (List l : pixels) {
-      for (int j = 0; j < width; j++) {
-        int r = sc.nextInt();
-        int g = sc.nextInt();
-        int b = sc.nextInt();
-        l.add(new Pixel(new Color(r, g, b)));
 
 
-      }
-    }
-
-    ImageInterface readImage = new Image(pixels);
+    ImageInterface readImage = this.project.LoadImagePixelsFromProject(sc,pixels);
     return readImage;
   }
 
@@ -363,6 +354,7 @@ public class GUIController2 extends JFrame implements ActionListener {
       ArrayList<ArrayList<PixelInterface>> nextPixels = new ArrayList<>();
 
       String layerName = sc.next();
+      this.project.addLayer(layerName);
 
       String filterName = sc.next();
 
@@ -372,18 +364,9 @@ public class GUIController2 extends JFrame implements ActionListener {
       for (int y = 0; y < height; y++) {
         nextPixels.add(new ArrayList<PixelInterface>());
       }
-      for (List l : nextPixels) {
-        for (int x = 0; x < width; x++) {
-          int r = sc.nextInt();
-          int g = sc.nextInt();
-          int b = sc.nextInt();
-          int a = sc.nextInt();
-          tracker += 1;
-          l.add(new Pixel(r, g, b, a));
-        }
-      }
-      this.project.addLayer(layerName);
-      this.project.addImageToLayer(layerName, new Image(nextPixels), 0, 0);
+
+
+      this.project.addImageToLayer(layerName, this.project.LoadImagePixelsFromProject(sc,nextPixels), 0, 0);
 
 
       this.project.setFilter(layerName, filterName);
@@ -432,30 +415,18 @@ public class GUIController2 extends JFrame implements ActionListener {
    * @return Image to be rendered.
    */
   public ImageInterface readPngJpeg(String filepath) {
-    ArrayList<ArrayList<PixelInterface>> imageColors = new ArrayList<>();
 
+
+    BufferedImage image = null;
     try {
-      BufferedImage image = ImageIO.read(new File(filepath));
-      int width = image.getWidth();
-      int height = image.getHeight();
-
-      for (int i = 0; i < height; i++) {
-        ArrayList<PixelInterface> rowPixels = new ArrayList<>();
-        for (int j = 0; j < width; j++) {
-          int rgb = image.getRGB(j, i);
-          Color color = new Color(rgb);
-
-          rowPixels.add(new Pixel(color.getRed(), color.getGreen(),
-                  color.getBlue(), color.getAlpha()));
-        }
-        imageColors.add(rowPixels);
-      }
-
+      image = ImageIO.read(new File(filepath));
     } catch (IOException e) {
       System.err.println("Error reading the image file: " + e.getMessage());
     }
 
-    return new Image(imageColors);
+
+
+    return this.project.LoadImagePixelsFromProjectPNGJPEG(image);
   }
 
   /**
@@ -465,7 +436,6 @@ public class GUIController2 extends JFrame implements ActionListener {
    * @param fileName Name of file.
    */
   public void saveImageNew(String filepath, String fileName) {
-    // Create a BufferedImage from the ArrayList<ArrayList<Color>>
 
     ImageInterface finalImage = this.project.stackToImage(
             this.project.getLayers().size() - 1);

@@ -1,6 +1,9 @@
 package collagefiles.model;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Represents a project that a user can perform collage functions on.
@@ -54,4 +57,25 @@ public interface Project {
    * @return a composite image of the below layers.
    */
   public ImageInterface stackToImage(int startIndex);
+
+  /**
+   * Iterates through scanned integers representing RGB values.
+   * To load pixels onto an Image for use in PPM processing.
+   * DOES NOT VIOLATE controller contracts as its simpy parsing a string.
+   * Not a PPM.
+   * @param sc The Scanner that reads the ints.
+   * @param imageToCreate The 2D Array that will be filled with RGB values.
+   * @return Image representing the scanned image.
+   */
+  public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate);
+
+  /**
+   * * Iterates through scanned integers representing RGB values.
+   *    * To load pixels onto an Image for use in PPM processing.
+   *    * DOES NOT VIOLATE controller contracts as its simpy parsing an image.
+   *    Does not do any loading/reading
+   * @param imageToCreate A bufferedImage that the method will iterate through to add RGB values from.
+   * @return
+   */
+  public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate);
 }
