@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Image implements ImageInterface {
   protected ArrayList<ArrayList<PixelInterface>> pixels;
-  ArrayList<ArrayList<PixelInterface>> filterPixels;
+  protected ArrayList<ArrayList<PixelInterface>> filterPixels;
 
   /**
    * Creates a blank image of a specified size.
@@ -62,7 +62,10 @@ public class Image implements ImageInterface {
     this.pixels = pixelList;
     this.filterPixels = this.getPixels();
   }
-
+@Override
+  public void normalMe(){
+    this.filterPixels = this.pixels;
+  }
   @Override
   public void filterImageRed() {
 
@@ -162,7 +165,7 @@ public class Image implements ImageInterface {
 
     ArrayList<ArrayList<PixelInterface>> copy = new ArrayList<ArrayList<PixelInterface>>();
 
-    for (ArrayList<PixelInterface> pixelRow : (ArrayList<ArrayList<PixelInterface>>) this.pixels.clone()) {
+    for (ArrayList<PixelInterface> pixelRow : this.pixels) {
       ArrayList<PixelInterface> newRow = new ArrayList<>();
       for (PixelInterface pix : pixelRow) {
         Pixel newPix = new Pixel(pix.getPixelColor());
@@ -171,6 +174,11 @@ public class Image implements ImageInterface {
       copy.add(newRow);
     }
     return copy;
+  }
+
+  @Override
+  public void setPixelAt(PixelInterface replacementPixel, int col, int row) {
+    this.pixels.get(row).set(col,replacementPixel);
   }
 
 

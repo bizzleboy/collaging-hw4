@@ -28,25 +28,28 @@ public class Layer implements LayerInterface {
 
   @Override
   public void placeImage(int xPos, int yPos, ImageInterface image) throws IllegalArgumentException {
-    if (xPos < 0 || yPos >= this.imagesOnLayer.get(0).getPixels().size() || yPos < 0
-            || xPos >= this.imagesOnLayer.get(0).getPixels().get(0).size()) {
+    int imageSize = this.imagesOnLayer.get(0).getPixels().size();
+    if (xPos < 0 || yPos >= imageSize || yPos < 0
+            || xPos >= imageSize) {
       throw new IllegalArgumentException("Invalid positions");
     }
     int xIndex = xPos;
     int yIndex = yPos;
 
     for (List<PixelInterface> list : image.getFilterPixels()) {
-      if (yIndex >= this.imagesOnLayer.get(0).getPixels().size()) {
+      if (yIndex >= imageSize) {
         break;
       } else {
         for (PixelInterface p : list) {
-          if (xIndex >= this.imagesOnLayer.get(0).getPixels().get(0).size()) {
+          if (xIndex >= imageSize) {
             break;
           } else {
-            /// THIS is where the issue is TODO
+
             PixelInterface alteredPixel = this.imagesOnLayer.get(0).getPixels().get(yIndex).get(xIndex);
             alteredPixel.addPixels(p);
-            this.imagesOnLayer.get(0).getPixels().get(yIndex).set(xIndex, alteredPixel);
+            this.imagesOnLayer.get(0).setPixelAt(alteredPixel,xIndex,yIndex);
+
+//                    getPixels().get(yIndex).set(xIndex, alteredPixel);
             this.imagesOnLayer.get(0).getFilterPixels().get(yIndex).set(xIndex, alteredPixel);
             xIndex += 1;
 
@@ -72,8 +75,9 @@ public class Layer implements LayerInterface {
       case "normal":
         this.filter = filter;
         for (ImageInterface image : imagesOnLayer) {
-          ArrayList<ArrayList<PixelInterface>> imagePixels = image.getFilterPixels();
-          imagePixels = image.getPixels();
+          image.normalMe();
+//          ArrayList<ArrayList<PixelInterface>> imagePixels = image.getFilterPixels();
+//          imagePixels = image.getPixels();
         }
         break;
       case "red-component":
