@@ -7,10 +7,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
@@ -20,13 +21,13 @@ import collagefiles.model.BasicCollageProject;
 
 import collagefiles.model.ImageInterface;
 
-import collagefiles.model.Pixel;
 import collagefiles.model.PixelInterface;
 import collagefiles.model.Project;
 import collagefiles.view.CollageView;
 
 /**
  * Controller for operating collage project.
+ * This controller is operated through the command line using text inputs.
  */
 public class CollageControllerImpl implements CollageController {
 
@@ -35,13 +36,14 @@ public class CollageControllerImpl implements CollageController {
   private Project currentProject;
 
   /**
-   * Constructor for controller that takes in input and view.
+   * Constructor for controller that takes in an input, a view, and a current project.
+   * The inputs to this constructor are interfaces for reduced coupling.
    *
    * @param input Readable to process inputs.
    * @param view  View for storing output.
    * @throws IllegalArgumentException If any arguments are null.
    */
-  public CollageControllerImpl(Readable input, CollageView view)
+  public CollageControllerImpl(Readable input, CollageView view,Project project)
           throws IllegalArgumentException {
     if (input == null) {
       throw new IllegalArgumentException("provided readable input cannot be null.");
@@ -51,11 +53,12 @@ public class CollageControllerImpl implements CollageController {
     }
     this.input = input;
     this.view = view;
-    this.currentProject = null;
+    this.currentProject = project;
   }
 
   /**
    * Controller that starts with a project for loading purposes.
+   * This project input allows a previously existing project to be loaded into the controller.
    *
    * @param input Readable to process inputs.
    * @param p     Project to input.
@@ -137,15 +140,15 @@ public class CollageControllerImpl implements CollageController {
           } catch (IOException a) {
             throw new IllegalStateException(a);
           }
-          if (this.currentProject == null) {
-            this.currentProject = new BasicCollageProject(width, height, 255);
+
+            this.currentProject = this.currentProject.resetProject(width);
             this.currentProject.addLayer("background");
             try {
               this.view.renderMessage("new project made");
             } catch (IOException a) {
               throw new IllegalStateException(a);
             }
-          }
+
           break;
 
         case "load-project":
@@ -373,13 +376,28 @@ public class CollageControllerImpl implements CollageController {
             } catch (IOException a) {
               throw new IllegalStateException(a);
             }
-            this.currentProject.addImageToLayer(layerToAddTo,
-                    this.readImage(this.printPath() + imageToAdd), xPos, yPos);
-            try {
-              this.view.renderMessage("image added to layer");
-            } catch (IOException a) {
-              throw new IllegalStateException(a);
+            System.out.print(imageToAdd);
+            if (imageToAdd.split("\\.")[1].equals("ppm")) {
+              try {
+                this.currentProject.addImageToLayer(layerToAddTo,
+                        this.readImage(this.printPath() + imageToAdd), xPos, yPos);
+              } catch (IOException e) {
+              }
+
+              try {
+                this.view.renderMessage("image added to layer");
+              } catch (IOException a) {
+                throw new IllegalStateException(a);
+              }
             }
+            else if (imageToAdd.split("\\.")[1].equals("jpeg") ||
+                    imageToAdd.split("\\.")[1].equals("jpg") ||
+                    imageToAdd.split("\\.")[1].equals("png")) {
+
+              this.currentProject.addImageToLayer(layerToAddTo,
+                      this.readPngJpeg(this.printPath() + imageToAdd), xPos, yPos);
+            }
+
           }
           break;
         default:
@@ -397,18 +415,19 @@ public class CollageControllerImpl implements CollageController {
   }
 
   private Project readProject(String path) throws IllegalArgumentException {
+    if (path == null) {
+      throw new IllegalArgumentException("Bad path");
+    }
     Scanner sc = null;
 
     try {
       sc = new Scanner(new FileInputStream(path));
     } catch (FileNotFoundException e) {
       try {
-        this.view.renderMessage("File " + path + " not found!");
-      } catch (IOException a) {
-        throw new IllegalStateException(a);
+        this.view.renderMessage("invalid file");
+      } catch (IOException ex) {
+        throw new RuntimeException(ex);
       }
-      Scanner tryAgain = new Scanner(this.input);
-      this.readProject(tryAgain.next());
     }
 
     int tracker = 3;
@@ -424,79 +443,103 @@ public class CollageControllerImpl implements CollageController {
     height = sc.nextInt();
     maxVal = sc.nextInt();
 
-    this.currentProject = new BasicCollageProject(width, height, maxVal);
+    this.currentProject = this.currentProject.resetProject(width);
+// && tracker <= 3 + ((width * height) + 1) * layerTracker
+    while (sc.hasNextLine()) {
 
-    while (sc.hasNextLine() && tracker < 3 + width * height + layerTracker) {
 
       ArrayList<ArrayList<PixelInterface>> nextPixels = new ArrayList<>();
 
       String layerName = sc.next();
+      if(!layerName.equals("background")) {
+        this.currentProject.addLayer(layerName);
+      }
+
       String filterName = sc.next();
-      layerTracker += 1;
+
       tracker += 1;
+      layerTracker += 1;
 
       for (int y = 0; y < height; y++) {
         nextPixels.add(new ArrayList<PixelInterface>());
       }
 
-      this.currentProject.addLayer(layerName);
-      this.currentProject.addImageToLayer(layerName, this.currentProject.LoadImagePixelsFromProject(sc,nextPixels), 0, 0);
+      BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+      // Read pixel data and populate the BufferedImage
+      for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+          if (!sc.hasNextLine()) {
+            break;
+          }
+          int red = sc.nextInt();
+          int green = sc.nextInt();
+          int blue = sc.nextInt();
+          int alpha = sc.nextInt();
+//          tracker+=1;
+
+          int rgb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+          image.setRGB(x, y, rgb);
+        }
+      }
+
+
+
+
+      this.currentProject.addImageToLayer(layerName, this.currentProject.LoadImagePixelsFromProjectPNGJPEG(image), 0, 0);
+
+
       this.currentProject.setFilter(layerName, filterName);
+
+
+      if (!sc.hasNext()) {
+        break;
+      }
+
     }
     return this.currentProject;
   }
 
-  private ImageInterface readImage(String path) {
-    Scanner sc = null;
+  /**
+   * Reads in an image(ppm) and converts it to an object of ImageInterface (list of list of pixels).
+   * This method relies on the file beginning with 'P3'.
+   *
+   * @param path Path to image on computer.
+   * @return Image object based on components of image file from computer.
+   */
+  private ImageInterface readImage(String path) throws IOException {
+    File file = new File(path);
+    Scanner scan = new Scanner(new FileReader(file));
 
-    try {
-      sc = new Scanner(new FileInputStream(path));
-    } catch (FileNotFoundException e) {
-      try {
-        this.view.renderMessage("File " + path + " not found!");
-      } catch (IOException a) {
-        throw new IllegalStateException(a);
+    // Read the header information
+    String magicNumber = scan.next();
+    if (!magicNumber.equals("P3")) {
+      throw new IOException("Invalid PPM file format: expected P3 magic number.");
+    }
+
+
+
+    int width = scan.nextInt();
+    int height = scan.nextInt();
+
+    int maxColorValue = scan.nextInt();
+
+    // Create a BufferedImage to hold the pixel data
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    // Read pixel data and populate the BufferedImage
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int red = scan.nextInt();
+        int green = scan.nextInt();
+        int blue = scan.nextInt();
+
+        int rgb = ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
+        image.setRGB(x, y, rgb);
       }
-      Scanner tryAgain = new Scanner(this.input);
-      return this.readImage(tryAgain.next());
-    }
-    StringBuilder imageBuilder = new StringBuilder();
-    while (sc.hasNextLine()) {
-      String s = sc.nextLine();
-      if (s.charAt(0) != '#') {
-        imageBuilder.append(s + System.lineSeparator());
-      }
     }
 
-    sc = new Scanner(imageBuilder.toString());
-
-    String token;
-
-    token = sc.next();
-    if (!token.equals("P3")) {
-      try {
-        this.view.renderMessage("Invalid PPM file: plain RAW file should begin with P3");
-      } catch (IOException a) {
-        throw new IllegalStateException(a);
-      }
-    }
-    int width = sc.nextInt();
-
-    int height = sc.nextInt();
-
-    int maxVal = sc.nextInt();
-
-    ArrayList<ArrayList<PixelInterface>> pixels;
-    pixels = new ArrayList<>();
-
-    //adding the rows of pixels
-    for (int i = 0; i < height; i++) {
-      pixels.add(new ArrayList<PixelInterface>());
-    }
-
-
-    ImageInterface readImage = this.currentProject.LoadImagePixelsFromProject(sc,pixels);
-    return readImage;
+    return this.currentProject.LoadImagePixelsFromProjectPNGJPEG(image);
   }
 
   /**
@@ -570,11 +613,34 @@ public class CollageControllerImpl implements CollageController {
   private String printPath() {
     String path = String.format("%s/%s", System.getProperty("user.dir"),
             this.getClass().getPackage().getName().replace(".", "/"));
-    System.out.print(path.split("out/")[0].split("Collaging/")[0]);
-    return path.split("out/")[0].split("Collaging/")[0];
+    return path.split("Collaging/")[0].split("collagefiles")[0];
+  }
+
+
+
+
+
+  /**
+   * Turns a png/jpeg into an ImageInterface object (array list of array list of pixels).
+   *
+   * @param filepath Path to image.
+   * @return Image to be rendered.
+   */
+  public ImageInterface readPngJpeg(String filepath) {
+
+
+    BufferedImage image = null;
+    try {
+      image = ImageIO.read(new File(filepath));
+    } catch (IOException e) {
+      System.err.println("Error reading the image file: " + e.getMessage());
+    }
+
+
+
+    return this.currentProject.LoadImagePixelsFromProjectPNGJPEG(image);
   }
 
 
 
 }
-

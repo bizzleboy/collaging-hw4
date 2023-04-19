@@ -20,14 +20,14 @@ public class Main {
    * @param args All the inputs.
    */
   public static void main(String[] args) {
-    Project project = new BasicCollageProject(10, 10, 255);
+    Project project = new BasicCollageProject();
 
     if (args.length == 0) {
       GUIView2 view = new GUIView2();
-      GUIController2 controller2 = new GUIController2(view);
+      GUIController2 controller2 = new GUIController2(view,project);
     } else if (args[0].equals("-text")) {
       CollageController controller = new CollageControllerImpl(new InputStreamReader(System.in),
-              new CollageTextView());
+              new CollageTextView(),project);
       controller.runProgram();
 
 
@@ -36,7 +36,7 @@ public class Main {
       CollageController controller = null;
       try {
         controller = new CollageControllerImpl(new InputStreamReader(new FileInputStream(args[1])),
-                new CollageTextView());
+                new CollageTextView(),project);
       } catch (FileNotFoundException e) {
         throw new RuntimeException(e);
       }

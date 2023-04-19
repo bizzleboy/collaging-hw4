@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,11 +22,12 @@ import javax.swing.JFrame;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import collagefiles.model.BasicCollageProject;
+
 
 import collagefiles.model.ImageInterface;
 
 
+import collagefiles.model.Layer;
 import collagefiles.model.LayerInterface;
 import collagefiles.model.PixelInterface;
 import collagefiles.model.Project;
@@ -52,13 +53,14 @@ public class GUIController2 extends JFrame implements ActionListener {
    *
    * @param view desired view.
    */
-  public GUIController2(GUIView view) {
+  public GUIController2(GUIView view,Project project) {
 
     super();
     //Was able to decouple view to not rely on a specific gui view.
     this.view = view;
 
     this.view.setListener(this);
+    this.project = project;
   }
 
   /**
@@ -141,21 +143,23 @@ public class GUIController2 extends JFrame implements ActionListener {
 
 
     if (command.equals("new-project")) {
-      String pHeightS = JOptionPane.showInputDialog(view.getFrame(),
-              "Enter Project Height");
+
       String pWidthS = JOptionPane.showInputDialog(view.getFrame(),
-              "Enter Project Width");
+              "Enter Project SIze");
       int pWidth = 0;
-      int pHeight = 0;
+
       try {
-        pHeight = Integer.parseInt(pHeightS);
+
         pWidth = Integer.parseInt(pWidthS);
       } catch (NumberFormatException n) {
         JOptionPane.showMessageDialog(view.getFrame(), "Invalid height/width.");
       }
 
+
       this.view.removeLayers();
-      this.project = new BasicCollageProject(pWidth, pHeight, 255);
+      this.project = this.project.resetProject(pWidth);
+
+      this.project.getLayers().add(new Layer("background",pWidth, pWidth, true));
       this.view.removeLayers();
       BufferedImage renderedImage = this.renderImage(this.project.stackToImage(
               this.project.getLayers().size() - 1));
@@ -339,15 +343,17 @@ public class GUIController2 extends JFrame implements ActionListener {
     height = sc.nextInt();
     maxVal = sc.nextInt();
 
-    this.project = new BasicCollageProject(width, height, maxVal);
-
-    while (sc.hasNextLine() && tracker <= 3 + ((width * height) + 1) * layerTracker) {
+   this.project = this.project.resetProject(width);
+// && tracker <= 3 + ((width * height) + 1) * layerTracker
+    while (sc.hasNextLine()) {
 
 
       ArrayList<ArrayList<PixelInterface>> nextPixels = new ArrayList<>();
 
       String layerName = sc.next();
-      this.project.addLayer(layerName);
+      if(!layerName.equals("background")) {
+        this.project.addLayer(layerName);
+      }
 
       String filterName = sc.next();
 
@@ -358,15 +364,36 @@ public class GUIController2 extends JFrame implements ActionListener {
         nextPixels.add(new ArrayList<PixelInterface>());
       }
 
+      BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-      this.project.addImageToLayer(layerName, this.project.LoadImagePixelsFromProject(sc,nextPixels), 0, 0);
+      // Read pixel data and populate the BufferedImage
+      for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+          if (!sc.hasNextLine()) {
+            break;
+          }
+          int red = sc.nextInt();
+          int green = sc.nextInt();
+          int blue = sc.nextInt();
+          int alpha = sc.nextInt();
+//          tracker+=1;
+
+          int rgb = (alpha << 24) | (red << 16) | (green << 8) | blue;
+          image.setRGB(x, y, rgb);
+        }
+      }
+
+
+
+
+      this.project.addImageToLayer(layerName, this.project.LoadImagePixelsFromProjectPNGJPEG(image), 0, 0);
 
 
       this.project.setFilter(layerName, filterName);
       this.view.addLayerButton(layerName);
 
       if (!sc.hasNext()) {
-        tracker += 1;
+        break;
       }
 
     }

@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 //memes
 
 /**
@@ -13,28 +13,21 @@ import java.util.Scanner;
 
 public class BasicCollageProject implements Project {
   private final List<LayerInterface> layers;
-  private final int height;
-  private final int width;
+  private int height;
+  private int width;
   private final int maxVal;
 
+
   /**
-   * Instantiating a collage with basic parameters.
-   *
-   * @param canvasWidth  Width of canvas.
-   * @param canvasHeight Height of canvas.
-   * @param maxVal       Maximum pixel value.
+   * Instantiating a collage.
    */
-  public BasicCollageProject(int canvasWidth,
-                             int canvasHeight, int maxVal) throws IllegalArgumentException {
+  public BasicCollageProject() throws IllegalArgumentException {
+    this.maxVal = 255;
     //ADDED EXCEPTION
-    if (canvasHeight < 1 || canvasWidth < 1 || maxVal < 1) {
-      throw new IllegalArgumentException("invalid arg");
-    }
+
     this.layers = new ArrayList<LayerInterface>();
-    this.height = canvasHeight;
-    this.width = canvasWidth;
-    this.maxVal = maxVal;
-    this.layers.add(new Layer("background", this.width, this.height, true));
+
+
   }
 
   /**
@@ -165,23 +158,6 @@ public class BasicCollageProject implements Project {
     return startLayer.getImages().get(0);
   }
 
-  @Override
-  public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate) {
-    ArrayList<ArrayList<PixelInterface>> imageColors = new ArrayList<>();
-
-    for (ArrayList<PixelInterface> l : imageToCreate) {
-      for (int x = 0; x < imageToCreate.size(); x++) {
-        int r = sc.nextInt();
-        int g = sc.nextInt();
-        int b = sc.nextInt();
-        int a = sc.nextInt();
-        l.add(new Pixel(r, g, b, a));
-
-      }
-      imageColors.add(l);
-    }
-    return new Image(imageColors);
-  }
 
   @Override
   public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate) {
@@ -203,6 +179,25 @@ public class BasicCollageProject implements Project {
     }
 
     return new Image(imageColors);
+  }
+
+  @Override
+  public void setDimensions(int size) throws IllegalArgumentException  {
+    if (size < 1) {
+      throw new IllegalArgumentException("invalid arg");
+    }
+    this.height = size;
+    this.width = size;
+
+
+
+  }
+
+  @Override
+  public Project resetProject(int newSize) {
+    Project newProject = new BasicCollageProject();
+    newProject.setDimensions(newSize);
+    return newProject;
   }
 
 }

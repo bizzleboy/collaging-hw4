@@ -4,6 +4,7 @@ import java.io.StringReader;
 
 import collagefiles.controller.CollageController;
 import collagefiles.controller.CollageControllerImpl;
+import collagefiles.model.BasicCollageProject;
 import collagefiles.model.Project;
 import collagefiles.view.CollageTextView;
 
@@ -16,12 +17,12 @@ public class TestCollageControllerImpl {
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidConstructionReadable() {
-    CollageController impl = new CollageControllerImpl(null, new CollageTextView());
+    CollageController impl = new CollageControllerImpl(null, new CollageTextView(), new BasicCollageProject());
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidConstructionView() {
-    CollageController impl = new CollageControllerImpl(new StringReader("q"), null);
+    CollageController impl = new CollageControllerImpl(new StringReader("q"), null,new BasicCollageProject());
   }
 
   @Test

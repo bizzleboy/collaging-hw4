@@ -69,13 +69,19 @@ class BasicCollageProjectConfirmMethodsMock implements Project {
     return null;
   }
 
+
   @Override
-  public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate) {
+  public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate) {
     return null;
   }
 
   @Override
-  public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate) {
+  public void setDimensions(int size) {
+
+  }
+
+  @Override
+  public Project resetProject(int newSize) {
     return null;
   }
 }

@@ -59,17 +59,6 @@ public interface Project {
   public ImageInterface stackToImage(int startIndex);
 
   /**
-   * Iterates through scanned integers representing RGB values.
-   * To load pixels onto an Image for use in PPM processing.
-   * DOES NOT VIOLATE controller contracts as its simpy parsing a string.
-   * Not a PPM.
-   * @param sc The Scanner that reads the ints.
-   * @param imageToCreate The 2D Array that will be filled with RGB values.
-   * @return Image representing the scanned image.
-   */
-  public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate);
-
-  /**
    * * Iterates through scanned integers representing RGB values.
    *    * To load pixels onto an Image for use in PPM processing.
    *    * DOES NOT VIOLATE controller contracts as its simpy parsing an image.
@@ -78,4 +67,14 @@ public interface Project {
    * @return
    */
   public ImageInterface LoadImagePixelsFromProjectPNGJPEG(BufferedImage imageToCreate);
+
+  /**
+   * Sets the height for this project, since all projects must have same height/width, only.
+   * One input is required.
+   * @param size Size in pixels you want project to be.
+   */
+  public void setDimensions(int size);
+
+  public Project resetProject(int newSize);
+
 }
