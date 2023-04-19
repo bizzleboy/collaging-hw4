@@ -167,16 +167,20 @@ public class BasicCollageProject implements Project {
 
   @Override
   public ImageInterface LoadImagePixelsFromProject(Scanner sc, ArrayList<ArrayList<PixelInterface>> imageToCreate) {
-    for (List l : imageToCreate) {
-      for (int x = 0; x < width; x++) {
+    ArrayList<ArrayList<PixelInterface>> imageColors = new ArrayList<>();
+
+    for (ArrayList<PixelInterface> l : imageToCreate) {
+      for (int x = 0; x < imageToCreate.size(); x++) {
         int r = sc.nextInt();
         int g = sc.nextInt();
         int b = sc.nextInt();
         int a = sc.nextInt();
         l.add(new Pixel(r, g, b, a));
+
       }
+      imageColors.add(l);
     }
-    return new Image(imageToCreate);
+    return new Image(imageColors);
   }
 
   @Override

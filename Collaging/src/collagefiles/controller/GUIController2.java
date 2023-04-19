@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -232,18 +234,20 @@ public class GUIController2 extends JFrame implements ActionListener {
                   null, options2, options2[0]);
 
 
+          ImageInterface addingImage = null;
           File selectedFile = fileChooser.getSelectedFile();
           if (this.getExtension(selectedFile).equals("ppm")) {
-            this.imageToAdd = this.readImage(selectedFile.getAbsolutePath());
+             addingImage = this.readImage(selectedFile.getAbsolutePath());
           } else if (this.getExtension(selectedFile).equals("jpeg")
                   || (this.getExtension(selectedFile).equals("png")
                   || (this.getExtension(selectedFile).equals("jpg")))) {
-            this.imageToAdd = this.readPngJpeg(selectedFile.getAbsolutePath());
+            addingImage = this.readPngJpeg(selectedFile.getAbsolutePath());
           }
 
           if (layer != null) {
 
-            this.project.addImageToLayer(layer, this.imageToAdd, x_offset, y_offset);
+
+            this.project.addImageToLayer(layer, addingImage, x_offset, y_offset);
             BufferedImage renderedImage = this.renderImage(this.project.stackToImage(
                     this.project.getLayers().size() - 1));
             this.view
@@ -253,6 +257,8 @@ public class GUIController2 extends JFrame implements ActionListener {
 
         } catch (NumberFormatException ex) {
           this.view.renderMessage("Invalid coordinates.");
+        } catch (IOException ex) {
+          throw new RuntimeException(ex);
         }
       }
 
@@ -266,52 +272,39 @@ public class GUIController2 extends JFrame implements ActionListener {
    * @param path Path to image on computer.
    * @return Image from computer.
    */
-  private ImageInterface readImage(String path) {
-    Scanner sc = null;
+  private ImageInterface readImage(String path) throws IOException {
+    File file = new File(path);
+    Scanner scan = new Scanner(new FileReader(file));
 
-    try {
-      sc = new Scanner(new FileInputStream(path));
-    } catch (FileNotFoundException e) {
-
-      this.view.renderMessage("File " + path + " not found!");
-
+    // Read the header information
+    String magicNumber = scan.next();
+    if (!magicNumber.equals("P3")) {
+      throw new IOException("Invalid PPM file format: expected P3 magic number.");
     }
-    StringBuilder imageBuilder = new StringBuilder();
-    while (sc.hasNextLine()) {
-      String s = sc.nextLine();
-      if (s.charAt(0) != '#') {
-        imageBuilder.append(s + System.lineSeparator());
+
+
+
+    int width = scan.nextInt();
+    int height = scan.nextInt();
+
+    int maxColorValue = scan.nextInt();
+
+    // Create a BufferedImage to hold the pixel data
+    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    // Read pixel data and populate the BufferedImage
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        int red = scan.nextInt();
+        int green = scan.nextInt();
+        int blue = scan.nextInt();
+
+        int rgb = ((red & 0xFF) << 16) | ((green & 0xFF) << 8) | (blue & 0xFF);
+        image.setRGB(x, y, rgb);
       }
     }
 
-    sc = new Scanner(imageBuilder.toString());
-
-    String token;
-
-    token = sc.next();
-    if (!token.equals("P3")) {
-
-      this.view.renderMessage("Invalid PPM file: plain RAW file should begin with P3");
-
-    }
-    int width = sc.nextInt();
-
-    int height = sc.nextInt();
-
-    int maxVal = sc.nextInt();
-
-    ArrayList<ArrayList<PixelInterface>> pixels;
-    pixels = new ArrayList<>();
-
-    //adding the rows of pixels
-    for (int i = 0; i < height; i++) {
-      pixels.add(new ArrayList<PixelInterface>());
-    }
-    //adding pixels to each row
-
-
-    ImageInterface readImage = this.project.LoadImagePixelsFromProject(sc,pixels);
-    return readImage;
+    return this.project.LoadImagePixelsFromProjectPNGJPEG(image);
   }
 
   /**

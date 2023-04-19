@@ -67,4 +67,8 @@ public interface ImageInterface {
    * @return The ArrayList of ArrayList(pixel).
    */
   ArrayList<ArrayList<PixelInterface>> getPixels();
+
+  void setPixelAt(PixelInterface replacementPixel, int col, int row);
+
+  void normalMe();
 }
